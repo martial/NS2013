@@ -1,8 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
+#include "NSScene.h"
+#include "ofxUI.h"
 
-class testApp : public ofBaseApp{
+class app : public ofBaseApp{
 
 	public:
 		void setup();
@@ -18,5 +20,11 @@ class testApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+    
+        void guiEvent(ofxUIEventArgs &e);
+    
+    
+        NSScene scene;
+        ofxUICanvas *gui1;   
 		
 };
