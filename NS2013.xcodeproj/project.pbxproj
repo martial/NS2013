@@ -52,6 +52,22 @@
 		E72CAC9017009FDF006A0901 /* PixelatePass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E72CAC8017009FDE006A0901 /* PixelatePass.cpp */; };
 		E72CAC9117009FDF006A0901 /* PostProcessing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E72CAC8217009FDF006A0901 /* PostProcessing.cpp */; };
 		E72CAC9217009FDF006A0901 /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E72CAC8417009FDF006A0901 /* RenderPass.cpp */; };
+		E749B6351701AFB300699521 /* NSEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B6331701AFB300699521 /* NSEditor.cpp */; };
+		E749B6381701B00700699521 /* NSGuiManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B6361701B00700699521 /* NSGuiManager.cpp */; };
+		E749B7351701CCFB00699521 /* libJavascript.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E749B70D1701CCFB00699521 /* libJavascript.dylib */; };
+		E749B7361701CCFB00699521 /* libnspr4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E749B70E1701CCFB00699521 /* libnspr4.dylib */; };
+		E749B73D1701CCFB00699521 /* ofxJavascript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B71F1701CCFB00699521 /* ofxJavascript.cpp */; };
+		E749B73E1701CCFB00699521 /* ofxJSGlobalFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7211701CCFB00699521 /* ofxJSGlobalFunc.cpp */; };
+		E749B73F1701CCFB00699521 /* ofxJSImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7231701CCFB00699521 /* ofxJSImage.cpp */; };
+		E749B7411701CCFB00699521 /* ofxJSOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7261701CCFB00699521 /* ofxJSOpenGL.cpp */; };
+		E749B7421701CCFB00699521 /* ofxJSScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7281701CCFB00699521 /* ofxJSScript.cpp */; };
+		E749B7431701CCFB00699521 /* ofxJSTrueTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B72A1701CCFB00699521 /* ofxJSTrueTypeFont.cpp */; };
+		E749B7441701CCFB00699521 /* ofxJSUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B72C1701CCFB00699521 /* ofxJSUtils.cpp */; };
+		E749B79F1701CDDA00699521 /* libJavascript.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = E749B70D1701CCFB00699521 /* libJavascript.dylib */; };
+		E749B7A01701CDDA00699521 /* libnspr4.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = E749B70E1701CCFB00699521 /* libnspr4.dylib */; };
+		E749B7CA1701D2B500699521 /* JSBinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7C81701D2B500699521 /* JSBinder.cpp */; };
+		E749B7CD1701D62F00699521 /* Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7CB1701D62F00699521 /* Globals.cpp */; };
+		E749B7D01701DFF000699521 /* NSAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7CE1701DFEF00699521 /* NSAnimation.cpp */; };
 		E778AA2E1700658100EA034E /* NSScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E778AA2C1700658100EA034E /* NSScene.cpp */; };
 		E778AA311700671000EA034E /* NSSharpy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E778AA2F1700671000EA034E /* NSSharpy.cpp */; };
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
@@ -87,6 +103,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E749B79F1701CDDA00699521 /* libJavascript.dylib in CopyFiles */,
+				E749B7A01701CDDA00699521 /* libnspr4.dylib in CopyFiles */,
 				BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,6 +217,83 @@
 		E72CAC8317009FDF006A0901 /* PostProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostProcessing.h; sourceTree = "<group>"; };
 		E72CAC8417009FDF006A0901 /* RenderPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPass.cpp; sourceTree = "<group>"; };
 		E72CAC8517009FDF006A0901 /* RenderPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPass.h; sourceTree = "<group>"; };
+		E749B6331701AFB300699521 /* NSEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSEditor.cpp; sourceTree = "<group>"; };
+		E749B6341701AFB300699521 /* NSEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEditor.h; sourceTree = "<group>"; };
+		E749B6361701B00700699521 /* NSGuiManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSGuiManager.cpp; sourceTree = "<group>"; };
+		E749B6371701B00700699521 /* NSGuiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSGuiManager.h; sourceTree = "<group>"; };
+		E749B6CF1701CCFB00699521 /* notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = notes.txt; sourceTree = "<group>"; };
+		E749B6D61701CCFB00699521 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		E749B6DA1701CCFB00699521 /* jsapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsapi.h; sourceTree = "<group>"; };
+		E749B6DB1701CCFB00699521 /* jsarena.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsarena.h; sourceTree = "<group>"; };
+		E749B6DC1701CCFB00699521 /* jsarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsarray.h; sourceTree = "<group>"; };
+		E749B6DD1701CCFB00699521 /* jsatom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsatom.h; sourceTree = "<group>"; };
+		E749B6DE1701CCFB00699521 /* jsautocfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsautocfg.h; sourceTree = "<group>"; };
+		E749B6DF1701CCFB00699521 /* jsautokw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsautokw.h; sourceTree = "<group>"; };
+		E749B6E01701CCFB00699521 /* jsbit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsbit.h; sourceTree = "<group>"; };
+		E749B6E11701CCFB00699521 /* jsbool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsbool.h; sourceTree = "<group>"; };
+		E749B6E21701CCFB00699521 /* jsclist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsclist.h; sourceTree = "<group>"; };
+		E749B6E31701CCFB00699521 /* jscntxt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jscntxt.h; sourceTree = "<group>"; };
+		E749B6E41701CCFB00699521 /* jscompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jscompat.h; sourceTree = "<group>"; };
+		E749B6E51701CCFB00699521 /* jsconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsconfig.h; sourceTree = "<group>"; };
+		E749B6E61701CCFB00699521 /* jscpucfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jscpucfg.h; sourceTree = "<group>"; };
+		E749B6E71701CCFB00699521 /* jsdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsdate.h; sourceTree = "<group>"; };
+		E749B6E81701CCFB00699521 /* jsdbgapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsdbgapi.h; sourceTree = "<group>"; };
+		E749B6E91701CCFB00699521 /* jsdhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsdhash.h; sourceTree = "<group>"; };
+		E749B6EA1701CCFB00699521 /* jsdtoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsdtoa.h; sourceTree = "<group>"; };
+		E749B6EB1701CCFB00699521 /* jsemit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsemit.h; sourceTree = "<group>"; };
+		E749B6EC1701CCFB00699521 /* jsexn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsexn.h; sourceTree = "<group>"; };
+		E749B6ED1701CCFB00699521 /* jsfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsfile.h; sourceTree = "<group>"; };
+		E749B6EE1701CCFB00699521 /* jsfun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsfun.h; sourceTree = "<group>"; };
+		E749B6EF1701CCFB00699521 /* jsgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsgc.h; sourceTree = "<group>"; };
+		E749B6F01701CCFB00699521 /* jshash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jshash.h; sourceTree = "<group>"; };
+		E749B6F11701CCFB00699521 /* jsinterp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsinterp.h; sourceTree = "<group>"; };
+		E749B6F21701CCFB00699521 /* jslibmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jslibmath.h; sourceTree = "<group>"; };
+		E749B6F31701CCFB00699521 /* jslock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jslock.h; sourceTree = "<group>"; };
+		E749B6F41701CCFB00699521 /* jslong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jslong.h; sourceTree = "<group>"; };
+		E749B6F51701CCFB00699521 /* jsmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsmath.h; sourceTree = "<group>"; };
+		E749B6F61701CCFB00699521 /* jsnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsnum.h; sourceTree = "<group>"; };
+		E749B6F71701CCFB00699521 /* jsobj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsobj.h; sourceTree = "<group>"; };
+		E749B6F81701CCFB00699521 /* jsopcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsopcode.h; sourceTree = "<group>"; };
+		E749B6F91701CCFB00699521 /* jsosdep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsosdep.h; sourceTree = "<group>"; };
+		E749B6FA1701CCFB00699521 /* jsotypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsotypes.h; sourceTree = "<group>"; };
+		E749B6FB1701CCFB00699521 /* jsparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsparse.h; sourceTree = "<group>"; };
+		E749B6FC1701CCFB00699521 /* jsprf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsprf.h; sourceTree = "<group>"; };
+		E749B6FD1701CCFB00699521 /* jsprvtd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsprvtd.h; sourceTree = "<group>"; };
+		E749B6FE1701CCFB00699521 /* jspubtd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jspubtd.h; sourceTree = "<group>"; };
+		E749B6FF1701CCFB00699521 /* jsregexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsregexp.h; sourceTree = "<group>"; };
+		E749B7001701CCFB00699521 /* jsscan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsscan.h; sourceTree = "<group>"; };
+		E749B7011701CCFB00699521 /* jsscope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsscope.h; sourceTree = "<group>"; };
+		E749B7021701CCFB00699521 /* jsscript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsscript.h; sourceTree = "<group>"; };
+		E749B7031701CCFB00699521 /* jsstddef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsstddef.h; sourceTree = "<group>"; };
+		E749B7041701CCFB00699521 /* jsstr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsstr.h; sourceTree = "<group>"; };
+		E749B7051701CCFB00699521 /* jstypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jstypes.h; sourceTree = "<group>"; };
+		E749B7061701CCFB00699521 /* jsutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsutil.h; sourceTree = "<group>"; };
+		E749B7071701CCFB00699521 /* jsxdrapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsxdrapi.h; sourceTree = "<group>"; };
+		E749B7081701CCFB00699521 /* jsxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsxml.h; sourceTree = "<group>"; };
+		E749B7091701CCFB00699521 /* prmjtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prmjtime.h; sourceTree = "<group>"; };
+		E749B70A1701CCFB00699521 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resource.h; sourceTree = "<group>"; };
+		E749B70D1701CCFB00699521 /* libJavascript.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libJavascript.dylib; sourceTree = "<group>"; };
+		E749B70E1701CCFB00699521 /* libnspr4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libnspr4.dylib; sourceTree = "<group>"; };
+		E749B71F1701CCFB00699521 /* ofxJavascript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJavascript.cpp; sourceTree = "<group>"; };
+		E749B7201701CCFB00699521 /* ofxJavascript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxJavascript.h; sourceTree = "<group>"; };
+		E749B7211701CCFB00699521 /* ofxJSGlobalFunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJSGlobalFunc.cpp; sourceTree = "<group>"; };
+		E749B7221701CCFB00699521 /* ofxJSGlobalFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxJSGlobalFunc.h; sourceTree = "<group>"; };
+		E749B7231701CCFB00699521 /* ofxJSImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJSImage.cpp; sourceTree = "<group>"; };
+		E749B7241701CCFB00699521 /* ofxJSImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxJSImage.h; sourceTree = "<group>"; };
+		E749B7261701CCFB00699521 /* ofxJSOpenGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJSOpenGL.cpp; sourceTree = "<group>"; };
+		E749B7271701CCFB00699521 /* ofxJSOpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxJSOpenGL.h; sourceTree = "<group>"; };
+		E749B7281701CCFB00699521 /* ofxJSScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJSScript.cpp; sourceTree = "<group>"; };
+		E749B7291701CCFB00699521 /* ofxJSScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxJSScript.h; sourceTree = "<group>"; };
+		E749B72A1701CCFB00699521 /* ofxJSTrueTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJSTrueTypeFont.cpp; sourceTree = "<group>"; };
+		E749B72B1701CCFB00699521 /* ofxJSTrueTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxJSTrueTypeFont.h; sourceTree = "<group>"; };
+		E749B72C1701CCFB00699521 /* ofxJSUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJSUtils.cpp; sourceTree = "<group>"; };
+		E749B72D1701CCFB00699521 /* ofxJSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxJSUtils.h; sourceTree = "<group>"; };
+		E749B7C81701D2B500699521 /* JSBinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSBinder.cpp; sourceTree = "<group>"; };
+		E749B7C91701D2B500699521 /* JSBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBinder.h; sourceTree = "<group>"; };
+		E749B7CB1701D62F00699521 /* Globals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Globals.cpp; sourceTree = "<group>"; };
+		E749B7CC1701D62F00699521 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
+		E749B7CE1701DFEF00699521 /* NSAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSAnimation.cpp; sourceTree = "<group>"; };
+		E749B7CF1701DFF000699521 /* NSAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSAnimation.h; sourceTree = "<group>"; };
 		E778AA2C1700658100EA034E /* NSScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSScene.cpp; sourceTree = "<group>"; };
 		E778AA2D1700658100EA034E /* NSScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSScene.h; sourceTree = "<group>"; };
 		E778AA2F1700671000EA034E /* NSSharpy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSSharpy.cpp; sourceTree = "<group>"; };
@@ -263,6 +358,8 @@
 				E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */,
 				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
 				E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */,
+				E749B7351701CCFB00699521 /* libJavascript.dylib in Frameworks */,
+				E749B7361701CCFB00699521 /* libnspr4.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +518,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				E749B6CD1701CCFB00699521 /* ofxJavascript */,
 				E72CAC5F17009FDE006A0901 /* ofxPostProcessing */,
 				18240ecce4076fb0833a8578697ffa74 /* ofxNetwork */,
 				e6053ab7fec63d5f83825b880ce53c41 /* ofxOsc */,
@@ -497,6 +595,16 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* app.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* app.h */,
+				E749B6331701AFB300699521 /* NSEditor.cpp */,
+				E749B6341701AFB300699521 /* NSEditor.h */,
+				E749B6361701B00700699521 /* NSGuiManager.cpp */,
+				E749B6371701B00700699521 /* NSGuiManager.h */,
+				E749B7C81701D2B500699521 /* JSBinder.cpp */,
+				E749B7C91701D2B500699521 /* JSBinder.h */,
+				E749B7CB1701D62F00699521 /* Globals.cpp */,
+				E749B7CC1701D62F00699521 /* Globals.h */,
+				E749B7CE1701DFEF00699521 /* NSAnimation.cpp */,
+				E749B7CF1701DFF000699521 /* NSAnimation.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -547,6 +655,137 @@
 				E72CAC8317009FDF006A0901 /* PostProcessing.h */,
 				E72CAC8417009FDF006A0901 /* RenderPass.cpp */,
 				E72CAC8517009FDF006A0901 /* RenderPass.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		E749B6CD1701CCFB00699521 /* ofxJavascript */ = {
+			isa = PBXGroup;
+			children = (
+				E749B6CE1701CCFB00699521 /* doc */,
+				E749B6D61701CCFB00699521 /* install.xml */,
+				E749B6D71701CCFB00699521 /* libs */,
+				E749B7131701CCFB00699521 /* src */,
+			);
+			name = ofxJavascript;
+			path = ../../../addons/ofxJavascript;
+			sourceTree = "<group>";
+		};
+		E749B6CE1701CCFB00699521 /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				E749B6CF1701CCFB00699521 /* notes.txt */,
+			);
+			path = doc;
+			sourceTree = "<group>";
+		};
+		E749B6D71701CCFB00699521 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				E749B6D81701CCFB00699521 /* javascript */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		E749B6D81701CCFB00699521 /* javascript */ = {
+			isa = PBXGroup;
+			children = (
+				E749B6D91701CCFB00699521 /* include */,
+				E749B70B1701CCFB00699521 /* lib */,
+			);
+			path = javascript;
+			sourceTree = "<group>";
+		};
+		E749B6D91701CCFB00699521 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E749B6DA1701CCFB00699521 /* jsapi.h */,
+				E749B6DB1701CCFB00699521 /* jsarena.h */,
+				E749B6DC1701CCFB00699521 /* jsarray.h */,
+				E749B6DD1701CCFB00699521 /* jsatom.h */,
+				E749B6DE1701CCFB00699521 /* jsautocfg.h */,
+				E749B6DF1701CCFB00699521 /* jsautokw.h */,
+				E749B6E01701CCFB00699521 /* jsbit.h */,
+				E749B6E11701CCFB00699521 /* jsbool.h */,
+				E749B6E21701CCFB00699521 /* jsclist.h */,
+				E749B6E31701CCFB00699521 /* jscntxt.h */,
+				E749B6E41701CCFB00699521 /* jscompat.h */,
+				E749B6E51701CCFB00699521 /* jsconfig.h */,
+				E749B6E61701CCFB00699521 /* jscpucfg.h */,
+				E749B6E71701CCFB00699521 /* jsdate.h */,
+				E749B6E81701CCFB00699521 /* jsdbgapi.h */,
+				E749B6E91701CCFB00699521 /* jsdhash.h */,
+				E749B6EA1701CCFB00699521 /* jsdtoa.h */,
+				E749B6EB1701CCFB00699521 /* jsemit.h */,
+				E749B6EC1701CCFB00699521 /* jsexn.h */,
+				E749B6ED1701CCFB00699521 /* jsfile.h */,
+				E749B6EE1701CCFB00699521 /* jsfun.h */,
+				E749B6EF1701CCFB00699521 /* jsgc.h */,
+				E749B6F01701CCFB00699521 /* jshash.h */,
+				E749B6F11701CCFB00699521 /* jsinterp.h */,
+				E749B6F21701CCFB00699521 /* jslibmath.h */,
+				E749B6F31701CCFB00699521 /* jslock.h */,
+				E749B6F41701CCFB00699521 /* jslong.h */,
+				E749B6F51701CCFB00699521 /* jsmath.h */,
+				E749B6F61701CCFB00699521 /* jsnum.h */,
+				E749B6F71701CCFB00699521 /* jsobj.h */,
+				E749B6F81701CCFB00699521 /* jsopcode.h */,
+				E749B6F91701CCFB00699521 /* jsosdep.h */,
+				E749B6FA1701CCFB00699521 /* jsotypes.h */,
+				E749B6FB1701CCFB00699521 /* jsparse.h */,
+				E749B6FC1701CCFB00699521 /* jsprf.h */,
+				E749B6FD1701CCFB00699521 /* jsprvtd.h */,
+				E749B6FE1701CCFB00699521 /* jspubtd.h */,
+				E749B6FF1701CCFB00699521 /* jsregexp.h */,
+				E749B7001701CCFB00699521 /* jsscan.h */,
+				E749B7011701CCFB00699521 /* jsscope.h */,
+				E749B7021701CCFB00699521 /* jsscript.h */,
+				E749B7031701CCFB00699521 /* jsstddef.h */,
+				E749B7041701CCFB00699521 /* jsstr.h */,
+				E749B7051701CCFB00699521 /* jstypes.h */,
+				E749B7061701CCFB00699521 /* jsutil.h */,
+				E749B7071701CCFB00699521 /* jsxdrapi.h */,
+				E749B7081701CCFB00699521 /* jsxml.h */,
+				E749B7091701CCFB00699521 /* prmjtime.h */,
+				E749B70A1701CCFB00699521 /* resource.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		E749B70B1701CCFB00699521 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				E749B70C1701CCFB00699521 /* osx */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		E749B70C1701CCFB00699521 /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				E749B70D1701CCFB00699521 /* libJavascript.dylib */,
+				E749B70E1701CCFB00699521 /* libnspr4.dylib */,
+			);
+			path = osx;
+			sourceTree = "<group>";
+		};
+		E749B7131701CCFB00699521 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E749B71F1701CCFB00699521 /* ofxJavascript.cpp */,
+				E749B7201701CCFB00699521 /* ofxJavascript.h */,
+				E749B7211701CCFB00699521 /* ofxJSGlobalFunc.cpp */,
+				E749B7221701CCFB00699521 /* ofxJSGlobalFunc.h */,
+				E749B7231701CCFB00699521 /* ofxJSImage.cpp */,
+				E749B7241701CCFB00699521 /* ofxJSImage.h */,
+				E749B7261701CCFB00699521 /* ofxJSOpenGL.cpp */,
+				E749B7271701CCFB00699521 /* ofxJSOpenGL.h */,
+				E749B7281701CCFB00699521 /* ofxJSScript.cpp */,
+				E749B7291701CCFB00699521 /* ofxJSScript.h */,
+				E749B72A1701CCFB00699521 /* ofxJSTrueTypeFont.cpp */,
+				E749B72B1701CCFB00699521 /* ofxJSTrueTypeFont.h */,
+				E749B72C1701CCFB00699521 /* ofxJSUtils.cpp */,
+				E749B72D1701CCFB00699521 /* ofxJSUtils.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -704,7 +943,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -f ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libfmodex.dylib\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";";
+			shellScript = "cp -f ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libfmodex.dylib\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\ncp -f ../../../addons/ofxJavascript/libs/javascript/lib/osx/libnspr4.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libnspr4.dylib\"\ncp -f ../../../addons/ofxJavascript/libs/javascript/lib/osx/libJavascript.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libJavascript.dylib\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -749,6 +988,18 @@
 				E72CAC9017009FDF006A0901 /* PixelatePass.cpp in Sources */,
 				E72CAC9117009FDF006A0901 /* PostProcessing.cpp in Sources */,
 				E72CAC9217009FDF006A0901 /* RenderPass.cpp in Sources */,
+				E749B6351701AFB300699521 /* NSEditor.cpp in Sources */,
+				E749B6381701B00700699521 /* NSGuiManager.cpp in Sources */,
+				E749B73D1701CCFB00699521 /* ofxJavascript.cpp in Sources */,
+				E749B73E1701CCFB00699521 /* ofxJSGlobalFunc.cpp in Sources */,
+				E749B73F1701CCFB00699521 /* ofxJSImage.cpp in Sources */,
+				E749B7411701CCFB00699521 /* ofxJSOpenGL.cpp in Sources */,
+				E749B7421701CCFB00699521 /* ofxJSScript.cpp in Sources */,
+				E749B7431701CCFB00699521 /* ofxJSTrueTypeFont.cpp in Sources */,
+				E749B7441701CCFB00699521 /* ofxJSUtils.cpp in Sources */,
+				E749B7CA1701D2B500699521 /* JSBinder.cpp in Sources */,
+				E749B7CD1701D62F00699521 /* Globals.cpp in Sources */,
+				E749B7D01701DFF000699521 /* NSAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,6 +1054,8 @@
 					../../../addons/ofxGUI/src,
 					../../../addons/ofxTimer/libs,
 					../../../addons/ofxTimer/src,
+					../../../addons/ofxJavascript/libs/javascript/include,
+					../../../addons/ofxJavascript/libs/javascript/lib/osx,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
@@ -854,6 +1107,8 @@
 					../../../addons/ofxGUI/src,
 					../../../addons/ofxTimer/libs,
 					../../../addons/ofxTimer/src,
+					../../../addons/ofxJavascript/libs/javascript/include,
+					../../../addons/ofxJavascript/libs/javascript/lib/osx,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
@@ -944,7 +1199,15 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../addons/ofxJavaScript/javascript/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../addons/ofxJavaScript/javascript/lib/win32\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../../addons/ofxJavascript/libs/javascript/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../../addons/ofxJavascript/libs/javascript/lib/win32\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
 				WRAPPER_EXTENSION = app;
@@ -1030,7 +1293,15 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_49)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../addons/ofxJavaScript/javascript/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../addons/ofxJavaScript/javascript/lib/win32\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../../addons/ofxJavascript/libs/javascript/lib/osx\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../../addons/ofxJavascript/libs/javascript/lib/win32\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

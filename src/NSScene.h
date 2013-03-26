@@ -22,8 +22,19 @@ public:
     void update();
     void draw();
     
+    
+    void setGobo(int sharpyIndex, float pct);
+    void setBrightness(int sharpyIndex, float pct);
+    void setOrientation(int sharpyIndex, ofVec3f eulerAngles);
+    
     float                       dofFocus;
     float                       dofAperture;
+    
+    bool                        bEnableFFSA;
+    bool                        bEnableBloom;
+    bool                        bEnableDof;
+    bool                        bCamMouseInput;
+
     
 private:
     
@@ -39,7 +50,8 @@ private:
     
     vector<ofPtr<NSSharpy> >    sharpies;
     vector<ofLight*>            lights;
-
+    
+   
 };
 
 

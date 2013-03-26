@@ -21,7 +21,7 @@ public:
     void update();
     void draw();
     
-    void setBrightness(int brighntess);
+    void setBrightness(float brighntessPct);
     void setGobo(float pct);
     
     void setID(int id);

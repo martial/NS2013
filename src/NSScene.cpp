@@ -10,6 +10,11 @@
 
 NSScene::NSScene () {
     
+    bEnableFFSA     = true;
+    bEnableBloom    = true;
+    bEnableDof      = false;
+    bCamMouseInput  = false;
+    
     
 }
 
@@ -29,38 +34,52 @@ void NSScene::setup () {
         
         sharpies.push_back(sharpyRef);
       
-        
     }
     
-    //tests
-    
-    //ofSetCoordHandedness(OF_RIGHT_HANDED);
     
     light.setPosition(sharpiesCenter);
     light.setAmbientColor(255);
     
     
     
-    post.init(ofGetWidth(), ofGetHeight());
-    post.createPass<FxaaPass>()->setEnabled(true);
-    post.createPass<BloomPass>()->setEnabled(true);
-    post.createPass<DofPass>()->setEnabled(true);
+    post.init(ofGetWidth() , ofGetHeight());
+    post.createPass<FxaaPass>()->setEnabled(bEnableFFSA);
+    post.createPass<BloomPass>()->setEnabled(bEnableBloom);
+    post.createPass<DofPass>()->setEnabled(bEnableDof);
 
-    
     dof = post.getPasses()[2];
     
     
+    cam.setOrientation(ofVec3f(90, 90, 0));
+    cam.setDistance(2000.f);
+    
+    dofAperture = 0.92;
+    dofFocus = 0.4;
     
 }
 
 void NSScene::update () {
     
+    
+    // lock cam position
+    ofVec3f position = cam.getPosition();
+    
+    if ( position.z < -180.0) {
+        position.z = -180.0;
+        cam.setPosition(position);
+        
+    }
+    
     /* update shaders */
+    
+    post.getPasses()[0]->setEnabled(bEnableFFSA);
+    post.getPasses()[1]->setEnabled(bEnableBloom);
+    post.getPasses()[2]->setEnabled(bEnableDof);
     
     shared_ptr<DofPass> pass = static_pointer_cast<DofPass>(dof);
     pass->setFocus(dofAperture);
     pass->setAperture(dofFocus);
-    pass->setMaxBlur(1.3);
+    pass->setMaxBlur(.3);
     
     resetTransform();
     
@@ -79,14 +98,8 @@ void NSScene::update () {
     for (int i=0; i<sharpies.size(); i++) {
         
         ofPtr<NSSharpy> sharpyRef = sharpies[i];
-        
-        sharpyRef->resetTransform();
         sharpyRef->setPosition(-getPosition() + pos - sharpiesCenter);
-        sharpyRef->setOrientation(ofVec3f(ofGetElapsedTimef()*i, ofGetElapsedTimef()*i));
-        sharpyRef->setGobo(.5 + cos(ofGetElapsedTimef()) * .5);
         sharpyRef->update();
-        
-        
         pos.x += xDistance;
         if( i == (floor)((float)numSharpies *.5) -1) {
             pos.x = 0.F;
@@ -95,27 +108,21 @@ void NSScene::update () {
 
     }
     
-    cam.setDistance(ofGetMouseX());
-    
-    //DofPass pass = dof.get();
-    
 }
 
 void NSScene::draw() {
     
+    
+        
     // copy enable part of gl state
     glPushAttrib(GL_ENABLE_BIT);
-    
-    // setup gl state
-    
-    
-    //transformGL();
-    
+
     light.enable();
     
     // begin scene to post process
     post.begin(cam);
-    
+    glEnable(GL_CULL_FACE);
+
     ofSetColor(255);
     //ofDrawGrid(1000, 2, true);
     
@@ -126,46 +133,26 @@ void NSScene::draw() {
     ofDisableAlphaBlending();
     
     light.setAmbientColor(0);
+    light.setDiffuseColor(.3);
     glEnable(GL_DEPTH_TEST);
     glBegin(GL_QUADS);
-    
-    /*
-    // draw right wall
-    glColor3f(.9, 0.9, 0.9);        glVertex3f(width/2, height+1, width/2);
-    glColor3f(1, 1, 1);             glVertex3f(width/2, -height, width/2);
-    glColor3f(0.95, 0.95, 0.95);    glVertex3f(width/2, -height, -width/2);
-    glColor3f(.85, 0.85, 0.85);     glVertex3f(width/2, height+1, -width/2);
-    
-    // back wall
-    glColor3f(.9, 0.9, 0.9);        glVertex3f(width/2, height+1, -width/2);
-    glColor3f(1, 1, 1);             glVertex3f(width/2, -height, -width/2);
-    glColor3f(0.95, 0.95, 0.95);    glVertex3f(-width/2, -height, -width/2);
-    glColor3f(.85, 0.85, 0.85);     glVertex3f(-width/2, height+1, -width/2);
-    
-    // left wall
-    glColor3f(.9, 0.9, 0.9);        glVertex3f(-width/2, height+1, -width/2);
-    glColor3f(1, 1, 1);             glVertex3f(-width/2, -height, -width/2);
-    glColor3f(0.95, 0.95, 0.95);    glVertex3f(-width/2, -height, width/2);
-    glColor3f(.85, 0.85, 0.85);     glVertex3f(-width/2, height+1, width/2);
-     
-     */
-    
+
     // sol
     float zPos = -300.0;
     ofVec3f floorSize = sharpiesCenter;
     floorSize.y *= 6;
     floorSize.x *= 2;
-    glColor3f(0.95, 0.95, 0.95);    glVertex3f(-floorSize.x, -floorSize.y, zPos);
-    glColor3f(.85, 0.85, 0.85);     glVertex3f(floorSize.x, -floorSize.y, zPos);
-    glColor3f(.9, 0.9, 0.9);        glVertex3f(floorSize.x, floorSize.y, zPos);
-    glColor3f(1, 1, 1);             glVertex3f(-floorSize.x, floorSize.y, zPos);
+    glColor3f(0.95, 0.95, 0.95);    glVertex3f(-floorSize.x, -floorSize.y* 100, zPos);
+    glColor3f(.85, 0.85, 0.85);     glVertex3f(floorSize.x, -floorSize.y* 100, zPos);
+    glColor3f(.9, 0.9, 0.9);        glVertex3f(floorSize.x, floorSize.y* 100, zPos);
+    glColor3f(1, 1, 1);             glVertex3f(-floorSize.x, floorSize.y* 100, zPos);
     
     // right
-    
-    glColor3f(.9, 0.9, 0.9);    glVertex3f(-floorSize.x, -floorSize.y, zPos);
-    glColor3f(1, 1, 1);        glVertex3f(floorSize.x, -floorSize.y, zPos);
-    glColor3f(0.95, 0.95, 0.95);        glVertex3f(floorSize.x, -floorSize.y, 0);
+   
     glColor3f(.85, 0.85, 0.85);            glVertex3f(-floorSize.x, -floorSize.y, 0);
+     glColor3f(0.95, 0.95, 0.95);        glVertex3f(floorSize.x, -floorSize.y, 0);
+     glColor3f(1, 1, 1);        glVertex3f(floorSize.x, -floorSize.y, zPos);
+    glColor3f(.9, 0.9, 0.9);    glVertex3f(-floorSize.x, -floorSize.y, zPos);
     
     glColor3f(0.95, 0.95, 0.95);    glVertex3f(-floorSize.x, floorSize.y, zPos);
     glColor3f(.85, 0.85, 0.85);     glVertex3f(floorSize.x, floorSize.y, zPos);
@@ -176,22 +163,16 @@ void NSScene::draw() {
     glColor3f(.85, 0.85, 0.85);     glVertex3f(-floorSize.x, floorSize.y, zPos);
     glColor3f(.9, 0.9, 0.9);        glVertex3f(-floorSize.x, floorSize.y, 0);
     glColor3f(1, 1, 1);             glVertex3f(-floorSize.x, -floorSize.y, 0);
-
-  
-    
     
     glEnd();
     
-    
-   
-    glEnable(GL_CULL_FACE);
-    
+        
     // walls
     int groundWidth = 4000, groundHeight = 1000;
     
     //ofRect(0, 0, groundWidth, groundHeight);
     
-    light.setAmbientColor(255);
+    light.setAmbientColor(1.0);
     ofSetColor(255);
     ofSphere (light.getPosition(), 10);
     
@@ -199,8 +180,8 @@ void NSScene::draw() {
     ofSphere(0, 0, 0, 10);
     
     //ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-    ofSetColor(255, 175);
-
+    ofSetColor(255);
+    ofEnableAlphaBlending();
     
     for (int i=0; i<sharpies.size(); i++) {
         
@@ -208,7 +189,8 @@ void NSScene::draw() {
         sharpyRef->draw();
         
     }
-    
+    ofDisableAlphaBlending();
+    //ofDisableBlendMode();
     //cam.end();
     post.end();
     //restoreTransformGL();
@@ -219,8 +201,38 @@ void NSScene::draw() {
     
     //post.draw();
    
+}
+
+/*
+ 
+ */
+
+void NSScene::setGobo(int sharpyIndex, float pct) {
     
+    sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
     
+    ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
+    sharpyRef->setGobo(pct);
+    
+}
+
+void NSScene::setBrightness(int sharpyIndex, float pct) {
+    
+    sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
+    
+    ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
+    sharpyRef->setBrightness(pct);
+    
+}
+
+void NSScene::setOrientation(int sharpyIndex, ofVec3f eulerAngles) {
+    
+    sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
+    
+    ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
+    sharpyRef->setOrientation(eulerAngles);
     
     
 }
+
+

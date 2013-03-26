@@ -2,7 +2,8 @@
 
 #include "ofMain.h"
 #include "NSScene.h"
-#include "ofxUI.h"
+#include "NSGuiManager.h"
+#include "NSEditor.h"
 
 class app : public ofBaseApp{
 
@@ -23,8 +24,10 @@ class app : public ofBaseApp{
     
         void guiEvent(ofxUIEventArgs &e);
     
+        void exit();
     
-        NSScene scene;
-        ofxUICanvas *gui1;   
+        NSScene             scene;
+        NSGuiManager        guiManager;
+        NSEditor            editor;
 		
 };

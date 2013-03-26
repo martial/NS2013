@@ -10,8 +10,8 @@
 
 NSSharpy::NSSharpy() {
     
-    maxRadius = 16.f;
-    
+    maxRadius = 8.f;
+    brightness = 1.0;
       
 }
 
@@ -49,7 +49,7 @@ void NSSharpy::update(){
             cur.rotate(theta);
             cylinder.addVertex(offset + cur);
             // mesh.addColor(ofColor((i * j) % 2 == 0 ? 255 : 0));
-            //mesh.addColor(255);
+            //cylinder.addColor(ofColor(255,255,255, brightness));
         }
     }
     
@@ -73,17 +73,15 @@ void NSSharpy::update(){
 void NSSharpy::draw(){
     
    
-    
     transformGL();
     ofPushMatrix();
-    //ofTranslate(-maxRadius *.5, -maxRadius*.5);
-    //ofSphere(0, 0, 0, maxRadius);
+    ofSetColor(255, 255);
     ofCone(0, 0, 0, maxRadius, maxRadius);
+    ofSetColor(255, brightness * 255.f);
     cylinder.draw();
     ofPopMatrix();
     restoreTransformGL();
     
-    //ofPopMatrix();
     
 }
 
@@ -94,11 +92,14 @@ void NSSharpy::setID(int id){
 }
 
 
-void NSSharpy::setBrightness(int brighntess){
+void NSSharpy::setBrightness(float brighntessPct){
+    this->brightness = brighntessPct;
+    
     
 }
 void NSSharpy::setGobo(float pct){
     
     this->goboPct = pct;
+    
     
 }
