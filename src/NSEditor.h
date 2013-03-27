@@ -46,6 +46,8 @@ private :
     
     int                         currentIndex;
     
+
+    
 };
 
 #endif /* defined(__NS2013__NSEditor__) */

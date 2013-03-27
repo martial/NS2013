@@ -9,19 +9,22 @@
 
 #include "NSAnimation.h"
 
+//--------------------------------------------------------------
 
 
 void NSAnimation::setup(string scriptPath) {
     
-    checkTimer = 0.f;
+    checkTimer  = 0.f;
+    time        = 0;
     
     this->scriptPath = scriptPath;
     loadScript();
     
-    
         
-    
 }
+
+//--------------------------------------------------------------
+
 
 void NSAnimation::loadScript() {
         
@@ -39,16 +42,15 @@ void NSAnimation::loadScript() {
                 ofxJSValue args[1];
                 args[0] = float_TO_ofxJSValue(checkTimer);
                 ofxJSCallFunctionNameGlobal_IfExists("setup", args,1,retVal);
+                time        = 0;
 				return true;
 			}
 			else{
 				ofLog(OF_LOG_ERROR, "ERROR > cannot eval script ");
-				//M_deleteScript();
 			}
 		}
 		else{
 			ofLog(OF_LOG_ERROR, "ERROR > cannot load script");
-			//M_deleteScript();
 		}
 	}
 	else
@@ -58,6 +60,9 @@ void NSAnimation::loadScript() {
 	return false;
     
 }
+
+//--------------------------------------------------------------
+
 
 void NSAnimation::update() {
     
@@ -80,11 +85,15 @@ void NSAnimation::update() {
 		// Call update
 		ofxJSValue retVal;
 		ofxJSValue args[1];
-		args[0] = float_TO_ofxJSValue(checkTimer);
+		args[0] = int_TO_ofxJSValue(time);
 		ofxJSCallFunctionNameGlobal_IfExists("update", args,1,retVal);
+        time++;
 	}
     
 }
+
+//--------------------------------------------------------------
+
 
 void NSAnimation::render() {
     

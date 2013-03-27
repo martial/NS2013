@@ -30,6 +30,9 @@ void NSSharpy::reset(){
     
 }
 
+//--------------------------------------------------------------
+
+
 void NSSharpy::update(){
     
     // update mesh
@@ -70,11 +73,16 @@ void NSSharpy::update(){
     
     
 }
+
+//--------------------------------------------------------------
+
+
 void NSSharpy::draw(){
     
    
     transformGL();
     ofPushMatrix();
+    
     ofSetColor(255, 255);
     ofCone(0, 0, 0, maxRadius, maxRadius);
     ofSetColor(255, brightness * 255.f);
@@ -84,6 +92,8 @@ void NSSharpy::draw(){
     
     
 }
+
+//--------------------------------------------------------------
 
 
 

@@ -34,6 +34,7 @@ public:
     bool                        bEnableBloom;
     bool                        bEnableDof;
     bool                        bCamMouseInput;
+    bool                        bDrawGrid;
 
     
 private:
@@ -44,6 +45,8 @@ private:
     ofxPostProcessing           postDof;
     ofEasyCam                   cam;
     ofLight                     light;
+    ofLight                     lightUp;
+
     
     int                         numSharpies;
     ofVec3f                     sharpiesCenter;
