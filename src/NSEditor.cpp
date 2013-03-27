@@ -16,9 +16,9 @@ void NSEditor::setup(NSGuiManager *guiManager, class NSScene * nsScene) {
     
     initJS();
     
-    currentIndex = 0;
+    currentIndex        = 0;
     
-    this->guiManager = guiManager;
+    this->guiManager    = guiManager;
     listAnimations();
     setAnimation(0);
     
@@ -48,9 +48,7 @@ void NSEditor::listAnimations() {
                  ofPtr<NSAnimation> animationRef(new NSAnimation());
                  animationRef->setup(ofToDataPath((*it).getAbsolutePath()));
                  animations.push_back(animationRef);
-                
-				//Animation* pAnimation = new Animation((*it).getFileName(), (*it).getAbsolutePath());
-				//m_animationManager.M_addAnimation(pAnimation);
+
 			}
 		}
 	}
@@ -72,7 +70,7 @@ void NSEditor::nextAnimation() {
         currentIndex = 0;
     }
     
-    printf("current %d", currentIndex);
+    //printf("current %d", currentIndex);
     
     currentAnimation = animations[currentIndex];
     currentAnimation->loadScript();

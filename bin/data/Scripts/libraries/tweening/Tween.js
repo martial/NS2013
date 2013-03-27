@@ -68,8 +68,9 @@ Tween.prototype = {
   	this.prevTime = this._time;
   	if (t > this.getDuration()) {
   		if (this.looping) {
-  			this.rewind (t - this._duration);
-  			this.update();
+  			//this.rewind (t - this._duration);
+  			//this.update();
+  			this.yoyo();
   			// execute onLooped callback
   		} else {
   			this._time = this._duration;

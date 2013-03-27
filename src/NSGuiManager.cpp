@@ -11,7 +11,6 @@
 
 NSGuiManager::NSGuiManager() {
     
-    
 }
 
 void NSGuiManager::setup() {
@@ -31,27 +30,20 @@ void NSGuiManager::setup() {
     guiLeft->addToggle("DOF", &Globals::instance()->nsScene->bEnableDof);
     guiLeft->addSlider("DOF APERTURE", 0.0, 1.0, &Globals::instance()->nsScene->dofAperture);
     guiLeft->addSlider("DOF FOCUS", 0.0, 5.0, &Globals::instance()->nsScene->dofFocus);
-    guiLeft->addSpacer();
-    
-    //guiLeft->addLabel("POST AHOU", OFX_UI_FONT_SMALL);
-    
+    guiLeft->addToggle("DRAW GRID", &Globals::instance()->nsScene->bDrawGrid);
     //guiLeft->addSpacer();
-    //guiLeft->addSlider("DOF FOCUS", 0.0, 1.0, 0.92f);
-    //guiLeft->addSlider("DOF APERTURE", 0.0, 1.0, 0.99);
     
-    guiRight = new ofxUICanvas();
-    
+    //guiRight = new ofxUICanvas();
     /*
     guiRight->setDrawBack(true);
     guiRight->addLabel("INSPECTOR");
-     
      */
     
     
 }
 
 void NSGuiManager::update() {
-    guiRight->getRect()->x = ofGetWidth() - guiRight->getRect()->getWidth();
+    //guiRight->getRect()->x = ofGetWidth() - guiRight->getRect()->getWidth();
     fps = ofGetFrameRate();
 
 }

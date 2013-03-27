@@ -31,6 +31,8 @@ private:
     ofxJSScript *               script;
     
     float                       checkTimer;
+    int                         time;
+
     Poco::Timestamp             fileTimeStamp;
     
 };

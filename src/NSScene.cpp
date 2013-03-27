@@ -14,9 +14,13 @@ NSScene::NSScene () {
     bEnableBloom    = true;
     bEnableDof      = false;
     bCamMouseInput  = false;
+    bDrawGrid       = true;
     
     
 }
+
+//--------------------------------------------------------------
+
 
 void NSScene::setup () {
     
@@ -40,6 +44,12 @@ void NSScene::setup () {
     light.setPosition(sharpiesCenter);
     light.setAmbientColor(255);
     
+    ofVec3f lightUpPos = sharpiesCenter;
+    lightUpPos.z =  0;
+    lightUp.setPosition(lightUpPos);
+    lightUp.setAmbientColor(255);
+    //lightUp.setDirectional();
+    
     
     
     post.init(ofGetWidth() , ofGetHeight());
@@ -57,6 +67,8 @@ void NSScene::setup () {
     dofFocus = 0.4;
     
 }
+
+//--------------------------------------------------------------
 
 void NSScene::update () {
     
@@ -110,6 +122,9 @@ void NSScene::update () {
     
 }
 
+
+//--------------------------------------------------------------
+
 void NSScene::draw() {
     
     
@@ -118,6 +133,7 @@ void NSScene::draw() {
     glPushAttrib(GL_ENABLE_BIT);
 
     light.enable();
+    lightUp.disable();
     
     // begin scene to post process
     post.begin(cam);
@@ -134,6 +150,12 @@ void NSScene::draw() {
     
     light.setAmbientColor(0);
     light.setDiffuseColor(.3);
+    
+    lightUp.setAmbientColor(ofFloatColor(.01));
+    lightUp.setDiffuseColor(ofFloatColor(.1));
+
+    
+    
     glEnable(GL_DEPTH_TEST);
     glBegin(GL_QUADS);
 
@@ -166,6 +188,8 @@ void NSScene::draw() {
     
     glEnd();
     
+   
+    
         
     // walls
     int groundWidth = 4000, groundHeight = 1000;
@@ -173,15 +197,30 @@ void NSScene::draw() {
     //ofRect(0, 0, groundWidth, groundHeight);
     
     light.setAmbientColor(1.0);
+    lightUp.setAmbientColor(0.001);
+    
+    light.draw();
+    lightUp.draw();
+
+    
     ofSetColor(255);
     ofSphere (light.getPosition(), 10);
     
-    ofSetColor(255, 0, 0);
-    ofSphere(0, 0, 0, 10);
+   
     
     //ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
     ofSetColor(255);
     ofEnableAlphaBlending();
+    glDisable(GL_CULL_FACE);
+    
+    
+    if(bDrawGrid) {
+    ofPushMatrix();
+    ofTranslate(0, 0, zPos +1);
+    ofDrawGrid(5000, 48, false, false, false, true);
+    ofPopMatrix();
+    }
+
     
     for (int i=0; i<sharpies.size(); i++) {
         
@@ -195,8 +234,8 @@ void NSScene::draw() {
     post.end();
     //restoreTransformGL();
     
+    
     glDisable(GL_DEPTH_TEST);
-    glDisable(GL_CULL_FACE);
     glPopAttrib();
     
     //post.draw();
@@ -204,7 +243,8 @@ void NSScene::draw() {
 }
 
 /*
- 
+ //--------------------------------------------------------------
+
  */
 
 void NSScene::setGobo(int sharpyIndex, float pct) {
