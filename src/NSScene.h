@@ -22,7 +22,12 @@ public:
     void update();
     void draw();
     
+    void setCameraMode(int camMode);
+    void toggleCamera();
     
+    ofVec3f getSharpyPos(int sharpyIndex);
+    
+    void sharpyLookAt(int sharpyIndex, ofVec3f pos);
     void setGobo(int sharpyIndex, float pct);
     void setBrightness(int sharpyIndex, float pct);
     void setOrientation(int sharpyIndex, ofVec3f eulerAngles);
@@ -35,7 +40,9 @@ public:
     bool                        bEnableDof;
     bool                        bCamMouseInput;
     bool                        bDrawGrid;
-
+    bool                        bToggleCamera;
+    bool                        bSndAlpha;
+    bool                        bSndGobo;
     
 private:
     
@@ -46,7 +53,8 @@ private:
     ofEasyCam                   cam;
     ofLight                     light;
     ofLight                     lightUp;
-
+    
+    int                         camMode;
     
     int                         numSharpies;
     ofVec3f                     sharpiesCenter;

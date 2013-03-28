@@ -104,12 +104,16 @@ void NSSharpy::setID(int id){
 
 void NSSharpy::setBrightness(float brighntessPct){
     this->brightness = brighntessPct;
-    
-    
 }
+
+float NSSharpy::getBrightness(){
+    return this->brightness;    
+}
+
 void NSSharpy::setGobo(float pct){
-    
-    this->goboPct = pct;
-    
-    
+    this->goboPct = pct;    
+}
+
+float NSSharpy::getGobo(){
+    return this->goboPct;
 }

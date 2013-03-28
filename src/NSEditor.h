@@ -37,14 +37,14 @@ public:
     
 private :
     
-    NSGuiManager                * guiManager;
-    NSScene                     * NSScene;
+    NSGuiManager                    * guiManager;
+    NSScene                         * NSScene;
     
-    ofPtr<NSAnimation>          currentAnimation;
+    ofPtr<NSAnimation>              currentAnimation;
     
-    vector<ofPtr<NSAnimation> >    animations;
+    vector<ofPtr<NSAnimation> >     animations;
     
-    int                         currentIndex;
+    int                             currentIndex;
     
 
     

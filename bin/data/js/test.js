@@ -9,11 +9,13 @@ function setup () {
 	TWEEN.removeAll();
 	
 	// start
-	initTweens(); 
+	initTweens (); 
 	
 	this.goMadCount = 0;
 	this.openArmsCount = 0;
-}
+	this.turtleCount = 0 ;
+	this.cosPct = 0.0;
+} 
 
 
 
@@ -190,7 +192,7 @@ function goPapillonDeLumiere() {
 		   if(index == 31 && openArmsCount < 4 ) 
 		     tween.onComplete(function(){goPapillonDeLumiere()});	
 		     else if (index == 31) {
-		     	tween.onComplete(function(){goClose()});	
+		     	tween.onComplete(function(){doTheTurtle()});	
 		     	goMadCount = 0;
 		     	}
 		  }
@@ -198,6 +200,40 @@ function goPapillonDeLumiere() {
 	  }
 		  	 
 	openArmsCount ++;
+}
+
+function doTheTurtle () {
+
+
+	var tween = new TWEEN.Tween({dummy:0})
+		            .to( {dummy:1} , 10000 )
+		            .easing( TWEEN.Easing.Linear.None )
+		            .onUpdate(function () {
+		            	renderTurtle()
+		            })
+		            .start();
+	
+	
+	  
+}
+
+function renderTurtle () {
+	
+	
+	for ( var i=0; i<2; i++) {
+	
+		for (var j=0; j<16; j++) { 
+		
+		var index = i * 16 + j;
+		cosPct = 0.5 + Math.cos(of.GetElapsedTimeMillis() + j / 6 / 1000) * 0.5;
+		var pan = (i % 2 == 0) ? -50 + ( j * cosPct  ) :  50 + ( -j * cosPct);
+		
+		
+				
+		this.tweens[index].pan = pan;
+				
+		}
+	  }
 }
 
 function goClose() {
@@ -242,6 +278,8 @@ function update (time) {
 	
 	// update Tween engine
 	this.TWEEN.update();
+	
+	//cosPct = 0.5 + Math.cos(time / 6) * 0.5;
 
 	
 	// update sharpys properties

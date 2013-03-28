@@ -14,10 +14,17 @@ bool initJS()
 {
 	// Some functions
 	//
+    ofxJSDefineFunctionGlobal("lookAt",                         &lookAt,                            4);
+    ofxJSDefineFunctionGlobal("getPosX",                        &getPosX,                           1);
+    ofxJSDefineFunctionGlobal("getPosY",                        &getPosY,                           1);
+    ofxJSDefineFunctionGlobal("getPosZ",                        &getPosZ,                           1);
     ofxJSDefineFunctionGlobal("setOrientation",					&setOrientation,					4); // name, function pointer, args number
     ofxJSDefineFunctionGlobal("setBrightness",					&setBrightness,                     2); // name, function pointer, args number
     ofxJSDefineFunctionGlobal("setGobo",                        &setGobo,                           2); // name, function pointer, args number
     ofxJSDefineFunctionGlobal("setName",                        &setName,                           0); // name, function pointer, args number
+    
+    ofxJSDefineFunctionGlobal("getMouseX",                      &getMouseX,                           0);
+    ofxJSDefineFunctionGlobal("getMouseY",                      &getMouseY,                           0);
     
 	// Load globals
 	ofxJSScript * pScript = ofxJSLoadFromData("app.js", "app"); 
@@ -32,6 +39,93 @@ bool initJS()
 	
 	return true; // TODO err checking
 }
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getMouseX){
+    
+	if (argc == 0){
+        
+		*retVal = int_TO_ofxJSValue(ofGetMouseX());
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getMouseY){
+    
+	if (argc == 0){
+        
+		*retVal = int_TO_ofxJSValue(ofGetMouseY());
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(lookAt){
+    
+	if (argc == 4){
+        
+		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
+        float x	= ofxJSValue_TO_float(argv[1]);
+        float y	= ofxJSValue_TO_float(argv[2]);
+        float z	= ofxJSValue_TO_float(argv[3]);
+        
+        Globals::instance()->nsScene->sharpyLookAt(indexSharpy, ofVec3f(x,y,z));
+
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getPosX){
+    
+	if (argc == 1){
+        
+		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
+
+        ofVec3f pos = Globals::instance()->nsScene->getSharpyPos(indexSharpy);
+		*retVal = float_TO_ofxJSValue(pos.x);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getPosY){
+    
+	if (argc == 1){
+        
+		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
+        
+        ofVec3f pos = Globals::instance()->nsScene->getSharpyPos(indexSharpy);
+		*retVal = float_TO_ofxJSValue(pos.y);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getPosZ){
+    
+	if (argc == 1){
+        
+		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
+        
+        ofVec3f pos = Globals::instance()->nsScene->getSharpyPos(indexSharpy);
+		*retVal = float_TO_ofxJSValue(pos.z);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
 
 //--------------------------------------------------------------
 ofxJSDefineFunctionCpp(setName){

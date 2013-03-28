@@ -12,8 +12,17 @@
 
 bool initJS();
 
+ofxJSDeclareFunctionCpp(getPosX);
+ofxJSDeclareFunctionCpp(getPosY);
+ofxJSDeclareFunctionCpp(getPosZ);
+
+ofxJSDeclareFunctionCpp(lookAt);
 ofxJSDeclareFunctionCpp(setOrientation);
 ofxJSDeclareFunctionCpp(setBrightness);
 ofxJSDeclareFunctionCpp(setGobo);
 
 ofxJSDeclareFunctionCpp(setName);
+
+
+ofxJSDeclareFunctionCpp(getMouseX);
+ofxJSDeclareFunctionCpp(getMouseY);

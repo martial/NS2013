@@ -19,7 +19,6 @@ void NSAnimation::setup(string scriptPath) {
     
     this->scriptPath = scriptPath;
     loadScript();
-    
         
 }
 

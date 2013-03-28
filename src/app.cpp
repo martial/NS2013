@@ -10,11 +10,18 @@ void app::setup(){
     
     ofxJSInitialize();
     
-    Globals::instance()->nsScene = &scene;
+    Globals::instance()->nsScene    = &scene;
+    Globals::instance()->eq         = &eq;
+    
+    ofSoundStreamSetup(0,2,this, 44100, 512, 4);
+    eq.setup();
+    eq.setRange(16);
+
     
     guiManager.setup();
     scene.setup();
     editor.setup(&guiManager, &scene);
+    eq.smooth = .2;
     
    
         
@@ -24,19 +31,16 @@ void app::setup(){
 void app::update(){
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
+    editor.update();
     scene.update();
     
-    
+   
 }
 
 //--------------------------------------------------------------
 void app::draw(){
     
     ofDisableSmoothing();
-    //ofBackground(90);
-    
-    
-    editor.update();
     
     guiManager.update();
     scene.draw();
@@ -49,7 +53,7 @@ void app::draw(){
 void app::guiEvent(ofxUIEventArgs &e)
 {
 	string name = e.widget->getName();
-	int kind = e.widget->getKind();
+	int kind    = e.widget->getKind();
 	
 	if(name == "DOF FOCUS")
 	{
@@ -64,12 +68,23 @@ void app::guiEvent(ofxUIEventArgs &e)
 }
 
 //--------------------------------------------------------------
+void app::audioReceived (float * input, int bufferSize, int nChannels){
+	
+	eq.audioReceived(input, bufferSize);
+    
+}
+
+//--------------------------------------------------------------
 void app::keyPressed(int key){
     
     if (key == ' ') {
         
         editor.nextAnimation();
         
+    }
+    
+    if (key == 'e') {
+        eq.setup();
     }
 
 }

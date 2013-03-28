@@ -7,6 +7,8 @@
 //
 
 #include "NSScene.h"
+#include "Globals.h"
+#include "ofxEQ.h"
 
 NSScene::NSScene () {
     
@@ -15,6 +17,9 @@ NSScene::NSScene () {
     bEnableDof      = false;
     bCamMouseInput  = false;
     bDrawGrid       = true;
+    bToggleCamera   = false;
+    bSndAlpha       = false;
+    bSndGobo        = false;
     
     
 }
@@ -72,6 +77,7 @@ void NSScene::setup () {
 
 void NSScene::update () {
     
+   
     
     // lock cam position
     ofVec3f position = cam.getPosition();
@@ -81,6 +87,8 @@ void NSScene::update () {
         cam.setPosition(position);
         
     }
+    
+    
     
     /* update shaders */
     
@@ -106,15 +114,29 @@ void NSScene::update () {
     
     sharpiesCenter.set(ofVec3f( ( (float)numSharpies *.25  * xDistance) - xDistance*.5, yDistance * .5));
     
+    ofxEQ * eq = Globals::instance()->eq;
     
     for (int i=0; i<sharpies.size(); i++) {
         
         ofPtr<NSSharpy> sharpyRef = sharpies[i];
         sharpyRef->setPosition(-getPosition() + pos - sharpiesCenter);
+        
+        
+        int index = ( i < 16 ) ? i : i - 16;
+        float * eqChannel = ( i < 16 ) ?  eq->left :  eq->right;
+        int indexMapped = ofMap(index, 0, 16, 0, 512);
+        
+        if(bSndAlpha)
+            sharpyRef->setBrightness(sharpyRef->getBrightness() * eqChannel[indexMapped]);
+        
+        if(bSndGobo)
+            sharpyRef->setGobo(sharpyRef->getGobo() * eqChannel[indexMapped]);
+
+        
         sharpyRef->update();
         pos.x += xDistance;
         if( i == (floor)((float)numSharpies *.5) -1) {
-            pos.x = 0.F;
+            pos.x = 0.f;
             pos.y += yDistance;
         }
 
@@ -127,7 +149,7 @@ void NSScene::update () {
 
 void NSScene::draw() {
     
-    
+    setCameraMode(camMode);
         
     // copy enable part of gl state
     glPushAttrib(GL_ENABLE_BIT);
@@ -215,10 +237,10 @@ void NSScene::draw() {
     
     
     if(bDrawGrid) {
-    ofPushMatrix();
-    ofTranslate(0, 0, zPos +1);
-    ofDrawGrid(5000, 48, false, false, false, true);
-    ofPopMatrix();
+        ofPushMatrix();
+        ofTranslate(0, 0, zPos +1);
+        ofDrawGrid(5000, 48, false, false, false, true);
+        ofPopMatrix();
     }
 
     
@@ -242,10 +264,71 @@ void NSScene::draw() {
    
 }
 
+void NSScene::toggleCamera() {
+    
+        camMode++;
+        if(camMode>3) camMode = 0;
+        bToggleCamera = false;
+    
+    
+}
+
+void NSScene::setCameraMode(int camMode) {
+    
+    this->camMode = camMode;
+    
+    switch (camMode) {
+        case 0:
+            cam.setOrientation(ofVec3f(90, 90, 0));
+            cam.setDistance(2000.f);
+            break;
+            
+        case 1:
+            cam.setOrientation(ofVec3f(0, 0, 0));
+            cam.setDistance(2000.f);
+            break;
+            
+        case 2:
+            cam.setOrientation(ofVec3f(90, 90, 90));
+            cam.setDistance(2000.f);
+            break;
+            
+        case 3:
+            cam.setPosition(0, 0, -ofGetMouseY());
+            cam.setOrientation(ofVec3f(90, 90, 0));
+            cam.setDistance(500.0);
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
 /*
  //--------------------------------------------------------------
 
  */
+
+
+
+void NSScene::sharpyLookAt(int sharpyIndex, ofVec3f pos) {
+    
+    sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
+    ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
+    
+    sharpyRef->lookAt(pos);
+    
+}
+
+ofVec3f NSScene::getSharpyPos(int sharpyIndex) {
+    
+    sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
+    ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
+    
+    return getPosition() + sharpyRef->getPosition();
+    
+}
 
 void NSScene::setGobo(int sharpyIndex, float pct) {
     
