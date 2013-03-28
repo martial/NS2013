@@ -20,10 +20,14 @@ public:
     void setup();
     void update();
     
+    void guiEvent(ofxUIEventArgs &e);
+    
 private:
     
     ofxUICanvas     *    guiLeft;
     ofxUICanvas     *    guiRight;
+    
+    ofxUISlider     *    overrideSlider;
     
     float                fps;
     

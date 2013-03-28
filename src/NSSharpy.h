@@ -22,7 +22,9 @@ public:
     void draw();
     
     void setBrightness(float brighntessPct);
+    float getBrightness();
     void setGobo(float pct);
+    float getGobo();
     
     void setID(int id);
     void getID(int id);

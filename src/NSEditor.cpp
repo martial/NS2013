@@ -22,8 +22,6 @@ void NSEditor::setup(NSGuiManager *guiManager, class NSScene * nsScene) {
     listAnimations();
     setAnimation(0);
     
-    //test = new NSAnimation();
-    //test->setup("test.js");
     
     
 }

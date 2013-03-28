@@ -24,7 +24,6 @@ function setup () {
 
 function update () {
 
-	println("ahou");
 	
 	var time = of.GetElapsedTimeMillis();
 	
@@ -41,6 +40,7 @@ function update () {
 			
 			setOrientation(index,  -pct, -45, 0);	
 			setGobo(index, 1.0);
+			setBrightness(index, 1);
 		}
 		
 		

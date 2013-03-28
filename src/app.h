@@ -4,6 +4,7 @@
 #include "NSScene.h"
 #include "NSGuiManager.h"
 #include "NSEditor.h"
+#include "ofxEQ.h"
 
 class app : public ofBaseApp{
 
@@ -21,6 +22,8 @@ class app : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+        void audioReceived (float * input, int bufferSize, int nChannels);
+
     
         void guiEvent(ofxUIEventArgs &e);
     
@@ -29,5 +32,7 @@ class app : public ofBaseApp{
         NSScene             scene;
         NSGuiManager        guiManager;
         NSEditor            editor;
+    
+        ofxEQ               eq;
 		
 };
