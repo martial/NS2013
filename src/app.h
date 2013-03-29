@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "NSScene.h"
+#include "NSSceneManager.h"
 #include "NSGuiManager.h"
 #include "NSEditor.h"
 #include "ofxEQ.h"
@@ -29,7 +29,7 @@ class app : public ofBaseApp{
     
         void exit();
     
-        NSScene             scene;
+        NSSceneManager      sceneManager;
         NSGuiManager        guiManager;
         NSEditor            editor;
     

@@ -1,46 +1,38 @@
-println("-- another.js -- ");
+println("-- Simple Cosinus example.js -- ");
 
-function setup () {
+function setup (s) {
 		
 	var time = of.GetElapsedTimeMillis();
 	
 	for ( var i=0; i<2; i++) {
 		
 		for (var j=0; j<16; j++) {
-			
-			
+		
 			var index = i * 16 + j;
-			//setOrientation(index,  0, 0, 0);	
-			setGobo(index, 1.0);
-			
+			setOrientation(s, index,  0, 0, 0);	
+			setGobo(s, index, 1.0);
 		}
-		
-		
 	}
 	
 }
 
-
-
-function update () {
+function update (s) {
 
 	
 	var time = of.GetElapsedTimeMillis();
-	
-	var Apct = 0.5 + Math.cos(time / 5000) * 0.5;
-		
+			
 	for ( var i=0; i<2; i++) {
 		
 		for (var j=0; j<16; j++) {
 			
 			var index = i * 16 + j;
-			pct = Math.cos(time *  j / 3000) * 10;
+			var pct = Math.cos(time *  j / 3000) * 10;
 			
 			var pan = (i % 2 == 0) ? pct:  pct;
 			
-			setOrientation(index,  -pct, -45, 0);	
-			setGobo(index, 1.0);
-			setBrightness(index, 1);
+			setOrientation(s, index,  -pct, -45, 0);	
+			setGobo(s, index, 1.0);
+			setBrightness(s, index, 1);
 		}
 		
 		

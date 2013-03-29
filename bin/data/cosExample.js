@@ -1,8 +1,9 @@
-println("-- circle example.js -- ");
 
 
-function setup () {
-		
+
+function setup (s) {
+	
+	println("-- circle example.js -- ");
 	var time = of.GetElapsedTimeMillis();
 	
 	for ( var i=0; i<2; i++) {
@@ -11,10 +12,12 @@ function setup () {
 			
 			var index = i * 16 + j;
 			var posSharpy = new fk.Vec3(getPosX(index), getPosY(index), 0);
-			lookAt(index,  getMouseX(), 0, -300);
-			setGobo(index,  .5);	
+
+
+			//lookAt(s, index,  getMouseX(), 0, -300);
+			//setGobo(s, index,  .5);	
 			
-		}
+		} 
 		
 		
 	}
@@ -47,9 +50,9 @@ function dot(a, b) {
 }
 
 */
+ 
 
-
-function update (time) {
+function update (s, time) {
 	
 	var time = of.GetElapsedTimeMillis();
 	var pct = 0.5 + Math.cos(time / 500) * 0.5;
@@ -74,9 +77,9 @@ function update (time) {
 			//y += ( -r + ( r*2 * pct));
 			//var posSharpy = new fk.Vec3(getPosX(index), getPosY(index), 0);
 			
-			lookAt(index,   x, y, -300 );
-			setGobo(cnt,  yo);
-			setBrightness(cnt, 1);	
+			lookAt(s, index,   x, y, -300 );
+			setGobo(s, cnt,  yo);
+			setBrightness(s, cnt, 1);	
 			
 		}
 		

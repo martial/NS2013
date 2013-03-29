@@ -7,6 +7,7 @@
 //
 
 #pragma once
+#include "NSSceneManager.h"
 #include "NSScene.h"
 #include "ofxEQ.h"
 
@@ -17,7 +18,8 @@ public:
     Globals					();
     static Globals*			instance();
     
-    NSScene     *           nsScene;
+    
+    NSSceneManager *        nsSceneManager;
     ofxEQ       *           eq;
 	    
 private:

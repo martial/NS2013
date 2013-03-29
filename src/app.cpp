@@ -10,17 +10,25 @@ void app::setup(){
     
     ofxJSInitialize();
     
-    Globals::instance()->nsScene    = &scene;
-    Globals::instance()->eq         = &eq;
+    //Globals::instance()->nsScene    = &scene;
+    
+    Globals::instance()->nsSceneManager = &sceneManager;
+    Globals::instance()->eq             = &eq;
     
     ofSoundStreamSetup(0,2,this, 44100, 512, 4);
     eq.setup();
     eq.setRange(16);
 
     
+    
+    sceneManager.setup();
+    sceneManager.createScene(ofGetWidth(), ofGetHeight());
+    sceneManager.createScene(320, 240);
+    sceneManager.getScene(1)->setCameraMode(1);
     guiManager.setup();
-    scene.setup();
-    editor.setup(&guiManager, &scene);
+    editor.setup();
+    editor.setAnimation(0, 0);
+    //editor.setAnimation(0, 1);
     eq.smooth = .2;
     
    
@@ -31,8 +39,8 @@ void app::setup(){
 void app::update(){
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
-    editor.update();
-    scene.update();
+    editor.update(sceneManager.getNumScenes());
+    sceneManager.update();
     
    
 }
@@ -43,7 +51,7 @@ void app::draw(){
     ofDisableSmoothing();
     
     guiManager.update();
-    scene.draw();
+    sceneManager.draw();
     
     ofEnableSmoothing();
 
@@ -58,12 +66,14 @@ void app::guiEvent(ofxUIEventArgs &e)
 	if(name == "DOF FOCUS")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget;
-		scene.dofFocus = slider->getScaledValue();
+        Globals::instance()->nsSceneManager->getScene(0)->dofFocus = slider->getScaledValue();
+		//scene.dofFocus = slider->getScaledValue();
 	}
 	else if(name == "DOF APERTURE")
 	{
 		ofxUIMinimalSlider *slider = (ofxUIMinimalSlider *) e.widget;
-		scene.dofAperture = slider->getScaledValue();
+        Globals::instance()->nsSceneManager->getScene(0)->dofAperture = slider->getScaledValue();
+		//scene.dofAperture = slider->getScaledValue();
 	}
 }
 
@@ -79,7 +89,15 @@ void app::keyPressed(int key){
     
     if (key == ' ') {
         
-        editor.nextAnimation();
+        editor.nextAnimation(0);
+        //editor.nextAnimation(1);
+        
+    }
+    
+    if (key == 'p') {
+        
+        editor.nextAnimation(1);
+        //editor.nextAnimation(1);
         
     }
     

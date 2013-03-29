@@ -1,20 +1,23 @@
-println("-- tween example.js -- ");
 
 
-function setup () {
+
+function setup (s) {
 		
-	
+	println("-- tween example.js -- ");
 	// reset tweens
 	this.tweens = new Array();	
 	TWEEN.removeAll();
-	
-	// start
-	initTweens (); 
-	
+	 
+		 
 	this.goMadCount = 0;
 	this.openArmsCount = 0;
 	this.turtleCount = 0 ;
 	this.cosPct = 0.0;
+	this.scene = s;
+	
+	// start
+	this.initTweens (s); 
+	
 } 
 
 
@@ -23,6 +26,7 @@ function setup () {
 function initTweens () {
 	
 	//TWEEN.removeAll();
+	
 
 	for ( var i=0; i<2; i++) {
 		
@@ -35,7 +39,7 @@ function initTweens () {
 			var pan = (i % 2 == 0) ? -45 :  45;
 			 
 			// set default orientation - be careful It's for testing
-			setOrientation(index, 0, 0, 0);	
+			setOrientation(scene, index, 0, 0, 0);	
 			 
 			// add a new empty orientation - push it to array
 			this.tweens[index] = {brt: 1.0, gobo:1.0, pan:0, tilt:0, roll:0};
@@ -76,7 +80,6 @@ function goLaser () {
 		
 		
 		//if(index==0)
-		println(index); 
 		//println(this.tweens);
 		
 		var tween = new TWEEN.Tween(this.tweens[index])
@@ -274,7 +277,8 @@ function strob(object) {
 	
 }
 
-function update (time) {
+function update (s) {
+	
 	
 	// update Tween engine
 	this.TWEEN.update();
@@ -285,15 +289,11 @@ function update (time) {
 	// update sharpys properties
 	for ( var i=0; i<numSharpy; i++) {
 	
-		
-		
 		var tween = this.tweens[i];
 		
-		
-		
-		setOrientation(i,tween.pan, tween.tilt, tween.roll);	
-		setGobo(i, tween.gobo);
-		setBrightness(i, tween.brt)
+		setOrientation(s, i,tween.pan, tween.tilt, tween.roll);	
+		setGobo(s, i, tween.gobo);
+		setBrightness(s, i, tween.brt)
 								
 	}	
 	

@@ -11,24 +11,31 @@
 
 #include "ofMain.h"
 #include "ofxJavascript.h"
+#include "ofxJSScript.h"
 
 class NSAnimation  {
     
 public:
     NSAnimation(){};
     
-    void setup(string scriptPath);
+    void setup(string scriptPath, int id);
     void loadScript();
-    void update();
+    void init(int scene);
+    void update(int scene);
     void render();
     
-    
+    int                         id;
     string                      name;
+    string                      scriptPath;
+    
+    ofxJSScript *               script;
+    
+    ofEvent<ofEventArgs>        needReload;
     
 private:
     
-    string                      scriptPath;
-    ofxJSScript *               script;
+    
+
     
     float                       checkTimer;
     int                         time;
