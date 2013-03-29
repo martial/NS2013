@@ -12,10 +12,11 @@
 //--------------------------------------------------------------
 
 
-void NSAnimation::setup(string scriptPath) {
+void NSAnimation::setup(string scriptPath, int id) {
     
     checkTimer  = 0.f;
     time        = 0;
+    this->id    = id;
     
     this->scriptPath = scriptPath;
     loadScript();
@@ -31,18 +32,12 @@ void NSAnimation::loadScript() {
 	if (scriptPath != "")
 	{
 		script = ofxJSLoad(ofToDataPath(scriptPath),"___tmpScript___");
-        
+               
 		if (script){
 			if (ofxJSEval(script))
 			{
-				ofxJSValue retVal;
-                
-                // Call setup
-                ofxJSValue args[1];
-                args[0] = float_TO_ofxJSValue(checkTimer);
-                ofxJSCallFunctionNameGlobal_IfExists("setup", args,1,retVal);
-                time        = 0;
-				return true;
+                return true;
+
 			}
 			else{
 				ofLog(OF_LOG_ERROR, "ERROR > cannot eval script ");
@@ -60,10 +55,20 @@ void NSAnimation::loadScript() {
     
 }
 
+void NSAnimation::init (int scene) {
+    ofLog(OF_LOG_NOTICE, "INIT FROM OF -------------------------------------------");
+    
+    
+    loadScript();
+    
+    
+    
+}
+
 //--------------------------------------------------------------
 
 
-void NSAnimation::update() {
+void NSAnimation::update(int scene) {
     
     if (script)
 	{
@@ -78,14 +83,14 @@ void NSAnimation::update() {
 				if (timestamp > fileTimeStamp){
 					fileTimeStamp = timestamp;
 					loadScript();
+                    init(scene);
+                    
+                    ofEventArgs e;
+                    ofNotifyEvent(needReload, e, this);
+                    
+                    
 				}
 			}
-		
-		// Call update
-		ofxJSValue retVal;
-		ofxJSValue args[1];
-		args[0] = int_TO_ofxJSValue(time);
-		ofxJSCallFunctionNameGlobal_IfExists("update", args,1,retVal);
         time++;
 	}
     

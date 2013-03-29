@@ -15,6 +15,9 @@ NSGuiManager::NSGuiManager() {
 
 void NSGuiManager::setup() {
     
+    
+    ofPtr<NSScene> mainScene = Globals::instance()->nsSceneManager->getScene(0);
+    
     guiLeft = new ofxUICanvas(220, ofGetHeight());
     guiLeft->setDrawBack(true);
     guiLeft->addLabel("NS 2013 BITCH");
@@ -24,20 +27,21 @@ void NSGuiManager::setup() {
     
     guiLeft->addLabel("POST PROCESSING", OFX_UI_FONT_SMALL);
     guiLeft->addSpacer();
-    guiLeft->addToggle("CAMERA MOUSE", &Globals::instance()->nsScene->bCamMouseInput);
-    guiLeft->addToggle("FFSA", &Globals::instance()->nsScene->bEnableFFSA);
-    guiLeft->addToggle("BLOOM", &Globals::instance()->nsScene->bEnableBloom);
-    guiLeft->addToggle("DOF", &Globals::instance()->nsScene->bEnableDof);
-    guiLeft->addSlider("DOF APERTURE", 0.0, 2.0, &Globals::instance()->nsScene->dofAperture);
-    guiLeft->addSlider("DOF FOCUS", 0.0, 5.0, &Globals::instance()->nsScene->dofFocus);
-    guiLeft->addToggle("DRAW GRID", &Globals::instance()->nsScene->bDrawGrid);
+    guiLeft->addToggle("CAMERA MOUSE", &mainScene->bCamMouseInput);
+    guiLeft->addToggle("FFSA", &mainScene->bEnableFFSA);
+    guiLeft->addToggle("BLOOM", &mainScene->bEnableBloom);
+    guiLeft->addToggle("DOF", &mainScene->bEnableDof);
+    guiLeft->addSlider("DOF APERTURE", 0.0, 2.0, &mainScene->dofAperture);
+    guiLeft->addSlider("DOF FOCUS", 0.0, 5.0, &mainScene->dofFocus);
+    guiLeft->addToggle("DRAW GRID", &mainScene->bDrawGrid);
     
     guiLeft->addLabelButton("TOGGLE CAMERA", false);
     guiLeft->addSpacer();
     guiLeft->addLabel("SOUND", OFX_UI_FONT_MEDIUM);
     guiLeft->addLabel("SPECTRUM", OFX_UI_FONT_SMALL);
-    ofxUISpectrum* leftSpectrum     = guiLeft->addSpectrum("SPECTRUM", Globals::instance()->eq->leftPreview, 512, 0.0, 1.0);
-    ofxUISpectrum* rightSpectrum    = guiLeft->addSpectrum("SPECTRUM", Globals::instance()->eq->rightPreview, 512, 0.0, 1.0);
+    guiLeft->addWaveform("SPECTRUMF", Globals::instance()->eq->rawInput, 512, 0.0, .1);
+    ofxUISpectrum* leftSpectrum     = guiLeft->addSpectrum("SPECTRUML", Globals::instance()->eq->leftPreview, 512, 0.0, 1.0);
+    ofxUISpectrum* rightSpectrum    = guiLeft->addSpectrum("SPECTRUMR", Globals::instance()->eq->rightPreview, 512, 0.0, 1.0);
     
     leftSpectrum->setSteps(&Globals::instance()->eq->range);
     leftSpectrum->setFilterRange(&Globals::instance()->eq->filterRange);
@@ -47,8 +51,8 @@ void NSGuiManager::setup() {
     
     guiLeft->addSlider("RANGE", 1, 16, 8);
     overrideSlider = guiLeft->addSlider("OVERRIDE", -1, 16, 8);
-    guiLeft->addToggle("SOUND ALPHA", &Globals::instance()->nsScene->bSndAlpha);
-    guiLeft->addToggle("SOUND GOBO", &Globals::instance()->nsScene->bSndGobo);
+    guiLeft->addToggle("SOUND ALPHA", &mainScene->bSndAlpha);
+    guiLeft->addToggle("SOUND GOBO", &mainScene->bSndGobo);
     
     ofAddListener(guiLeft->newGUIEvent,this,&NSGuiManager::guiEvent);
     //guiLeft->addSpacer();
@@ -73,14 +77,13 @@ void NSGuiManager::guiEvent(ofxUIEventArgs &e) {
     string name = e.widget->getName();
 	int kind = e.widget->getKind();
 	
-    
+     ofPtr<NSScene> mainScene = Globals::instance()->nsSceneManager->getScene(0);
     
 	if(name == "TOGGLE CAMERA") {
         ofxUIButton *button = (ofxUIButton *) e.widget;
-        cout << name << "\t value: " << button->getValue() << endl;
+        
         if(button->getValue() == 0)
-            //printf("BUTTON \n");
-        Globals::instance()->nsScene->toggleCamera();
+            mainScene->toggleCamera();
     }
     
     

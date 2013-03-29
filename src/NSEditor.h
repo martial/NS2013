@@ -10,7 +10,6 @@
 #define __NS2013__NSEditor__
 
 #include "ofMain.h"
-#include "NSGuiManager.h"
 #include "ofxUI.h"
 #include "ofxJavascript.h"
 #include "JSBinder.h"
@@ -22,29 +21,32 @@ class NSEditor {
 public:
     
     NSEditor();
-    void setup(NSGuiManager * guiManager, NSScene * nsScene);
+    void setup();
     void listAnimations();
-    void update();
+    void update(int numScenes);
     
-    void setAnimation(int index);
-    void nextAnimation();
+    
+    void setAnimation(int index, int scene);
+    void nextAnimation(int scene);
+    
     
     /* */
     
     void loadScripts();
     void setScript(int index);
     
+    void onScriptChanged(ofEventArgs & e);
+    
     
 private :
     
-    NSGuiManager                    * guiManager;
     NSScene                         * NSScene;
     
     ofPtr<NSAnimation>              currentAnimation;
-    
     vector<ofPtr<NSAnimation> >     animations;
     
     int                             currentIndex;
+    int                             currentPreviewIndex;
     
 
     

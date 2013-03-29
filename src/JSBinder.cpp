@@ -14,13 +14,13 @@ bool initJS()
 {
 	// Some functions
 	//
-    ofxJSDefineFunctionGlobal("lookAt",                         &lookAt,                            4);
-    ofxJSDefineFunctionGlobal("getPosX",                        &getPosX,                           1);
-    ofxJSDefineFunctionGlobal("getPosY",                        &getPosY,                           1);
-    ofxJSDefineFunctionGlobal("getPosZ",                        &getPosZ,                           1);
-    ofxJSDefineFunctionGlobal("setOrientation",					&setOrientation,					4); // name, function pointer, args number
-    ofxJSDefineFunctionGlobal("setBrightness",					&setBrightness,                     2); // name, function pointer, args number
-    ofxJSDefineFunctionGlobal("setGobo",                        &setGobo,                           2); // name, function pointer, args number
+    ofxJSDefineFunctionGlobal("lookAt",                         &lookAt,                            5);
+    ofxJSDefineFunctionGlobal("getPosX",                        &getPosX,                           2);
+    ofxJSDefineFunctionGlobal("getPosY",                        &getPosY,                           2);
+    ofxJSDefineFunctionGlobal("getPosZ",                        &getPosZ,                           2);
+    ofxJSDefineFunctionGlobal("setOrientation",					&setOrientation,					5); // name, function pointer, args number
+    ofxJSDefineFunctionGlobal("setBrightness",					&setBrightness,                     3); // name, function pointer, args number
+    ofxJSDefineFunctionGlobal("setGobo",                        &setGobo,                           3); // name, function pointer, args number
     ofxJSDefineFunctionGlobal("setName",                        &setName,                           0); // name, function pointer, args number
     
     ofxJSDefineFunctionGlobal("getMouseX",                      &getMouseX,                           0);
@@ -67,14 +67,15 @@ ofxJSDefineFunctionCpp(getMouseY){
 //--------------------------------------------------------------
 ofxJSDefineFunctionCpp(lookAt){
     
-	if (argc == 4){
+	if (argc == 5){
         
-		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
-        float x	= ofxJSValue_TO_float(argv[1]);
-        float y	= ofxJSValue_TO_float(argv[2]);
-        float z	= ofxJSValue_TO_float(argv[3]);
+        int scene           = ofxJSValue_TO_int(argv[0]);
+		int indexSharpy		= ofxJSValue_TO_int(argv[1]);
+        float x             = ofxJSValue_TO_float(argv[2]);
+        float y             = ofxJSValue_TO_float(argv[3]);
+        float z             = ofxJSValue_TO_float(argv[4]);
         
-        Globals::instance()->nsScene->sharpyLookAt(indexSharpy, ofVec3f(x,y,z));
+        Globals::instance()->nsSceneManager->getScene(scene)->sharpyLookAt(indexSharpy, ofVec3f(x,y,z));
 
 		return JS_TRUE;
 	}
@@ -84,11 +85,12 @@ ofxJSDefineFunctionCpp(lookAt){
 //--------------------------------------------------------------
 ofxJSDefineFunctionCpp(getPosX){
     
-	if (argc == 1){
+	if (argc == 2){
         
-		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
+        int scene           = ofxJSValue_TO_int(argv[0]);
+		int indexSharpy		= ofxJSValue_TO_int(argv[1]);
 
-        ofVec3f pos = Globals::instance()->nsScene->getSharpyPos(indexSharpy);
+        ofVec3f pos = Globals::instance()->nsSceneManager->getScene(scene)->getSharpyPos(indexSharpy);
 		*retVal = float_TO_ofxJSValue(pos.x);
         
 		return JS_TRUE;
@@ -99,11 +101,12 @@ ofxJSDefineFunctionCpp(getPosX){
 //--------------------------------------------------------------
 ofxJSDefineFunctionCpp(getPosY){
     
-	if (argc == 1){
+	if (argc == 2){
         
-		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
+		int scene           = ofxJSValue_TO_int(argv[0]);
+		int indexSharpy		= ofxJSValue_TO_int(argv[1]);
         
-        ofVec3f pos = Globals::instance()->nsScene->getSharpyPos(indexSharpy);
+        ofVec3f pos = Globals::instance()->nsSceneManager->getScene(scene)->getSharpyPos(indexSharpy);
 		*retVal = float_TO_ofxJSValue(pos.y);
         
 		return JS_TRUE;
@@ -114,11 +117,12 @@ ofxJSDefineFunctionCpp(getPosY){
 //--------------------------------------------------------------
 ofxJSDefineFunctionCpp(getPosZ){
     
-	if (argc == 1){
+    if (argc == 2){
         
-		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
+		int scene           = ofxJSValue_TO_int(argv[0]);
+		int indexSharpy		= ofxJSValue_TO_int(argv[1]);
         
-        ofVec3f pos = Globals::instance()->nsScene->getSharpyPos(indexSharpy);
+        ofVec3f pos = Globals::instance()->nsSceneManager->getScene(scene)->getSharpyPos(indexSharpy);
 		*retVal = float_TO_ofxJSValue(pos.z);
         
 		return JS_TRUE;
@@ -150,17 +154,15 @@ ofxJSDefineFunctionCpp(setName){
 //--------------------------------------------------------------
 ofxJSDefineFunctionCpp(setOrientation){
     
-	if (argc == 4){
+	if (argc == 5){
         
-		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
-		float pan	= ofxJSValue_TO_float(argv[1]);
-        float tilt	= ofxJSValue_TO_float(argv[2]);
-        float roll	= ofxJSValue_TO_float(argv[3]);
+        int scene           = ofxJSValue_TO_int(argv[0]);
+		int indexSharpy		= ofxJSValue_TO_int(argv[1]);
+		float pan           = ofxJSValue_TO_float(argv[2]);
+        float tilt          = ofxJSValue_TO_float(argv[3]);
+        float roll          = ofxJSValue_TO_float(argv[4]);
         
-        Globals::instance()->nsScene->setOrientation(indexSharpy, ofVec3f(pan, tilt, roll));
-        
-		//float val = Globals::instance()->M_getClientBass(indexClient,indexChannel);
-		//*retVal = float_TO_ofxJSValue(val);
+        Globals::instance()->nsSceneManager->getScene(scene)->setOrientation(indexSharpy, ofVec3f(pan, tilt, roll));
         
 		return JS_TRUE;
 	}
@@ -170,15 +172,13 @@ ofxJSDefineFunctionCpp(setOrientation){
 //--------------------------------------------------------------
 ofxJSDefineFunctionCpp(setBrightness){
     
-	if (argc == 2){
+	if (argc == 3){
         
-		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
-		float pct           = ofxJSValue_TO_float(argv[1]);
+        int scene           = ofxJSValue_TO_int(argv[0]);
+		int indexSharpy		= ofxJSValue_TO_int(argv[1]);
+		float pct           = ofxJSValue_TO_float(argv[2]);
 
-        Globals::instance()->nsScene->setBrightness(indexSharpy, pct);
-        
-		//float val = Globals::instance()->M_getClientBass(indexClient,indexChannel);
-		//*retVal = float_TO_ofxJSValue(val);
+        Globals::instance()->nsSceneManager->getScene(scene)->setBrightness(indexSharpy, pct);
         
 		return JS_TRUE;
 	}
@@ -188,12 +188,13 @@ ofxJSDefineFunctionCpp(setBrightness){
 //--------------------------------------------------------------
 ofxJSDefineFunctionCpp(setGobo){
     
-	if (argc == 2){
+	if (argc == 3){
         
-		int indexSharpy		= ofxJSValue_TO_int(argv[0]);
-		float pct           = ofxJSValue_TO_float(argv[1]);
+        int scene           = ofxJSValue_TO_int(argv[0]);
+		int indexSharpy		= ofxJSValue_TO_int(argv[1]);
+		float pct           = ofxJSValue_TO_float(argv[2]);
         
-        Globals::instance()->nsScene->setGobo(indexSharpy, pct);
+        Globals::instance()->nsSceneManager->getScene(scene)->setGobo(indexSharpy, pct);
         
 		//float val = Globals::instance()->M_getClientBass(indexClient,indexChannel);
 		//*retVal = float_TO_ofxJSValue(val);

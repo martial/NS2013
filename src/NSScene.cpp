@@ -27,7 +27,7 @@ NSScene::NSScene () {
 //--------------------------------------------------------------
 
 
-void NSScene::setup () {
+void NSScene::setup (int width, int height) {
     
     // init sharpies
     
@@ -53,11 +53,8 @@ void NSScene::setup () {
     lightUpPos.z =  0;
     lightUp.setPosition(lightUpPos);
     lightUp.setAmbientColor(255);
-    //lightUp.setDirectional();
-    
-    
-    
-    post.init(ofGetWidth() , ofGetHeight());
+        
+    post.init(width , height);
     post.createPass<FxaaPass>()->setEnabled(bEnableFFSA);
     post.createPass<BloomPass>()->setEnabled(bEnableBloom);
     post.createPass<DofPass>()->setEnabled(bEnableDof);
@@ -116,7 +113,7 @@ void NSScene::update () {
     
     ofxEQ * eq = Globals::instance()->eq;
     
-    for (int i=0; i<sharpies.size(); i++) {
+     for (int i=0; i<sharpies.size(); i++) {
         
         ofPtr<NSSharpy> sharpyRef = sharpies[i];
         sharpyRef->setPosition(-getPosition() + pos - sharpiesCenter);
@@ -158,6 +155,7 @@ void NSScene::draw() {
     lightUp.disable();
     
     // begin scene to post process
+    
     post.begin(cam);
     glEnable(GL_CULL_FACE);
 
@@ -212,7 +210,7 @@ void NSScene::draw() {
     
    
     
-        
+    
     // walls
     int groundWidth = 4000, groundHeight = 1000;
     
@@ -253,7 +251,7 @@ void NSScene::draw() {
     ofDisableAlphaBlending();
     //ofDisableBlendMode();
     //cam.end();
-    post.end();
+    post.end(false);
     //restoreTransformGL();
     
     
@@ -279,21 +277,28 @@ void NSScene::setCameraMode(int camMode) {
     
     switch (camMode) {
         case 0:
+            
             cam.setOrientation(ofVec3f(90, 90, 0));
             cam.setDistance(2000.f);
             break;
             
         case 1:
+            
+            cam.setGlobalPosition(2000, 0, -150);
+            cam.setOrientation(ofVec3f(90, 90, 0));
+            break;
+            
+        case 2:
             cam.setOrientation(ofVec3f(0, 0, 0));
             cam.setDistance(2000.f);
             break;
             
-        case 2:
+        case 3:
             cam.setOrientation(ofVec3f(90, 90, 90));
             cam.setDistance(2000.f);
             break;
             
-        case 3:
+        case 4:
             cam.setPosition(0, 0, -ofGetMouseY());
             cam.setOrientation(ofVec3f(90, 90, 0));
             cam.setDistance(500.0);
@@ -307,10 +312,7 @@ void NSScene::setCameraMode(int camMode) {
 
 /*
  //--------------------------------------------------------------
-
  */
-
-
 
 void NSScene::sharpyLookAt(int sharpyIndex, ofVec3f pos) {
     

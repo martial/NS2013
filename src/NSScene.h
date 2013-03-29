@@ -12,13 +12,14 @@
 #include "ofMain.h"
 #include "NSSharpy.h"
 #include "ofxPostProcessing.h"
+#include "NSAnimation.h"
 
 class NSScene : public ofNode{
     
 public:
     
     NSScene();
-    void setup();
+    void setup(int width, int height);
     void update();
     void draw();
     
@@ -44,11 +45,15 @@ public:
     bool                        bSndAlpha;
     bool                        bSndGobo;
     
+    // not sur if that would be there
+    ofPtr<NSAnimation>          animationRef;
+    ofxPostProcessing           post;
+    
 private:
     
     
     RenderPass::Ptr             dof;
-    ofxPostProcessing           post;
+    
     ofxPostProcessing           postDof;
     ofEasyCam                   cam;
     ofLight                     light;

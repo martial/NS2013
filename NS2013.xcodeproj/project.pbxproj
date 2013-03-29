@@ -73,6 +73,7 @@
 		E749B7D01701DFF000699521 /* NSAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7CE1701DFEF00699521 /* NSAnimation.cpp */; };
 		E778AA2E1700658100EA034E /* NSScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E778AA2C1700658100EA034E /* NSScene.cpp */; };
 		E778AA311700671000EA034E /* NSSharpy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E778AA2F1700671000EA034E /* NSSharpy.cpp */; };
+		E77C9C3E1705A517009B32E0 /* NSSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E77C9C3C1705A517009B32E0 /* NSSceneManager.cpp */; };
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
@@ -309,6 +310,8 @@
 		E778AA2D1700658100EA034E /* NSScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSScene.h; sourceTree = "<group>"; };
 		E778AA2F1700671000EA034E /* NSSharpy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSSharpy.cpp; sourceTree = "<group>"; };
 		E778AA301700671000EA034E /* NSSharpy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSSharpy.h; sourceTree = "<group>"; };
+		E77C9C3C1705A517009B32E0 /* NSSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSSceneManager.cpp; sourceTree = "<group>"; };
+		E77C9C3D1705A517009B32E0 /* NSSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSSceneManager.h; sourceTree = "<group>"; };
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
@@ -833,6 +836,8 @@
 				E778AA2D1700658100EA034E /* NSScene.h */,
 				E778AA2F1700671000EA034E /* NSSharpy.cpp */,
 				E778AA301700671000EA034E /* NSSharpy.h */,
+				E77C9C3C1705A517009B32E0 /* NSSceneManager.cpp */,
+				E77C9C3D1705A517009B32E0 /* NSSceneManager.h */,
 			);
 			name = preview;
 			sourceTree = "<group>";
@@ -1039,6 +1044,7 @@
 				E737B4AA1704958D00B656D9 /* fft.cpp in Sources */,
 				E737B4AB1704958D00B656D9 /* fftOctaveAnalyzer.cpp in Sources */,
 				E737B4AC1704958D00B656D9 /* ofxEQ.cpp in Sources */,
+				E77C9C3E1705A517009B32E0 /* NSSceneManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
