@@ -8,7 +8,10 @@
 
 #include "JSBinder.h"
 #include "Globals.h"
+#include "ofxJSUtils.h"
+#include "jspubtd.h"
 
+//class JSObject;
 //--------------------------------------------------------------
 bool initJS()
 {
@@ -26,6 +29,8 @@ bool initJS()
     ofxJSDefineFunctionGlobal("getMouseX",                      &getMouseX,                           0);
     ofxJSDefineFunctionGlobal("getMouseY",                      &getMouseY,                           0);
     
+    ofxJSDefineFunctionGlobal("getPos",                      &getPos,                           1);
+    
 	// Load globals
 	ofxJSScript * pScript = ofxJSLoadFromData("app.js", "app"); 
 	if (pScript){
@@ -33,7 +38,7 @@ bool initJS()
 		if (evalOk){
 			printf("Loaded \"app.js\"\n");
 		} else {
-            printf("Loaded badly \"app.js\"\n");
+            ofGetAppPtr()->exit();
         }
 	} 
 	
@@ -77,6 +82,39 @@ ofxJSDefineFunctionCpp(lookAt){
         
         Globals::instance()->nsSceneManager->getScene(scene)->sharpyLookAt(indexSharpy, ofVec3f(x,y,z));
 
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getPos){
+    
+	if (argc == 1){
+        
+        int indexSharpy		= ofxJSValue_TO_int(argv[1]);
+        
+        ofVec3f pos = Globals::instance()->nsSceneManager->getScene(0)->getSharpyPos(indexSharpy);
+
+                
+        // Création d'un array[] côté javascript
+		ofxJSObject* jsVec3f = JS_NewArrayObject(ofxJavascript::smp_instance->getContext(), 0, NULL);
+        
+		// Créé la propriété [0] de l'objet en READ_ONLY
+		ofxJSValue	jsX = float_TO_ofxJSValue(pos.x);
+		JS_DefineElement(ofxJavascript::smp_instance->getContext(), jsVec3f, 0, jsX, NULL, NULL, JSPROP_READONLY);
+        
+		// Créé la propriété [1] de l'objet en READ_ONLY
+		ofxJSValue	jsY = float_TO_ofxJSValue(pos.y);
+		JS_DefineElement(ofxJavascript::smp_instance->getContext(), jsVec3f, 1, jsY, NULL, NULL, JSPROP_READONLY);
+        
+		// Créé la propriété [2] de l'objet en READ_ONLY
+		ofxJSValue	jsZ = float_TO_ofxJSValue(pos.z);
+		JS_DefineElement(ofxJavascript::smp_instance->getContext(), jsVec3f, 2, jsZ, NULL, NULL, JSPROP_READONLY);
+        
+        //ofxJSObject * ahou =  OBJECT_TO_JSVAL((jsVec3f)->getJSObject(ofxJavascript::smp_instance->getContext()));
+		//*retVal = objectp_TO_ofxJSValue(jsVec3f);
+        
 		return JS_TRUE;
 	}
 	return JS_FALSE;

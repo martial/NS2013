@@ -19,6 +19,7 @@ public:
     NSGuiManager();
     void setup();
     void update();
+    void exit();
     
     void guiEvent(ofxUIEventArgs &e);
     

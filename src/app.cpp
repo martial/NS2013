@@ -4,35 +4,41 @@
 //--------------------------------------------------------------
 void app::setup(){
     
-    ofSetVerticalSync(true);
+    ofSetFrameRate(120);
+    //ofSetVerticalSync(true);
     ofBackground(25);
     
     
     ofxJSInitialize();
-    
-    //Globals::instance()->nsScene    = &scene;
-    
+        
     Globals::instance()->nsSceneManager = &sceneManager;
     Globals::instance()->eq             = &eq;
+    Globals::instance()->screenLog     = &screenLog;
     
     ofSoundStreamSetup(0,2,this, 44100, 512, 4);
     eq.setup();
     eq.setRange(16);
-
-    
-    
+        
     sceneManager.setup();
     sceneManager.createScene(ofGetWidth(), ofGetHeight());
+    
+#ifndef EDITOR_MODE
     sceneManager.createScene(320, 240);
+    sceneManager.getScene(1)->bEnableDof    = false;
+    sceneManager.getScene(1)->bEnableFFSA   = false;
     sceneManager.getScene(1)->setCameraMode(1);
+#endif
     guiManager.setup();
     editor.setup();
     editor.setAnimation(0, 0);
-    //editor.setAnimation(0, 1);
+#ifndef EDITOR_MODE
+    editor.setAnimation(0, 1);
+    editor.nextAnimation(1);
+#endif
     eq.smooth = .2;
+    //eq.setFilterRange(-1);
     
-   
-        
+    
 }
 
 //--------------------------------------------------------------
@@ -53,29 +59,13 @@ void app::draw(){
     guiManager.update();
     sceneManager.draw();
     
-    ofEnableSmoothing();
+    //ofEnableSmoothing();
+    
+    ofSetColor(255);
+    screenLog.draw();
 
 }
 
-//--------------------------------------------------------------
-void app::guiEvent(ofxUIEventArgs &e)
-{
-	string name = e.widget->getName();
-	int kind    = e.widget->getKind();
-	
-	if(name == "DOF FOCUS")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget;
-        Globals::instance()->nsSceneManager->getScene(0)->dofFocus = slider->getScaledValue();
-		//scene.dofFocus = slider->getScaledValue();
-	}
-	else if(name == "DOF APERTURE")
-	{
-		ofxUIMinimalSlider *slider = (ofxUIMinimalSlider *) e.widget;
-        Globals::instance()->nsSceneManager->getScene(0)->dofAperture = slider->getScaledValue();
-		//scene.dofAperture = slider->getScaledValue();
-	}
-}
 
 //--------------------------------------------------------------
 void app::audioReceived (float * input, int bufferSize, int nChannels){
@@ -88,18 +78,18 @@ void app::audioReceived (float * input, int bufferSize, int nChannels){
 void app::keyPressed(int key){
     
     if (key == ' ') {
-        
         editor.nextAnimation(0);
-        //editor.nextAnimation(1);
-        
     }
     
-    if (key == 'p') {
-        
-        editor.nextAnimation(1);
-        //editor.nextAnimation(1);
-        
+    if (key == 'f') {
+        ofToggleFullscreen();
     }
+    
+#ifndef EDITOR_MODE
+    if (key == 'p') {
+        editor.nextAnimation(1);        
+    }
+#endif
     
     if (key == 'e') {
         eq.setup();
@@ -134,7 +124,7 @@ void app::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void app::windowResized(int w, int h){
-
+    Globals::instance()->nsSceneManager->getScene(0)->onResize(w, h);
 }
 
 //--------------------------------------------------------------
@@ -150,6 +140,7 @@ void app::dragEvent(ofDragInfo dragInfo){
 //--------------------------------------------------------------
 void app::exit(){
     ofxJSFinalize();
+    guiManager.exit();
 }
 
 

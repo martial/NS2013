@@ -19,7 +19,10 @@ NSSharpy::NSSharpy() {
 
 void NSSharpy::setup(){
     
+    target = new NSSharpyTarget();
+    
     reset();
+    
 }
 
 void NSSharpy::reset(){
@@ -69,8 +72,34 @@ void NSSharpy::update(){
     }
     
     cylinder.setMode(OF_PRIMITIVE_TRIANGLES);
-
     
+    // update props
+    
+    this->goboPct       = this->target->goboPct;
+    this->brightness    = this->target->brt;
+    
+        
+    //currentQuat *= targetQuat;
+    //this->setOrientation( this->target->getOrientationQuat());
+    //ofVec3f o = this->target->getOrientationEuler();
+    
+    transToTargetOrientation();
+    
+    
+    
+}
+
+void NSSharpy::transToTargetOrientation () {
+    
+    float blurRate = 0.99;
+    
+    ofQuaternion currentQuat = this->getOrientationQuat();
+    ofVec4f      currentQuatVec = currentQuat.asVec4();
+    
+    
+    //this->target->setTweenedOrientation(currentQuat);
+    this->setOrientation(ofQuaternion(this->target->setTweenedOrientation(currentQuat)));
+
     
 }
 
@@ -95,15 +124,18 @@ void NSSharpy::draw(){
 
 //--------------------------------------------------------------
 
-
-
 void NSSharpy::setID(int id){
     
 }
 
+void NSSharpy::setTargetOrientation(ofVec3f orientation) {
+    this->target->setOrientation(orientation);
+}
+
 
 void NSSharpy::setBrightness(float brighntessPct){
-    this->brightness = brighntessPct;
+    //this->brightness = brighntessPct;
+    this->target->brt = brighntessPct;
 }
 
 float NSSharpy::getBrightness(){
@@ -111,7 +143,8 @@ float NSSharpy::getBrightness(){
 }
 
 void NSSharpy::setGobo(float pct){
-    this->goboPct = pct;    
+     this->target->goboPct = pct;
+    //this->goboPct = pct;
 }
 
 float NSSharpy::getGobo(){

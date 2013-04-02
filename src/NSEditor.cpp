@@ -65,14 +65,9 @@ void NSEditor::setAnimation(int index, int scene) {
     
     Globals::instance()->nsSceneManager->getScene(scene)->animationRef.reset();
     Globals::instance()->nsSceneManager->getScene(scene)->animationRef = animations[index];
-        
     Globals::instance()->nsSceneManager->getScene(scene)->animationRef->init(scene);
     
-    // Call main setup
-    ofxJSValue retVal;
-    ofxJSValue args[1];
-    args[0] = int_TO_ofxJSValue(0);
-    ofxJSCallFunctionNameGlobal_IfExists("setup", args,1,retVal);
+    callMainSetup();
     
     
 }
@@ -102,9 +97,7 @@ void NSEditor::nextAnimation(int scene) {
         ofxJSCallFunctionNameGlobal_IfExists("nextPreviewAnim", args,1,retVal);
         
         
-        // Call main setup
-        args[0] = int_TO_ofxJSValue(0);
-        ofxJSCallFunctionNameGlobal_IfExists("setup", args,1,retVal);
+        callMainSetup();
         
         
     }
@@ -121,7 +114,7 @@ void NSEditor::update (int numScenes) {
     // Call main update
     ofxJSValue retVal;
     ofxJSValue args[0];
-    ofxJSCallFunctionNameGlobal_IfExists("update", args,1,retVal);
+    ofxJSCallFunctionNameGlobal_IfExists("update", args,0,retVal);
     
     for( int i =0; i<2; i++) {
         
@@ -132,16 +125,21 @@ void NSEditor::update (int numScenes) {
     }
 }
 
+void NSEditor::callMainSetup() {
+    
+    ofxJSValue retVal;
+    ofxJSValue args[1];
+    
+    args[0] = int_TO_ofxJSValue(0);
+    ofxJSCallFunctionNameGlobal_IfExists("setup", args,1,retVal);
+    
+    
+}
+
 void NSEditor::onScriptChanged(ofEventArgs & e) {
     
     // Call main setup
-    // Call main setup
-    
-    printf("ahou");
-    ofxJSValue retVal;
-    ofxJSValue args[1];
-
-    args[0] = int_TO_ofxJSValue(0);
-    ofxJSCallFunctionNameGlobal_IfExists("setup", args,1,retVal);
+    callMainSetup();
+   
     
 }

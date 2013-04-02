@@ -26,7 +26,7 @@ void NSAnimation::setup(string scriptPath, int id) {
 //--------------------------------------------------------------
 
 
-void NSAnimation::loadScript() {
+bool NSAnimation::loadScript() {
         
     
 	if (scriptPath != "")

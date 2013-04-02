@@ -5,6 +5,10 @@
 #include "NSGuiManager.h"
 #include "NSEditor.h"
 #include "ofxEQ.h"
+#include "ofxScreenLog.h"
+
+
+#define EDITOR_MODE
 
 class app : public ofBaseApp{
 
@@ -25,7 +29,6 @@ class app : public ofBaseApp{
         void audioReceived (float * input, int bufferSize, int nChannels);
 
     
-        void guiEvent(ofxUIEventArgs &e);
     
         void exit();
     
@@ -34,5 +37,7 @@ class app : public ofBaseApp{
         NSEditor            editor;
     
         ofxEQ               eq;
+    
+        ofxScreenLog        screenLog;
 		
 };

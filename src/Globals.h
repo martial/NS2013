@@ -10,6 +10,7 @@
 #include "NSSceneManager.h"
 #include "NSScene.h"
 #include "ofxEQ.h"
+#include "ofxScreenLog.h"
 
 class Globals
 {
@@ -21,6 +22,7 @@ public:
     
     NSSceneManager *        nsSceneManager;
     ofxEQ       *           eq;
+    ofxScreenLog *          screenLog;
 	    
 private:
     static Globals*			inst;

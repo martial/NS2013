@@ -1,0 +1,55 @@
+<Widget>
+    <Kind>2</Kind>
+    <Name>CAMERA MOUSE</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>FFSA</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>BLOOM</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>DOF</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>DOF APERTURE</Name>
+    <Value>1.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>DOF FOCUS</Name>
+    <Value>0.212264150</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>DRAW GRID</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>RANGE</Name>
+    <Value>16.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>OVERRIDE</Name>
+    <Value>-1.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>SOUND ALPHA</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>SOUND GOBO</Name>
+    <Value>1</Value>
+</Widget>

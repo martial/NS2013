@@ -19,7 +19,7 @@ public:
     NSAnimation(){};
     
     void setup(string scriptPath, int id);
-    void loadScript();
+    bool loadScript();
     void init(int scene);
     void update(int scene);
     void render();

@@ -6,8 +6,6 @@ var Condor = Animation.extend({
 
         this._super();
 
-
-
     },
 
     update: function (s) {
@@ -34,14 +32,13 @@ var Condor = Animation.extend({
 
         for (var i = 0; i < rightSharpies.length; i++) {
 
+
+            //println("time " + time);
             //setOrientation  (s, i, 0, 0, 0);
             var index       = rightSharpies[i];
             var brtPct      = (i % 2 == 0) ? 1.0 : 1.0;
             var goboPct     = normalize(i, rightSharpies.length);
 
-            //println(goboPct);
-
-            //
             var pan = ( 1.0 - (0.5 + Math.cos((i+time)/4) * 0.5) ) * maxPan * anglePct;
 
             setOrientation  (s, index, pan , 0, 0);
