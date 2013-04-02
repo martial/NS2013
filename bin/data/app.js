@@ -1,6 +1,4 @@
 println("-- app.js -- ");
-
-//include("Scripts/libraries/tweening/Tween.js");
 include("Scripts/libraries/fieldkit/src/Header.js");
 include("Scripts/libraries/fieldkit/src/Class.js");
 include("Scripts/libraries/fieldkit/src/math/Math.js");
@@ -61,7 +59,6 @@ function radians(deg) {
 }
 
 function setPreviewAnim(index) {
-    println("set preview" + index)
     previewAnimation = animations[index];
 
 }
@@ -93,13 +90,13 @@ function strob(object) {
 function setup() {
 
     mainAnimation.setup(0);
-    previewAnimation.setup(1);
+    if(previewAnimation)previewAnimation.setup(1);
 }
 
 function update() {
 
     mainAnimation.update(0);
-    previewAnimation.update(1);
+    if(previewAnimation)previewAnimation.update(1);
 }
 
 var Animation = fk.Class.extend({
@@ -113,7 +110,17 @@ var Animation = fk.Class.extend({
 
     },
 
-    setup: function () {
+    setup: function (s) {
+
+        // set everything to default if not defined
+        for (var i = 0; i < numSharpy; i++) {
+
+            setOrientation  (s, i, 0 , 0, 0);
+            setGobo         (s, i, 1.0);
+            setBrightness   (s, i, 1.0);
+
+        }
+
     },
 
     update: function () {
@@ -121,7 +128,7 @@ var Animation = fk.Class.extend({
 });
 
 // defaults
-var mainAnimation = new Animation("empty");
-var previewAnimation = new Animation("empty");
+var mainAnimation = new Animation("");
+var previewAnimation = null;
 
 setVariables();

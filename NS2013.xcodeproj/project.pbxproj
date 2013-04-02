@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,6 +41,21 @@
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
 		E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
+		E712D5FF170AE7EB0090156E /* NSTransitions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D5FD170AE7EB0090156E /* NSTransitions.cpp */; };
+		E712D61E170AF31A0090156E /* ofxEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D604170AF31A0090156E /* ofxEasing.cpp */; };
+		E712D61F170AF31A0090156E /* ofxEasingBack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D606170AF31A0090156E /* ofxEasingBack.cpp */; };
+		E712D620170AF31A0090156E /* ofxEasingBounce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D608170AF31A0090156E /* ofxEasingBounce.cpp */; };
+		E712D621170AF31A0090156E /* ofxEasingCirc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D60A170AF31A0090156E /* ofxEasingCirc.cpp */; };
+		E712D622170AF31A0090156E /* ofxEasingCubic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D60C170AF31A0090156E /* ofxEasingCubic.cpp */; };
+		E712D623170AF31A0090156E /* ofxEasingElastic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D60E170AF31A0090156E /* ofxEasingElastic.cpp */; };
+		E712D624170AF31A0090156E /* ofxEasingExpo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D610170AF31A0090156E /* ofxEasingExpo.cpp */; };
+		E712D625170AF31A0090156E /* ofxEasingLinear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D612170AF31A0090156E /* ofxEasingLinear.cpp */; };
+		E712D626170AF31A0090156E /* ofxEasingQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D614170AF31A0090156E /* ofxEasingQuad.cpp */; };
+		E712D627170AF31A0090156E /* ofxEasingQuart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D616170AF31A0090156E /* ofxEasingQuart.cpp */; };
+		E712D628170AF31A0090156E /* ofxEasingQuint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D618170AF31A0090156E /* ofxEasingQuint.cpp */; };
+		E712D629170AF31A0090156E /* ofxEasingSine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D61A170AF31A0090156E /* ofxEasingSine.cpp */; };
+		E712D62A170AF31A0090156E /* ofxTween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D61C170AF31A0090156E /* ofxTween.cpp */; };
+		E712D62D170B0CF80090156E /* ofxScreenLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D62B170B0CF80090156E /* ofxScreenLog.cpp */; };
 		E72CAC8817009FDF006A0901 /* BloomPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E72CAC6F17009FDE006A0901 /* BloomPass.cpp */; };
 		E72CAC8917009FDF006A0901 /* ConvolutionPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E72CAC7117009FDE006A0901 /* ConvolutionPass.cpp */; };
 		E72CAC8A17009FDF006A0901 /* DofAltPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E72CAC7317009FDE006A0901 /* DofAltPass.cpp */; };
@@ -196,6 +211,37 @@
 		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		E712D5FD170AE7EB0090156E /* NSTransitions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSTransitions.cpp; sourceTree = "<group>"; };
+		E712D5FE170AE7EB0090156E /* NSTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTransitions.h; sourceTree = "<group>"; };
+		E712D603170AF31A0090156E /* easing_terms_of_use.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = easing_terms_of_use.html; sourceTree = "<group>"; };
+		E712D604170AF31A0090156E /* ofxEasing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasing.cpp; sourceTree = "<group>"; };
+		E712D605170AF31A0090156E /* ofxEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasing.h; sourceTree = "<group>"; };
+		E712D606170AF31A0090156E /* ofxEasingBack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingBack.cpp; sourceTree = "<group>"; };
+		E712D607170AF31A0090156E /* ofxEasingBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingBack.h; sourceTree = "<group>"; };
+		E712D608170AF31A0090156E /* ofxEasingBounce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingBounce.cpp; sourceTree = "<group>"; };
+		E712D609170AF31A0090156E /* ofxEasingBounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingBounce.h; sourceTree = "<group>"; };
+		E712D60A170AF31A0090156E /* ofxEasingCirc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingCirc.cpp; sourceTree = "<group>"; };
+		E712D60B170AF31A0090156E /* ofxEasingCirc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingCirc.h; sourceTree = "<group>"; };
+		E712D60C170AF31A0090156E /* ofxEasingCubic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingCubic.cpp; sourceTree = "<group>"; };
+		E712D60D170AF31A0090156E /* ofxEasingCubic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingCubic.h; sourceTree = "<group>"; };
+		E712D60E170AF31A0090156E /* ofxEasingElastic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingElastic.cpp; sourceTree = "<group>"; };
+		E712D60F170AF31A0090156E /* ofxEasingElastic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingElastic.h; sourceTree = "<group>"; };
+		E712D610170AF31A0090156E /* ofxEasingExpo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingExpo.cpp; sourceTree = "<group>"; };
+		E712D611170AF31A0090156E /* ofxEasingExpo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingExpo.h; sourceTree = "<group>"; };
+		E712D612170AF31A0090156E /* ofxEasingLinear.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingLinear.cpp; sourceTree = "<group>"; };
+		E712D613170AF31A0090156E /* ofxEasingLinear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingLinear.h; sourceTree = "<group>"; };
+		E712D614170AF31A0090156E /* ofxEasingQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingQuad.cpp; sourceTree = "<group>"; };
+		E712D615170AF31A0090156E /* ofxEasingQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingQuad.h; sourceTree = "<group>"; };
+		E712D616170AF31A0090156E /* ofxEasingQuart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingQuart.cpp; sourceTree = "<group>"; };
+		E712D617170AF31A0090156E /* ofxEasingQuart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingQuart.h; sourceTree = "<group>"; };
+		E712D618170AF31A0090156E /* ofxEasingQuint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingQuint.cpp; sourceTree = "<group>"; };
+		E712D619170AF31A0090156E /* ofxEasingQuint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingQuint.h; sourceTree = "<group>"; };
+		E712D61A170AF31A0090156E /* ofxEasingSine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingSine.cpp; sourceTree = "<group>"; };
+		E712D61B170AF31A0090156E /* ofxEasingSine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingSine.h; sourceTree = "<group>"; };
+		E712D61C170AF31A0090156E /* ofxTween.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTween.cpp; sourceTree = "<group>"; };
+		E712D61D170AF31A0090156E /* ofxTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTween.h; sourceTree = "<group>"; };
+		E712D62B170B0CF80090156E /* ofxScreenLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxScreenLog.cpp; sourceTree = "<group>"; };
+		E712D62C170B0CF80090156E /* ofxScreenLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxScreenLog.h; sourceTree = "<group>"; };
 		E72CAC6017009FDE006A0901 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E72CAC6D17009FDE006A0901 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.md; sourceTree = "<group>"; };
 		E72CAC6F17009FDE006A0901 /* BloomPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BloomPass.cpp; sourceTree = "<group>"; };
@@ -532,6 +578,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				E712D600170AF31A0090156E /* ofxTween */,
 				E737B49A1704958D00B656D9 /* ofxEQ */,
 				E749B6CD1701CCFB00699521 /* ofxJavascript */,
 				E72CAC5F17009FDE006A0901 /* ofxPostProcessing */,
@@ -620,6 +667,8 @@
 				E749B7CC1701D62F00699521 /* Globals.h */,
 				E749B7CE1701DFEF00699521 /* NSAnimation.cpp */,
 				E749B7CF1701DFF000699521 /* NSAnimation.h */,
+				E712D62B170B0CF80090156E /* ofxScreenLog.cpp */,
+				E712D62C170B0CF80090156E /* ofxScreenLog.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -631,6 +680,57 @@
 				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
 			);
 			name = openFrameworks;
+			sourceTree = "<group>";
+		};
+		E712D600170AF31A0090156E /* ofxTween */ = {
+			isa = PBXGroup;
+			children = (
+				E712D601170AF31A0090156E /* src */,
+			);
+			name = ofxTween;
+			path = ../../../addons/ofxTween;
+			sourceTree = "<group>";
+		};
+		E712D601170AF31A0090156E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E712D602170AF31A0090156E /* Easings */,
+				E712D61C170AF31A0090156E /* ofxTween.cpp */,
+				E712D61D170AF31A0090156E /* ofxTween.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		E712D602170AF31A0090156E /* Easings */ = {
+			isa = PBXGroup;
+			children = (
+				E712D603170AF31A0090156E /* easing_terms_of_use.html */,
+				E712D604170AF31A0090156E /* ofxEasing.cpp */,
+				E712D605170AF31A0090156E /* ofxEasing.h */,
+				E712D606170AF31A0090156E /* ofxEasingBack.cpp */,
+				E712D607170AF31A0090156E /* ofxEasingBack.h */,
+				E712D608170AF31A0090156E /* ofxEasingBounce.cpp */,
+				E712D609170AF31A0090156E /* ofxEasingBounce.h */,
+				E712D60A170AF31A0090156E /* ofxEasingCirc.cpp */,
+				E712D60B170AF31A0090156E /* ofxEasingCirc.h */,
+				E712D60C170AF31A0090156E /* ofxEasingCubic.cpp */,
+				E712D60D170AF31A0090156E /* ofxEasingCubic.h */,
+				E712D60E170AF31A0090156E /* ofxEasingElastic.cpp */,
+				E712D60F170AF31A0090156E /* ofxEasingElastic.h */,
+				E712D610170AF31A0090156E /* ofxEasingExpo.cpp */,
+				E712D611170AF31A0090156E /* ofxEasingExpo.h */,
+				E712D612170AF31A0090156E /* ofxEasingLinear.cpp */,
+				E712D613170AF31A0090156E /* ofxEasingLinear.h */,
+				E712D614170AF31A0090156E /* ofxEasingQuad.cpp */,
+				E712D615170AF31A0090156E /* ofxEasingQuad.h */,
+				E712D616170AF31A0090156E /* ofxEasingQuart.cpp */,
+				E712D617170AF31A0090156E /* ofxEasingQuart.h */,
+				E712D618170AF31A0090156E /* ofxEasingQuint.cpp */,
+				E712D619170AF31A0090156E /* ofxEasingQuint.h */,
+				E712D61A170AF31A0090156E /* ofxEasingSine.cpp */,
+				E712D61B170AF31A0090156E /* ofxEasingSine.h */,
+			);
+			path = Easings;
 			sourceTree = "<group>";
 		};
 		E72CAC5F17009FDE006A0901 /* ofxPostProcessing */ = {
@@ -838,6 +938,8 @@
 				E778AA301700671000EA034E /* NSSharpy.h */,
 				E77C9C3C1705A517009B32E0 /* NSSceneManager.cpp */,
 				E77C9C3D1705A517009B32E0 /* NSSceneManager.h */,
+				E712D5FD170AE7EB0090156E /* NSTransitions.cpp */,
+				E712D5FE170AE7EB0090156E /* NSTransitions.h */,
 			);
 			name = preview;
 			sourceTree = "<group>";
@@ -1045,6 +1147,21 @@
 				E737B4AB1704958D00B656D9 /* fftOctaveAnalyzer.cpp in Sources */,
 				E737B4AC1704958D00B656D9 /* ofxEQ.cpp in Sources */,
 				E77C9C3E1705A517009B32E0 /* NSSceneManager.cpp in Sources */,
+				E712D5FF170AE7EB0090156E /* NSTransitions.cpp in Sources */,
+				E712D61E170AF31A0090156E /* ofxEasing.cpp in Sources */,
+				E712D61F170AF31A0090156E /* ofxEasingBack.cpp in Sources */,
+				E712D620170AF31A0090156E /* ofxEasingBounce.cpp in Sources */,
+				E712D621170AF31A0090156E /* ofxEasingCirc.cpp in Sources */,
+				E712D622170AF31A0090156E /* ofxEasingCubic.cpp in Sources */,
+				E712D623170AF31A0090156E /* ofxEasingElastic.cpp in Sources */,
+				E712D624170AF31A0090156E /* ofxEasingExpo.cpp in Sources */,
+				E712D625170AF31A0090156E /* ofxEasingLinear.cpp in Sources */,
+				E712D626170AF31A0090156E /* ofxEasingQuad.cpp in Sources */,
+				E712D627170AF31A0090156E /* ofxEasingQuart.cpp in Sources */,
+				E712D628170AF31A0090156E /* ofxEasingQuint.cpp in Sources */,
+				E712D629170AF31A0090156E /* ofxEasingSine.cpp in Sources */,
+				E712D62A170AF31A0090156E /* ofxTween.cpp in Sources */,
+				E712D62D170B0CF80090156E /* ofxScreenLog.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1073,6 +1190,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
@@ -1107,7 +1225,7 @@
 					"-lpthread",
 					"-mtune=native",
 				);
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -1126,6 +1244,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_UNROLL_LOOPS = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
@@ -1160,7 +1279,7 @@
 					"-lpthread",
 					"-mtune=native",
 				);
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
@@ -1274,6 +1393,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
+				"INFOPLIST_PREPROCESSOR_DEFINITIONS[sdk=*]" = XP_UNIX;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

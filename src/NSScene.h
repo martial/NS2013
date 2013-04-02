@@ -49,6 +49,9 @@ public:
     ofPtr<NSAnimation>          animationRef;
     ofxPostProcessing           post;
     
+    
+    void onResize(int width, int height);
+    
 private:
     
     

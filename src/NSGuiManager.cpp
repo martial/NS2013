@@ -23,6 +23,7 @@ void NSGuiManager::setup() {
     guiLeft->addLabel("NS 2013 BITCH");
     
     guiLeft->addValuePlotter("FPS", 126, 0.0, 120, &fps );
+    guiLeft->addFPS();
     guiLeft->addSpacer();
     
     guiLeft->addLabel("POST PROCESSING", OFX_UI_FONT_SMALL);
@@ -54,7 +55,13 @@ void NSGuiManager::setup() {
     guiLeft->addToggle("SOUND ALPHA", &mainScene->bSndAlpha);
     guiLeft->addToggle("SOUND GOBO", &mainScene->bSndGobo);
     
+    
+    
+    guiLeft->loadSettings("gui.xml");
+    
     ofAddListener(guiLeft->newGUIEvent,this,&NSGuiManager::guiEvent);
+    
+    
     //guiLeft->addSpacer();
     
     //guiRight = new ofxUICanvas();
@@ -102,5 +109,11 @@ void NSGuiManager::guiEvent(ofxUIEventArgs &e) {
         ofxUISlider * slider = (ofxUISlider *) e.widget;
         Globals::instance()->eq->setFilterRange((int)slider->getScaledValue());
     }
+}
+
+void NSGuiManager::exit () {
+    
+    guiLeft->saveSettings("gui.xml");
+    
 }
 

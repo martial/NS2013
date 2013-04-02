@@ -15,11 +15,13 @@ var Template = Animation.extend({
 
         for (var i = 0; i < numSharpy; i++) {
 
+            //var x = z;
 
-            //setOrientation  (s, i, 0, 0, 0);
-            lookAt          (s, i, 0, 0, -300);
-            setGobo         (s, i, 1);
+            setOrientation  (s, i, 0, 0, 0);
+            //lookAt          (s, i, 0,0, -300);
+            setGobo         (s, i, 0.2);
             setBrightness   (s, i, 1);
+
 
 
         }

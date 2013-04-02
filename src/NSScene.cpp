@@ -14,12 +14,14 @@ NSScene::NSScene () {
     
     bEnableFFSA     = true;
     bEnableBloom    = true;
-    bEnableDof      = false;
+    bEnableDof      = true;
     bCamMouseInput  = false;
     bDrawGrid       = true;
     bToggleCamera   = false;
     bSndAlpha       = false;
     bSndGobo        = false;
+    dofAperture     = 1.0;
+    dofFocus        = 0.2;
     
     
 }
@@ -58,6 +60,8 @@ void NSScene::setup (int width, int height) {
     post.createPass<FxaaPass>()->setEnabled(bEnableFFSA);
     post.createPass<BloomPass>()->setEnabled(bEnableBloom);
     post.createPass<DofPass>()->setEnabled(bEnableDof);
+    
+    
 
     dof = post.getPasses()[2];
     
@@ -124,11 +128,13 @@ void NSScene::update () {
         int indexMapped = ofMap(index, 0, 16, 0, 512);
         
         if(bSndAlpha)
-            sharpyRef->setBrightness(sharpyRef->getBrightness() * eqChannel[indexMapped]);
-        
-        if(bSndGobo)
-            sharpyRef->setGobo(sharpyRef->getGobo() * eqChannel[indexMapped]);
+            sharpyRef->target->brt *= sharpyRef->target->brt * eqChannel[indexMapped];
 
+        if(bSndGobo)
+            sharpyRef->target->goboPct *= sharpyRef->target->goboPct * eqChannel[indexMapped];
+            //sharpyRef->target->setGobo(sharpyRef->getGobo() * eqChannel[indexMapped]);
+        
+         //sharpyRef->setOrientation(shar)
         
         sharpyRef->update();
         pos.x += xDistance;
@@ -146,7 +152,15 @@ void NSScene::update () {
 
 void NSScene::draw() {
     
-    setCameraMode(camMode);
+    
+    
+    if(bCamMouseInput) {
+        cam.enableMouseInput();
+    } else {
+        setCameraMode(camMode);
+        cam.disableMouseInput();
+        
+    }
         
     // copy enable part of gl state
     glPushAttrib(GL_ENABLE_BIT);
@@ -267,13 +281,14 @@ void NSScene::toggleCamera() {
         camMode++;
         if(camMode>3) camMode = 0;
         bToggleCamera = false;
-    
+        this->bCamMouseInput    = false;
     
 }
 
 void NSScene::setCameraMode(int camMode) {
     
-    this->camMode = camMode;
+    
+    this->camMode           = camMode;
     
     switch (camMode) {
         case 0:
@@ -319,7 +334,19 @@ void NSScene::sharpyLookAt(int sharpyIndex, ofVec3f pos) {
     sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
     ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
     
-    sharpyRef->lookAt(pos);
+    ofNode tmpNode;
+    tmpNode.setParent(*this);
+    tmpNode.setPosition(sharpyRef->getPosition());
+    tmpNode.lookAt(pos);
+    
+    sharpyRef->target->setOrientation(tmpNode.getOrientationQuat());
+    
+    
+    
+    //sharpyRef->lookAt(pos);
+    
+    
+    
     
 }
 
@@ -355,7 +382,15 @@ void NSScene::setOrientation(int sharpyIndex, ofVec3f eulerAngles) {
     sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
     
     ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
-    sharpyRef->setOrientation(eulerAngles);
+    //sharpyRef->setOrientation(eulerAngles);
+    sharpyRef->target->setOrientation(eulerAngles);
+    
+    
+}
+
+void NSScene::onResize(int width, int height) {
+    
+    post.init(width , height);
     
     
 }

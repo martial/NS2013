@@ -13,7 +13,7 @@
 #include "ofxUI.h"
 #include "ofxJavascript.h"
 #include "JSBinder.h"
-#include "NSScene.h"
+
 #include "NSAnimation.h"
 
 class NSEditor {
@@ -26,6 +26,8 @@ public:
     void update(int numScenes);
     
     
+    void callMainSetup();
+    void callMainUpdate();
     void setAnimation(int index, int scene);
     void nextAnimation(int scene);
     
@@ -40,7 +42,6 @@ public:
     
 private :
     
-    NSScene                         * NSScene;
     
     ofPtr<NSAnimation>              currentAnimation;
     vector<ofPtr<NSAnimation> >     animations;

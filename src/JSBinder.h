@@ -26,3 +26,5 @@ ofxJSDeclareFunctionCpp(setName);
 
 ofxJSDeclareFunctionCpp(getMouseX);
 ofxJSDeclareFunctionCpp(getMouseY);
+
+ofxJSDeclareFunctionCpp(getPos);
