@@ -56,25 +56,74 @@ void NSGuiManager::setup() {
     guiLeft->addToggle("SOUND GOBO", &mainScene->bSndGobo);
     
     
+    guiRight = new ofxUICanvas(220, ofGetHeight());
+    guiRight->setDrawBack(true);
+    guiRight->addLabel("GLOBALS");
+    guiRight->addToggle("RELOAD JS", false);
+    guiRight->addSlider("SPEED", 0.0, 1.0,  &Globals::instance()->animationManager->speedPct);
+    animationsDropDown = guiRight->addDropDownList("ANIMATIONS", Globals::instance()->animationManager->getAnimations());
     
     guiLeft->loadSettings("gui.xml");
     
     ofAddListener(guiLeft->newGUIEvent,this,&NSGuiManager::guiEvent);
+    ofAddListener(guiRight->newGUIEvent,this,&NSGuiManager::guiEvent);
     
+    guiLeft->disable();
     
-    //guiLeft->addSpacer();
+    guiEditorLeft = new ofxUICanvas(220, ofGetHeight());
+    guiEditorLeft->setDrawBack(true);
+    guiEditorLeft->addLabel("NS 2013 EDITOR BITCH");
+    guiEditorLeft->addSpacer();
+    guiEditorLeft->addLabel("INSPECTOR GADGET");
+    guiEditorLeft->addSpacer();
+    guiEditorLeft->addLabel("NAME");
+    nameInput = guiEditorLeft->addTextInput("NAME", "...");
+    guiEditorLeft->addSpacer();
+    guiEditorLeft->addSlider("SPEED", 0.0, 1.0,  &Globals::instance()->editor->playVel);
+    guiEditorLeft->addLabelButton("SAVE", false);
+    guiEditorLeft->addLabelButton("RELOAD", false);
     
-    //guiRight = new ofxUICanvas();
-    /*
-    guiRight->setDrawBack(true);
-    guiRight->addLabel("INSPECTOR");
-     */
+    //guiEditorLeft->
+    
+    setMode(1);
+    
+}
+
+void NSGuiManager::setMode(int mode) {
+    
+    if(mode == 0) {
+        
+        guiLeft->enable();
+        guiEditorLeft->disable();
+        
+        
+        
+    } else {
+        
+        guiRight->disable();
+        guiLeft->disable();
+        
+    }
     
     
 }
 
+void NSGuiManager::populateAnimations() {
+    
+    animationsDropDown->setAllowMultiple(false);
+    animationsDropDown->clearToggles();
+    
+    vector<string> anims = Globals::instance()->animationManager->getAnimations();
+    for ( int i=0; i<anims.size(); i++)
+        animationsDropDown->addToggle(anims[i]);
+    
+}
+
 void NSGuiManager::update() {
-    //guiRight->getRect()->x = ofGetWidth() - guiRight->getRect()->getWidth();
+    guiRight->getRect()->x      = ofGetWidth() - guiRight->getRect()->getWidth();
+    guiLeft->getRect()->height  = ofGetHeight();
+    guiRight->getRect()->height = ofGetHeight();
+    
     fps = ofGetFrameRate();
 
 }
@@ -109,6 +158,27 @@ void NSGuiManager::guiEvent(ofxUIEventArgs &e) {
         ofxUISlider * slider = (ofxUISlider *) e.widget;
         Globals::instance()->eq->setFilterRange((int)slider->getScaledValue());
     }
+    
+    if(name == "RELOAD JS") {
+        Globals::instance()->animationManager->listAnimations();
+        populateAnimations();
+    }
+    
+    if(name == "ANIMATIONS") {
+        
+        vector<ofxUIWidget *> &selected = animationsDropDown->getSelected();
+        for(int i = 0; i < selected.size(); i++)
+        {
+            
+            Globals::instance()->animationManager->setAnimation(selected[i]->getName(),0);
+        }
+        
+    }
+}
+
+bool NSGuiManager::isBusy() {
+    
+    return (nameInput->clicked);
 }
 
 void NSGuiManager::exit () {

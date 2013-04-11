@@ -21,14 +21,26 @@ public:
     void update();
     void exit();
     
+    void setMode(int mode);
+    
+    void populateAnimations();
     void guiEvent(ofxUIEventArgs &e);
+    
+    bool isBusy();
+    
+    ofxUITextInput *     nameInput;
+
     
 private:
     
     ofxUICanvas     *    guiLeft;
     ofxUICanvas     *    guiRight;
     
+    ofxUICanvas     *    guiEditorLeft;
+    ofxUICanvas     *    guiEditorRight;
+    
     ofxUISlider     *    overrideSlider;
+    ofxUIDropDownList*   animationsDropDown;
     
     float                fps;
     

@@ -13,6 +13,8 @@
 #include "NSSharpy.h"
 #include "ofxPostProcessing.h"
 #include "NSAnimation.h"
+#include "ofx3DModelLoader.h"
+
 
 class NSScene : public ofNode{
     
@@ -54,6 +56,8 @@ public:
     
 private:
     
+    ofMesh box( float width, float height, float depth, int resX, int resY, int resZ );
+    
     
     RenderPass::Ptr             dof;
     
@@ -69,6 +73,9 @@ private:
     
     vector<ofPtr<NSSharpy> >    sharpies;
     vector<ofLight*>            lights;
+    
+    ofx3DModelLoader            flash;
+    //ofMesh                      box;
     
    
 };

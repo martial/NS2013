@@ -6,14 +6,18 @@ void app::setup(){
     
     ofSetFrameRate(120);
     //ofSetVerticalSync(true);
-    ofBackground(25);
+    ofBackground(0);
     
     
     ofxJSInitialize();
         
-    Globals::instance()->nsSceneManager = &sceneManager;
-    Globals::instance()->eq             = &eq;
-    Globals::instance()->screenLog     = &screenLog;
+    Globals::instance()->nsSceneManager     = &sceneManager;
+    Globals::instance()->eq                 = &eq;
+    Globals::instance()->screenLog          = &screenLog;
+    Globals::instance()->animationManager   = &animationManager;
+    Globals::instance()->editor             = &editor;
+    Globals::instance()->gui                = &guiManager;
+    Globals::instance()->dataManager        = &dataManager;
     
     ofSoundStreamSetup(0,2,this, 44100, 512, 4);
     eq.setup();
@@ -22,21 +26,29 @@ void app::setup(){
     sceneManager.setup();
     sceneManager.createScene(ofGetWidth(), ofGetHeight());
     
-#ifndef EDITOR_MODE
+#ifndef animationManager_MODE
     sceneManager.createScene(320, 240);
     sceneManager.getScene(1)->bEnableDof    = false;
     sceneManager.getScene(1)->bEnableFFSA   = false;
     sceneManager.getScene(1)->setCameraMode(1);
 #endif
     guiManager.setup();
-    editor.setup();
-    editor.setAnimation(0, 0);
-#ifndef EDITOR_MODE
-    editor.setAnimation(0, 1);
-    editor.nextAnimation(1);
+    animationManager.setup();
+    animationManager.setAnimation(0, 0);
+    guiManager.populateAnimations();
+#ifndef animationManager_MODE
+    animationManager.setAnimation(0, 1);
+    animationManager.nextAnimation(1);
 #endif
     eq.smooth = .2;
     //eq.setFilterRange(-1);
+    
+    
+    // editor
+    
+    editor.setup();
+    
+    mode = 1;
     
     
 }
@@ -45,9 +57,21 @@ void app::setup(){
 void app::update(){
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
-    editor.update(sceneManager.getNumScenes());
-    sceneManager.update();
     
+    if(mode == 0 ) {
+        
+        
+        animationManager.update(sceneManager.getNumScenes());
+        sceneManager.update();
+        
+        
+    } else {
+        
+        editor.update();
+        
+    }
+    
+    guiManager.update();
    
 }
 
@@ -56,13 +80,20 @@ void app::draw(){
     
     ofDisableSmoothing();
     
-    guiManager.update();
+    ofBackground(25);
+    
+    
+    if(mode == 0 ) {
     sceneManager.draw();
-    
-    //ofEnableSmoothing();
-    
+        
     ofSetColor(255);
     screenLog.draw();
+        
+    } else {
+        
+        editor.draw();
+        
+    }
 
 }
 
@@ -77,17 +108,20 @@ void app::audioReceived (float * input, int bufferSize, int nChannels){
 //--------------------------------------------------------------
 void app::keyPressed(int key){
     
+    if(guiManager.isBusy())
+        return;
+    
     if (key == ' ') {
-        editor.nextAnimation(0);
+        animationManager.nextAnimation(0);
     }
     
     if (key == 'f') {
         ofToggleFullscreen();
     }
     
-#ifndef EDITOR_MODE
+#ifndef animationManager_MODE
     if (key == 'p') {
-        editor.nextAnimation(1);        
+        animationManager.nextAnimation(1);        
     }
 #endif
     

@@ -3,12 +3,14 @@
 #include "ofMain.h"
 #include "NSSceneManager.h"
 #include "NSGuiManager.h"
-#include "NSEditor.h"
+#include "NSAnimationManager.h"
 #include "ofxEQ.h"
 #include "ofxScreenLog.h"
+#include "NSEditor.h"
+#include "NSDataManager.h"
 
 
-#define EDITOR_MODE
+#define animationManager_MODE
 
 class app : public ofBaseApp{
 
@@ -32,12 +34,19 @@ class app : public ofBaseApp{
     
         void exit();
     
-        NSSceneManager      sceneManager;
-        NSGuiManager        guiManager;
-        NSEditor            editor;
+        NSSceneManager          sceneManager;
+        NSGuiManager            guiManager;
+        NSAnimationManager      animationManager;
+        NSDataManager           dataManager;
     
-        ofxEQ               eq;
+        NSEditor                editor;
     
-        ofxScreenLog        screenLog;
+        ofxEQ                   eq;
+    
+        ofxScreenLog            screenLog;
+    
+    
+    
+        int                     mode;
 		
 };

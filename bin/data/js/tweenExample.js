@@ -24,8 +24,6 @@ var TweenExample = Animation.extend({
 
     update: function (s) {
 
-        // update Tween engine
-        TWEEN.update();
 
         // update sharpys properties
         for (var i = 0; i < numSharpy; i++) {

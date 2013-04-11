@@ -5,19 +5,29 @@ include("Scripts/libraries/fieldkit/src/math/Math.js");
 include("Scripts/libraries/fieldkit/src/math/Vec2.js");
 include("Scripts/libraries/fieldkit/src/math/Vec3.js");
 include("Scripts/libraries/tween.min.js")
+include("Scripts/libraries/SimplexNoise.js")
+include("Scripts/libraries/EasedPct.js")
 
 // ----------------------------
 // Global variables and functions
 
-var numSharpy = 32;
-var leftSharpies = new Array();
-var rightSharpies = new Array();
-var horizontalSharpies = new Array();
+var numSharpy           = 32;
+var leftSharpies        = new Array();
+var rightSharpies       = new Array();
+var horizontalSharpies  = new Array();
 
-var animations = new Array();
-var previewAnimIndex = 0;
+var animations          = new Array();
+var previewAnimIndex    = 0;
 
-var speedPct = 1.0;
+var speedPct            = 1.0;
+var timeMillis          = 0.0;
+
+var yoyoPct             = 0.0;
+
+var tween = new TWEEN.Tween(yoyoPct)
+    .to(1.0,.0)
+    .easing(TWEEN.Easing.Quintic.Out)
+    .start();
 
 function setVariables() {
 
@@ -93,7 +103,14 @@ function setup() {
     if(previewAnimation)previewAnimation.setup(1);
 }
 
-function update() {
+function update(speed, timeMs) {
+
+    TWEEN.update();
+    speedPct    = speed;
+    timeMillis  = timeMs;
+
+   // println(speed);
+
 
     mainAnimation.update(0);
     if(previewAnimation)previewAnimation.update(1);

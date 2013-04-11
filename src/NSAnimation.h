@@ -27,6 +27,7 @@ public:
     int                         id;
     string                      name;
     string                      scriptPath;
+    string                      scriptName;
     
     ofxJSScript *               script;
     

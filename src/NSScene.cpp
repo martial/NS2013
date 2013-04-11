@@ -72,6 +72,17 @@ void NSScene::setup (int width, int height) {
     dofAperture = 0.92;
     dofFocus = 0.4;
     
+    //load the squirrel model - the 3ds and the texture file need to be in the same folder
+    flash.loadModel("model/model.3ds", 0.5);
+    
+    //you can create as many rotations as you want
+    //choose which axis you want it to effect
+    //you can update these rotations later on
+    
+    //flash.setRotation(0, 90, 0, 0, 1);
+    flash.setScale(0.9, 0.9, 0.9);
+    flash.setPosition(0, 0, -215);
+    
 }
 
 //--------------------------------------------------------------
@@ -110,8 +121,8 @@ void NSScene::update () {
     
     
     ofVec3f pos;
-    float xDistance = 120.f;
-    float yDistance = 120.f;
+    float xDistance = 7559.055119f * 2.0 / 100.0f;
+    float yDistance = 32125.984254f * 2.0 / 100.0f;
     
     sharpiesCenter.set(ofVec3f( ( (float)numSharpies *.25  * xDistance) - xDistance*.5, yDistance * .5));
     
@@ -132,9 +143,6 @@ void NSScene::update () {
 
         if(bSndGobo)
             sharpyRef->target->goboPct *= sharpyRef->target->goboPct * eqChannel[indexMapped];
-            //sharpyRef->target->setGobo(sharpyRef->getGobo() * eqChannel[indexMapped]);
-        
-         //sharpyRef->setOrientation(shar)
         
         sharpyRef->update();
         pos.x += xDistance;
@@ -171,14 +179,19 @@ void NSScene::draw() {
     // begin scene to post process
     
     post.begin(cam);
+    
+    ofPushMatrix();
+    
+    //ofScale(ofGetMouseY() /1000, ofGetMouseY() /1000);
+    
     glEnable(GL_CULL_FACE);
 
     ofSetColor(255);
     //ofDrawGrid(1000, 2, true);
     
     
-    float width = sharpiesCenter.x * 2.f;
-    float height = 300;
+    //float width = sharpiesCenter.x * 2.f;
+    //float height = 300;
     
     ofDisableAlphaBlending();
     
@@ -194,21 +207,44 @@ void NSScene::draw() {
     glBegin(GL_QUADS);
 
     // sol
-    float zPos = -300.0;
-    ofVec3f floorSize = sharpiesCenter;
-    floorSize.y *= 6;
-    floorSize.x *= 2;
-    glColor3f(0.95, 0.95, 0.95);    glVertex3f(-floorSize.x, -floorSize.y* 100, zPos);
-    glColor3f(.85, 0.85, 0.85);     glVertex3f(floorSize.x, -floorSize.y* 100, zPos);
-    glColor3f(.9, 0.9, 0.9);        glVertex3f(floorSize.x, floorSize.y* 100, zPos);
-    glColor3f(1, 1, 1);             glVertex3f(-floorSize.x, floorSize.y* 100, zPos);
+    //float zPos = -300.0;
+    float zPos = -20787.401576 / 100.0f;
+    ofVec3f floorSize;
+    floorSize.x = 158740.157492 / 100.0f;
+    floorSize.y = 60472.440949 / 100.0f;
     
+    
+    float floorScale = 10.0;
+    
+    glColor3f(0,0,0);               glVertex3f(-floorSize.x* floorScale, -floorSize.y* floorScale, zPos-2);
+    glColor3f(0,0,0);               glVertex3f(floorSize.x* floorScale, -floorSize.y* floorScale, zPos-2);
+    glColor3f(0,0,0);               glVertex3f(floorSize.x* floorScale, floorSize.y* floorScale, zPos-2);
+    glColor3f(0,0,0);               glVertex3f(-floorSize.x* floorScale, floorSize.y* floorScale, zPos-2);
+    
+    floorScale = 1.0;
+    
+    
+    float floorColor = 0.6;
+    glColor3f(floorColor,floorColor,floorColor);    glVertex3f(-floorSize.x* floorScale, -floorSize.y* floorScale, zPos);
+    glColor3f(floorColor,floorColor,floorColor);     glVertex3f(floorSize.x* floorScale, -floorSize.y* floorScale, zPos);
+    glColor3f(floorColor,floorColor,floorColor);        glVertex3f(floorSize.x* floorScale, floorSize.y* floorScale, zPos);
+    glColor3f(floorColor,floorColor,floorColor);             glVertex3f(-floorSize.x* floorScale, floorSize.y* floorScale, zPos);
+    
+    /*
+    glColor3f(0.95, 0.95, 0.95);    glVertex3f(-floorSize.x* floorScale, -floorSize.y* floorScale, zPos);
+    glColor3f(.85, 0.85, 0.85);     glVertex3f(floorSize.x* floorScale, -floorSize.y* floorScale, zPos);
+    glColor3f(.9, 0.9, 0.9);        glVertex3f(floorSize.x* floorScale, floorSize.y* floorScale, zPos);
+    glColor3f(1, 1, 1);             glVertex3f(-floorSize.x* floorScale, floorSize.y* floorScale, zPos);
+     
+     */
     // right
+    
+    
    
-    glColor3f(.85, 0.85, 0.85);            glVertex3f(-floorSize.x, -floorSize.y, 0);
-     glColor3f(0.95, 0.95, 0.95);        glVertex3f(floorSize.x, -floorSize.y, 0);
-     glColor3f(1, 1, 1);        glVertex3f(floorSize.x, -floorSize.y, zPos);
-    glColor3f(.9, 0.9, 0.9);    glVertex3f(-floorSize.x, -floorSize.y, zPos);
+    glColor3f(.85, 0.85, 0.85);     glVertex3f(-floorSize.x, -floorSize.y, 0);
+    glColor3f(0.95, 0.95, 0.95);    glVertex3f(floorSize.x, -floorSize.y, 0);
+    glColor3f(1, 1, 1);             glVertex3f(floorSize.x, -floorSize.y, zPos);
+    glColor3f(.9, 0.9, 0.9);        glVertex3f(-floorSize.x, -floorSize.y, zPos);
     
     glColor3f(0.95, 0.95, 0.95);    glVertex3f(-floorSize.x, floorSize.y, zPos);
     glColor3f(.85, 0.85, 0.85);     glVertex3f(floorSize.x, floorSize.y, zPos);
@@ -222,11 +258,31 @@ void NSScene::draw() {
     
     glEnd();
     
-   
     
+    //3779,5275595 / 100 = 1 Meter
+    
+    
+    
+    ofPushMatrix();
+    
+    float w = 3779.5275595 * 4 / 100;
+    float h = 60472.440949 / 100.0f;
+    float depth = 75;
+    
+    ofTranslate(-floorSize.x + (w*.5), 0, zPos + (depth*.5));
+    
+    ofMesh b =box(w, floorSize.y*2, depth, 16, 16, 16);
+    ofSetColor(0.6 * 255);
+    b.draw();
+    ofPopMatrix();
+    
+    //ofCylinder();
+    ofPopMatrix();
+    
+    flash.draw();
     
     // walls
-    int groundWidth = 4000, groundHeight = 1000;
+    //int groundWidth = 4000, groundHeight = 1000;
     
     //ofRect(0, 0, groundWidth, groundHeight);
     
@@ -236,6 +292,7 @@ void NSScene::draw() {
     light.draw();
     lightUp.draw();
 
+   
     
     ofSetColor(255);
     ofSphere (light.getPosition(), 10);
@@ -251,7 +308,7 @@ void NSScene::draw() {
     if(bDrawGrid) {
         ofPushMatrix();
         ofTranslate(0, 0, zPos +1);
-        ofDrawGrid(5000, 48, false, false, false, true);
+        ofDrawGrid(3779.5275595 / 100 * 256, 128, false, false, false, true);
         ofPopMatrix();
     }
 
@@ -262,7 +319,15 @@ void NSScene::draw() {
         sharpyRef->draw();
         
     }
+    
+  
+    ofSetColor(255);
+
+    
     ofDisableAlphaBlending();
+    
+    ofPopMatrix();
+    
     //ofDisableBlendMode();
     //cam.end();
     post.end(false);
@@ -293,13 +358,14 @@ void NSScene::setCameraMode(int camMode) {
     switch (camMode) {
         case 0:
             
+            cam.setGlobalPosition(2000, 0, 30);
             cam.setOrientation(ofVec3f(90, 90, 0));
-            cam.setDistance(2000.f);
+            //cam.setDistance(2000.f);
             break;
             
         case 1:
             
-            cam.setGlobalPosition(2000, 0, -150);
+            cam.setGlobalPosition(1500, 0, -80);
             cam.setOrientation(ofVec3f(90, 90, 0));
             break;
             
@@ -394,5 +460,253 @@ void NSScene::onResize(int width, int height) {
     
     
 }
+
+// Box Mesh //
+//--------------------------------------------------------------
+ofMesh NSScene::box( float width, float height, float depth, int resX, int resY, int resZ ) {
+    // mesh only available as triangles //
+    ofMesh mesh;
+    mesh.setMode( OF_PRIMITIVE_TRIANGLES );
+    
+    // halves //
+    float halfW = width * .5f;
+    float halfH = height * .5f;
+    float halfD = depth * .5f;
+    
+    ofVec3f vert;
+    ofVec2f texcoord;
+    ofVec3f normal;
+    int vertOffset = 0;
+    
+    // TRIANGLES //
+    
+    // Front Face //
+    normal.set(0, 0, 1);
+    // add the vertexes //
+    for(int iy = 0; iy < resY; iy++) {
+        for(int ix = 0; ix < resX; ix++) {
+            
+            // normalized tex coords //
+            texcoord.x = ((float)ix/((float)resX-1.f));
+            texcoord.y = ((float)iy/((float)resY-1.f));
+            
+            vert.x = texcoord.x * width - halfW;
+            vert.y = texcoord.y * height - halfH;
+            vert.z = halfD;
+            
+            mesh.addVertex(vert);
+            mesh.addTexCoord(texcoord);
+            mesh.addNormal(normal);
+        }
+    }
+    
+    for(int y = 0; y < resY-1; y++) {
+        for(int x = 0; x < resX-1; x++) {
+            // first triangle //
+            mesh.addIndex((y)*resX + x + vertOffset);
+            mesh.addIndex((y)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x + vertOffset);
+            
+            // second triangle //
+            mesh.addIndex((y)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x + vertOffset);
+        }
+    }
+    
+    vertOffset = mesh.getNumVertices();
+    
+    
+    // Right Side Face //
+    normal.set(1, 0, 0);
+    // add the vertexes //
+    for(int iy = 0; iy < resY; iy++) {
+        for(int ix = 0; ix < resZ; ix++) {
+            
+            // normalized tex coords //
+            texcoord.x = ((float)ix/((float)resZ-1.f));
+            texcoord.y = ((float)iy/((float)resY-1.f));
+            
+            //vert.x = texcoord.x * width - halfW;
+            vert.x = halfW;
+            vert.y = texcoord.y * height - halfH;
+            vert.z = texcoord.x * -depth + halfD;
+            
+            mesh.addVertex(vert);
+            mesh.addTexCoord(texcoord);
+            mesh.addNormal(normal);
+        }
+    }
+    
+    for(int y = 0; y < resY-1; y++) {
+        for(int x = 0; x < resZ-1; x++) {
+            // first triangle //
+            mesh.addIndex((y)*resZ + x + vertOffset);
+            mesh.addIndex((y)*resZ + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resZ + x + vertOffset);
+            
+            // second triangle //
+            mesh.addIndex((y)*resZ + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resZ + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resZ + x + vertOffset);
+        }
+    }
+    
+    vertOffset = mesh.getNumVertices();
+    
+    // Left Side Face //
+    normal.set(-1, 0, 0);
+    // add the vertexes //
+    for(int iy = 0; iy < resY; iy++) {
+        for(int ix = 0; ix < resZ; ix++) {
+            
+            // normalized tex coords //
+            texcoord.x = ((float)ix/((float)resZ-1.f));
+            texcoord.y = ((float)iy/((float)resY-1.f));
+            
+            //vert.x = texcoord.x * width - halfW;
+            vert.x = -halfW;
+            vert.y = texcoord.y * height - halfH;
+            vert.z = texcoord.x * depth - halfD;
+            
+            mesh.addVertex(vert);
+            mesh.addTexCoord(texcoord);
+            mesh.addNormal(normal);
+        }
+    }
+    
+    for(int y = 0; y < resY-1; y++) {
+        for(int x = 0; x < resZ-1; x++) {
+            // first triangle //
+            mesh.addIndex((y)*resZ + x + vertOffset);
+            mesh.addIndex((y)*resZ + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resZ + x + vertOffset);
+            
+            // second triangle //
+            mesh.addIndex((y)*resZ + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resZ + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resZ + x + vertOffset);
+        }
+    }
+    
+    vertOffset = mesh.getNumVertices();
+    
+    
+    // Back Face //
+    normal.set(0, 0, -1);
+    // add the vertexes //
+    for(int iy = 0; iy < resY; iy++) {
+        for(int ix = 0; ix < resX; ix++) {
+            
+            // normalized tex coords //
+            texcoord.x = ((float)ix/((float)resX-1.f));
+            texcoord.y = ((float)iy/((float)resY-1.f));
+            
+            vert.x = texcoord.x * -width + halfW;
+            vert.y = texcoord.y * height - halfH;
+            vert.z = -halfD;
+            
+            mesh.addVertex(vert);
+            mesh.addTexCoord(texcoord);
+            mesh.addNormal(normal);
+        }
+    }
+    
+    for(int y = 0; y < resY-1; y++) {
+        for(int x = 0; x < resX-1; x++) {
+            // first triangle //
+            mesh.addIndex((y)*resX + x + vertOffset);
+            mesh.addIndex((y)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x + vertOffset);
+            
+            // second triangle //
+            mesh.addIndex((y)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x + vertOffset);
+        }
+    }
+    
+    vertOffset = mesh.getNumVertices();
+    
+    
+    
+    // Top Face //
+    normal.set(0, -1, 0);
+    // add the vertexes //
+    for(int iy = 0; iy < resZ; iy++) {
+        for(int ix = 0; ix < resX; ix++) {
+            
+            // normalized tex coords //
+            texcoord.x = ((float)ix/((float)resX-1.f));
+            texcoord.y = ((float)iy/((float)resZ-1.f));
+            
+            vert.x = texcoord.x * width - halfW;
+            //vert.y = texcoord.y * height - halfH;
+            vert.y = -halfH;
+            vert.z = texcoord.y * depth - halfD;
+            
+            mesh.addVertex(vert);
+            mesh.addTexCoord(texcoord);
+            mesh.addNormal(normal);
+        }
+    }
+    
+    for(int y = 0; y < resZ-1; y++) {
+        for(int x = 0; x < resX-1; x++) {
+            // first triangle //
+            mesh.addIndex((y)*resX + x + vertOffset);
+            mesh.addIndex((y)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x + vertOffset);
+            
+            // second triangle //
+            mesh.addIndex((y)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x + vertOffset);
+        }
+    }
+    
+    vertOffset = mesh.getNumVertices();
+    
+    
+    // Bottom Face //
+    normal.set(0, 1, 0);
+    // add the vertexes //
+    for(int iy = 0; iy < resZ; iy++) {
+        for(int ix = 0; ix < resX; ix++) {
+            
+            // normalized tex coords //
+            texcoord.x = ((float)ix/((float)resX-1.f));
+            texcoord.y = ((float)iy/((float)resZ-1.f));
+            
+            vert.x = texcoord.x * width - halfW;
+            //vert.y = texcoord.y * height - halfH;
+            vert.y = halfH;
+            vert.z = texcoord.y * -depth + halfD;
+            
+            mesh.addVertex(vert);
+            mesh.addTexCoord(texcoord);
+            mesh.addNormal(normal);
+        }
+    }
+    
+    for(int y = 0; y < resZ-1; y++) {
+        for(int x = 0; x < resX-1; x++) {
+            // first triangle //
+            mesh.addIndex((y)*resX + x + vertOffset);
+            mesh.addIndex((y)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x + vertOffset);
+            
+            // second triangle //
+            mesh.addIndex((y)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x+1 + vertOffset);
+            mesh.addIndex((y+1)*resX + x + vertOffset);
+        }
+    }
+    
+    
+    
+    return mesh;
+}
+
 
 

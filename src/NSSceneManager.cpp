@@ -10,12 +10,9 @@
 
 NSSceneManager::NSSceneManager() {
     
-    
 }
 
-
 void NSSceneManager::setup() {
-    
     
 }
 

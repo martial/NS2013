@@ -16,7 +16,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>DOF</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -36,12 +36,12 @@
 <Widget>
     <Kind>4</Kind>
     <Name>RANGE</Name>
-    <Value>16.000000000</Value>
+    <Value>15.504716873</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>OVERRIDE</Name>
-    <Value>-1.000000000</Value>
+    <Value>11.612092972</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
