@@ -13,8 +13,8 @@ var Triangles = Animation.extend({
 
         var isRow = true;
 
-        var time    = of.GetElapsedTimeMillis();
-        var pct     = 0.5 + Math.cos(time / 3500) * 0.5;
+        var time    = timeMillis;
+        var pct     = 0.5 + Math.cos(time / 1500) * 0.5;
 
         var range   = 3000;
 

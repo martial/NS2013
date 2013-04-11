@@ -2,144 +2,197 @@
 //  NSEditor.cpp
 //  NS2013
 //
-//  Created by Martial on 26/03/13.
+//  Created by Martial on 10/04/13.
 //
 //
 
 #include "NSEditor.h"
 #include "Globals.h"
-
-NSEditor::NSEditor () {
-    
-}
+#include "ofxModifierKeys.h"
 
 void NSEditor::setup() {
     
-    initJS();
-    
-    currentIndex        = 0;
-    
-    listAnimations();
-    //(0, 0);
-    
-    
-    
-}
-
-void NSEditor::listAnimations() {
-    
-    // Scripts
-	ofDirectory dirScripts("js");
-	if (dirScripts.exists())
-	{
-		dirScripts.listDir();
-        
-		printf("DIR %s [%d file(s)]\n", dirScripts.path().c_str(),dirScripts.size());
-        
-		vector<ofFile> files = dirScripts.getFiles();
-		vector<ofFile>::iterator it;
-        int i=0;
-		for (it = files.begin(); it != files.end(); ++it){
-			if ((*it).getExtension() == "js")
-			{
-				printf("- [%s] path=%s\n", (*it).getFileName().c_str(), (*it).getAbsolutePath().c_str());
-                                
-                 ofPtr<NSAnimation> animationRef(new NSAnimation());
-                 animationRef->setup(ofToDataPath((*it).getAbsolutePath()), i);
-                 ofAddListener(animationRef->needReload, this, &NSEditor::onScriptChanged);
-                 animations.push_back(animationRef);
-                 i++;
-
-			}
-		}
-	}
-	dirScripts.close();
-    
-}
-
-void NSEditor::setAnimation(int index, int scene) {
-    
-    //currentIndex = ofClamp(index, 0, animations.size()-1);
-    
-    // set animation to scene
-    
-    Globals::instance()->nsSceneManager->getScene(scene)->animationRef.reset();
-    Globals::instance()->nsSceneManager->getScene(scene)->animationRef = animations[index];
-    Globals::instance()->nsSceneManager->getScene(scene)->animationRef->init(scene);
-    
-    callMainSetup();
-    
-    
-}
-
-void NSEditor::nextAnimation(int scene) {
-    
-    if(scene==0) {
-    
-        int index = Globals::instance()->nsSceneManager->getScene(scene)->animationRef->id + 1;
-        if(index > animations.size() -1 ) {
-            index = 0;
-        }
-        setAnimation(index, scene);
-        
-        
-    } else {
-        
-        currentPreviewIndex ++;
-        if(currentPreviewIndex > animations.size() -1 ) {
-            currentPreviewIndex = 0;
-        }
-        
-        // Call main setup
-        ofxJSValue retVal;
-        ofxJSValue args[1];
-        args[0] = int_TO_ofxJSValue(currentPreviewIndex);
-        ofxJSCallFunctionNameGlobal_IfExists("nextPreviewAnim", args,1,retVal);
-        
-        
-        callMainSetup();
-        
-        
-    }
-    
-    
-     
-}
-
-void NSEditor::update (int numScenes) {
-    
-    // update main JS update
-    
-    
-    // Call main update
-    ofxJSValue retVal;
-    ofxJSValue args[0];
-    ofxJSCallFunctionNameGlobal_IfExists("update", args,0,retVal);
-    
-    for( int i =0; i<2; i++) {
-        
-        ofPtr<NSAnimation> animationRef = Globals::instance()->nsSceneManager->getScene(i)->animationRef;
-        if(animationRef)
-            animationRef->update(i);
-        
-    }
-}
-
-void NSEditor::callMainSetup() {
-    
-    ofxJSValue retVal;
-    ofxJSValue args[1];
-    
-    args[0] = int_TO_ofxJSValue(0);
-    ofxJSCallFunctionNameGlobal_IfExists("setup", args,1,retVal);
-    
-    
-}
-
-void NSEditor::onScriptChanged(ofEventArgs & e) {
-    
-    // Call main setup
-    callMainSetup();
+    bIsPlaying = false;
+    currentFrame    = 0;
+    playVel         = 0.1;
+    currentFrameCnt = 0.0;
    
+    createNew();
+    
+    ofAddListener( selectTool.onReleaseEvent, this, &NSEditor::onSelectedHandler );
+    ofAddListener( ofEvents().keyPressed, this,    &NSEditor::onKeyPressed );
+    
+}
+void NSEditor::update() {
+    
+    if(bIsPlaying) {
+        currentFrameCnt += playVel;
+        setCurrentFrame(floor(currentFrameCnt));
+        if(currentFrameCnt > previewCanvas.size() )
+            currentFrameCnt = 0.0;
+        
+    }
+    
+    for (int i=0; i<previewCanvas.size(); i++) {
+        previewCanvas[i]->update();
+    }
+    
+}
+
+
+void NSEditor::draw() {
+    
+    ofEnableAlphaBlending();
+    ofPushMatrix();
+    
+    float xPadding  = 40.f;
+       for (int i=0; i<previewCanvas.size(); i++) {
+        
+        float xStart   = ofGetWidth() * .5 - currentFrame * (xPadding + previewCanvas[i]->getWidth());
+        float alpha = ( i == currentFrame ) ? 255 : (bIsPlaying) ? 0 : 25;
+           
+        previewCanvas[i]->alpha = alpha;
+        previewCanvas[i]->setPosition(xStart - previewCanvas[i]->getWidth() * .5 + i * (xPadding + previewCanvas[i]->getWidth()), ofGetHeight() * .5 - previewCanvas[i]->getHeight() * .5);
+        previewCanvas[i]->draw();
+    }
+    
+    ofPopMatrix();
+    
+    selectTool.draw();
+}
+
+//-----------------------------
+
+
+void NSEditor::createNew () {
+    
+    editableCanvas = new AnimationCanvas();
+    editableCanvas->setup();
+    previewCanvas.push_back(editableCanvas);
+    
+}
+
+void NSEditor::addFrame(bool bCopyCurrent) {
+    
+    
+    
+    AnimationCanvas  * canvas = new AnimationCanvas();
+    canvas->setup();
+    
+    if(bCopyCurrent)
+        clone(editableCanvas, canvas);
+    
+    previewCanvas.insert(previewCanvas.begin() + currentFrame +1, canvas);
+    pushFrame();
+    
+    
+
+}
+
+void NSEditor::deleteFrame() {
+    
+    previewCanvas.erase(previewCanvas.begin() + currentFrame);
+    
+}
+
+void NSEditor::setCurrentFrame(int index) {
+    
+    index = ofClamp(index, 0, previewCanvas.size()-1);
+    currentFrame = index;
+    editableCanvas = previewCanvas[currentFrame];
+}
+
+void NSEditor::pushFrame() {
+    
+    currentFrame ++;
+    if(currentFrame > previewCanvas.size() -1 )
+        currentFrame = 0;
+    
+    editableCanvas = previewCanvas[currentFrame];
+    
+}
+
+void NSEditor::popFrame() {
+    
+    currentFrame --;
+    if(currentFrame <0 )
+        currentFrame =  previewCanvas.size() -1;
+    
+    editableCanvas = previewCanvas[currentFrame];
+    
+}
+
+void NSEditor::clone(AnimationCanvas * in, AnimationCanvas * out) {
+    
+    vector<int> selecteds = in->getSelecteds();
+    
+    for (int i=0; i<selecteds.size(); i++) {
+        out->selectOnIndex(selecteds[i]);
+    }
+        
+}
+
+void NSEditor::play() {
+    bIsPlaying = true;
+}
+
+void NSEditor::stop() {
+    bIsPlaying = false;
+}
+
+void NSEditor::save () {
+    
+    vector<vector<int> > data;
+    for (int i=0; i<previewCanvas.size(); i++) {
+        
+        
+        data.push_back(previewCanvas[i]->getSelecteds());
+        
+    }
+    
+    AnimData anim;
+    anim.data = data;
+    anim.name = Globals::instance()->gui->nameInput->getLabel()->getLabel();
+    
+    anim.toXML();
+    
+    
+    
+}
+
+void NSEditor::onKeyPressed (ofKeyEventArgs & e) {
+    
+    if(Globals::instance()->gui->isBusy())
+        return;
+    
+    string key = ofToString(e.key);
+    
+    if ( e.key == OF_KEY_RIGHT)
+        pushFrame();
+    
+    if ( e.key == OF_KEY_LEFT)
+        popFrame();
+    
+    if ( key == "32")
+        bIsPlaying = !bIsPlaying;
+    
+    if ( e.key == 'a')
+        addFrame(ofGetModifierPressed(OF_KEY_ALT));
+    
+    if ( e.key == 'd')
+        deleteFrame();
+    
+    if ( e.key == 's')
+        save();
+    
+    
+}
+
+void NSEditor::onSelectedHandler(ofRectangle & e) {
+    
+    if(editableCanvas)
+        editableCanvas->selectOnRect(e, !ofGetModifierPressed(OF_KEY_SHIFT));
+    
+    
     
 }

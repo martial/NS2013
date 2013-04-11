@@ -10,7 +10,7 @@
 
 NSSharpy::NSSharpy() {
     
-    maxRadius = 8.f;
+    maxRadius = 4.f;
     brightness = 1.0;
       
 }
@@ -43,19 +43,19 @@ void NSSharpy::update(){
     cylinder.clear();
     
     int rings = 32, resolution = 32;
-    float length = 1024, radius = maxRadius * this->goboPct;
+    float length = 1024*2, radius = maxRadius * this->goboPct;
     
     
     for(int i = 0; i < rings; i++) {
         
-        ofVec3f offset(0, 0, maxRadius - length *.5 + ofMap(i, 0, rings, -length, length) / 2);
+        ofVec3f offset(0, 0, ofMap(i, 0, rings, 0, -length) );
+        //offset.z -= length;
         for(int j = 0; j < resolution; j++) {
             float theta = ofMap(j, 0, resolution, 0, 360);
             ofVec2f cur(radius, 0);
             cur.rotate(theta);
             cylinder.addVertex(offset + cur);
-            // mesh.addColor(ofColor((i * j) % 2 == 0 ? 255 : 0));
-            //cylinder.addColor(ofColor(255,255,255, brightness));
+           
         }
     }
     
@@ -78,11 +78,11 @@ void NSSharpy::update(){
     this->goboPct       = this->target->goboPct;
     this->brightness    = this->target->brt;
     
-        
     //currentQuat *= targetQuat;
     //this->setOrientation( this->target->getOrientationQuat());
     //ofVec3f o = this->target->getOrientationEuler();
     
+    getEulerDistance();
     transToTargetOrientation();
     
     
@@ -95,9 +95,7 @@ void NSSharpy::transToTargetOrientation () {
     
     ofQuaternion currentQuat = this->getOrientationQuat();
     ofVec4f      currentQuatVec = currentQuat.asVec4();
-    
-    
-    //this->target->setTweenedOrientation(currentQuat);
+        
     this->setOrientation(ofQuaternion(this->target->setTweenedOrientation(currentQuat)));
 
     
@@ -111,11 +109,23 @@ void NSSharpy::draw(){
    
     transformGL();
     ofPushMatrix();
-    
+    //ofRotate(180);
     ofSetColor(255, 255);
-    ofCone(0, 0, 0, maxRadius, maxRadius);
+    ofCone(0, 0, 0, maxRadius*2, maxRadius*2);
+    
+     ofSetColor(255, 0, 0);
+    
+    ofPushMatrix();
+    ofSetDrawBitmapMode(OF_BITMAPMODE_MODEL_BILLBOARD);
+    ofDrawBitmapString(ofToString(id), 0,0);
+    ofPopMatrix();
+    
+    ofPushMatrix();
+    //ofTranslate(0, 0, -1024);
     ofSetColor(255, brightness * 255.f);
     cylinder.draw();
+    ofPopMatrix();
+
     ofPopMatrix();
     restoreTransformGL();
     
@@ -124,7 +134,34 @@ void NSSharpy::draw(){
 
 //--------------------------------------------------------------
 
+ofVec3f NSSharpy::getEulerDistance() {
+    
+    ofVec3f currentEuler    = this->getOrientationEuler();
+    ofVec3f targetEuler     = this->target->getOrientationEuler();
+    
+    if(id == 0) {
+        
+        // pan, tilt, roll
+        
+        ofVec3f distance = targetEuler - currentEuler;
+        distance.x = abs(distance.x);
+        distance.y = abs(distance.y);
+        distance.z = abs(distance.z);
+        
+        ofLog(OF_LOG_NOTICE, "Distance x : %f, y : %f, z : %f", distance.x, distance.y, distance.z);
+        
+        
+        
+    }
+    
+    
+}
+
+//--------------------------------------------------------------
+
 void NSSharpy::setID(int id){
+    
+    this->id = id;
     
 }
 

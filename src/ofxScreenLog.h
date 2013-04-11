@@ -15,13 +15,10 @@ class ofxScreenLog {
     
 public:
     ofxScreenLog() {
-        //current_msg_string = 0;
     }
         
     void log(string str) {
         messages.push_back(str);
-        
-                
     }
     
     void draw() {
@@ -40,19 +37,7 @@ public:
             ofDrawBitmapString(m, 228, 30 + 15 * cnt);
             cnt++;
         }
-        
-       
-        
-        /*
-        msg_strings[current_msg_string] = currString;
-        timers[current_msg_string] = ofGetElapsedTimef() + 1.0f;
-        current_msg_string = (current_msg_string + 1) % NUM_MSG_STRINGS;
-        // clear the next line
-        msg_strings[current_msg_string] = "";
-         */
-
-
-        
+         
     }
     
     vector<string> messages;

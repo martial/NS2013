@@ -2,7 +2,7 @@
 //  NSEditor.h
 //  NS2013
 //
-//  Created by Martial on 26/03/13.
+//  Created by Martial on 10/04/13.
 //
 //
 
@@ -10,46 +10,66 @@
 #define __NS2013__NSEditor__
 
 #include "ofMain.h"
-#include "ofxUI.h"
-#include "ofxJavascript.h"
-#include "JSBinder.h"
+#include "AnimationCanvas.h"
+#include "SelectTool.h"
 
-#include "NSAnimation.h"
+
+class NSDataManager;
 
 class NSEditor {
     
 public:
     
-    NSEditor();
     void setup();
-    void listAnimations();
-    void update(int numScenes);
+    void update();
+    void draw();
+    
+    void createNew();
+    void addFrame(bool bCopyCurrent = false);
+    void deleteFrame();
+    
+    void clearFrame();
+    
+    void pushFrame();
+    void popFrame();
+    void setCurrentFrame(int index);
+    
+    void clone(AnimationCanvas * in, AnimationCanvas * out);
+    
+    void save();
+    
+    void play();
+    void stop();
     
     
-    void callMainSetup();
-    void callMainUpdate();
-    void setAnimation(int index, int scene);
-    void nextAnimation(int scene);
+    
+    void onKeyPressed (ofKeyEventArgs & e);
     
     
-    /* */
+    //void load(int id);
     
-    void loadScripts();
-    void setScript(int index);
+    void onSelectedHandler(ofRectangle & e);
     
-    void onScriptChanged(ofEventArgs & e);
-    
-    
-private :
-    
-    
-    ofPtr<NSAnimation>              currentAnimation;
-    vector<ofPtr<NSAnimation> >     animations;
-    
-    int                             currentIndex;
-    int                             currentPreviewIndex;
-    
+    float                       playVel;
 
+    
+private:
+    
+    
+    // the current we're going to edit
+    AnimationCanvas       *     editableCanvas;
+    
+    // a way to visualize frames
+    vector<AnimationCanvas*>    previewCanvas;
+    
+    int                         currentFrame;
+    
+    
+    SelectTool                  selectTool;
+    
+    float                       currentFrameCnt;
+    bool                        bIsPlaying;
+    
     
 };
 

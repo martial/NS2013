@@ -7,13 +7,13 @@ var Horizontal = Animation.extend({
         this._super();
 
 
-
     },
 
     update: function (s) {
 
-        var time        = of.GetElapsedTimeMillis() / (30 * (1+ ( 1.0 - speedPct)) );
-        var maxPan      = 80;
+        var time        = timeMillis / (30 * (1+ ( 1.0 )) );
+        var maxPan      = 0;
+
 
         for (var i = 0; i < horizontalSharpies.length; i++) {
 
@@ -23,14 +23,14 @@ var Horizontal = Animation.extend({
             var goboPct     = normalize(i, leftSharpies.length);
 
             var cosTime     = (i % 2 == 0) ? i : i- 1;
-            var pct         = ( 1.0 - (0.5 + Math.cos((cosTime+time)/10) * 0.5) );
+            var pct         = ( 1.0 - (0.5 + Math.cos((cosTime+time * speedPct)/10) * 0.5) );
             pct             = Math.round(pct);
 
-            var pan         = ( i < 8 || i > 24) ? 0 : (i % 2 == 0) ? - 80 : 80;
+            var pan         = ( i < 8 || i >= 24 ) ? 0 : (i % 2 == 0) ? - maxPan : maxPan;
 
-            setOrientation  (s, index, pan , 0, 0);
-            setGobo         (s, index, pct);
-            setBrightness   (s, index, brtPct);
+            lookAt  (s, index, pan , 0, -170);
+            setGobo         (s, index, 1);
+            setBrightness   (s, index, 1);
 
         }
 

@@ -33,7 +33,9 @@ public:
     float   getGobo();
     
     void    setID(int id);
-    void    getID(int id);
+    int     getID() {return this->id;}
+    
+    ofVec3f   getEulerDistance();
     
     void    reset();
     
@@ -110,11 +112,37 @@ public:
         float yDist = fabs(targetQuatVec.y - currentQuatVec.y);
         float zDist = fabs(targetQuatVec.z - currentQuatVec.z);
         float wDist = fabs(targetQuatVec.w - currentQuatVec.w);
+        
+        // update with the largest distance
+        
+        
+        float maxDist = 0.0;
+        maxDist = max(maxDist, xDist);
+        maxDist = max(maxDist, yDist);
+        maxDist = max(maxDist, zDist);
+        maxDist = max(maxDist, wDist);
+         
+         
+        
+        // or min
+        /*
+        float maxDist = 99999999.0;
+        maxDist = min(maxDist, xDist);
+        maxDist = min(maxDist, yDist);
+        maxDist = min(maxDist, zDist);
+        maxDist = min(maxDist, wDist);
+         
+         */
+        
+        
+        // try to get rollspeed
+        
+        float time = 120;
                 
-        tweens[0]->setParameters(linear, ofxTween::easeOut, currentQuatVec.x, targetQuatVec.x, xDist * 100, 0);
-        tweens[1]->setParameters(linear, ofxTween::easeOut, currentQuatVec.y, targetQuatVec.y, yDist * 100, 0);
-        tweens[2]->setParameters(linear, ofxTween::easeOut, currentQuatVec.z, targetQuatVec.z, zDist * 100, 0);
-        tweens[3]->setParameters(linear, ofxTween::easeOut, currentQuatVec.w, targetQuatVec.w, wDist * 100, 0);
+        tweens[0]->setParameters(linear, ofxTween::easeOut, currentQuatVec.x, targetQuatVec.x, maxDist * time, 0);
+        tweens[1]->setParameters(linear, ofxTween::easeOut, currentQuatVec.y, targetQuatVec.y, maxDist * time, 0);
+        tweens[2]->setParameters(linear, ofxTween::easeOut, currentQuatVec.z, targetQuatVec.z, maxDist * time, 0);
+        tweens[3]->setParameters(linear, ofxTween::easeOut, currentQuatVec.w, targetQuatVec.w, maxDist * time, 0);
  
         
         //tweens[4]->setParameters(linear, ofxTween::easeOut, 0, 1, maxDist * 100, 0);

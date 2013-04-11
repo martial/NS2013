@@ -30,7 +30,7 @@ var CosAnimation = Animation.extend({
 
 
         var time    = of.GetElapsedTimeMillis();
-        var pct     = 0.5 + Math.cos(time / 500) * 0.5;
+        var pct     = 0.5 + Math.cos(time / 500 + speedPct) * 0.5;
         var radius  = ( 300 * pct);
         var a       = (Math.PI * 2.0) / numSharpy;
 
@@ -42,7 +42,7 @@ var CosAnimation = Animation.extend({
 
                 var index = i * 16 + j;
                 var cnt = ( i ==0 ) ? (16 + index) :  (32 - index);
-                var yo = 0.5 + Math.cos( (time + index * 14) / 50) * 0.5;
+                var yo = 0.5 + Math.cos( (time + index * 14 ) / 50 * speedPct) * 0.5;
 
                 x = Math.cos(cnt * a) * radius;
                 y = Math.sin(cnt * a) * radius;

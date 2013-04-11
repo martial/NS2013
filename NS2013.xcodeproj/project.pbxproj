@@ -41,6 +41,9 @@
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
 		E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
+		E70AE30117146C8A00619E1B /* model3DS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E70AE2F917146C8A00619E1B /* model3DS.cpp */; };
+		E70AE30217146C8A00619E1B /* texture3DS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E70AE2FB17146C8A00619E1B /* texture3DS.cpp */; };
+		E70AE30317146C8A00619E1B /* ofx3dModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E70AE2FF17146C8A00619E1B /* ofx3dModelLoader.cpp */; };
 		E712D5FF170AE7EB0090156E /* NSTransitions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D5FD170AE7EB0090156E /* NSTransitions.cpp */; };
 		E712D61E170AF31A0090156E /* ofxEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D604170AF31A0090156E /* ofxEasing.cpp */; };
 		E712D61F170AF31A0090156E /* ofxEasingBack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D606170AF31A0090156E /* ofxEasingBack.cpp */; };
@@ -55,7 +58,6 @@
 		E712D628170AF31A0090156E /* ofxEasingQuint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D618170AF31A0090156E /* ofxEasingQuint.cpp */; };
 		E712D629170AF31A0090156E /* ofxEasingSine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D61A170AF31A0090156E /* ofxEasingSine.cpp */; };
 		E712D62A170AF31A0090156E /* ofxTween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D61C170AF31A0090156E /* ofxTween.cpp */; };
-		E712D62D170B0CF80090156E /* ofxScreenLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E712D62B170B0CF80090156E /* ofxScreenLog.cpp */; };
 		E72CAC8817009FDF006A0901 /* BloomPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E72CAC6F17009FDE006A0901 /* BloomPass.cpp */; };
 		E72CAC8917009FDF006A0901 /* ConvolutionPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E72CAC7117009FDE006A0901 /* ConvolutionPass.cpp */; };
 		E72CAC8A17009FDF006A0901 /* DofAltPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E72CAC7317009FDE006A0901 /* DofAltPass.cpp */; };
@@ -70,7 +72,17 @@
 		E737B4AA1704958D00B656D9 /* fft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E737B4A21704958D00B656D9 /* fft.cpp */; };
 		E737B4AB1704958D00B656D9 /* fftOctaveAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E737B4A41704958D00B656D9 /* fftOctaveAnalyzer.cpp */; };
 		E737B4AC1704958D00B656D9 /* ofxEQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E737B4A61704958D00B656D9 /* ofxEQ.cpp */; };
-		E749B6351701AFB300699521 /* NSEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B6331701AFB300699521 /* NSEditor.cpp */; };
+		E742B16217158F5600EDDDCB /* NSEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B16017158F5600EDDDCB /* NSEditor.cpp */; };
+		E742B16517158F9100EDDDCB /* NSDataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B16317158F9100EDDDCB /* NSDataManager.cpp */; };
+		E742B175171590A900EDDDCB /* ofxMSAInteractiveObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B171171590A900EDDDCB /* ofxMSAInteractiveObject.cpp */; };
+		E742B178171590F900EDDDCB /* AnimationCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B176171590F900EDDDCB /* AnimationCanvas.cpp */; };
+		E742B17B17159EA900EDDDCB /* ofxSelectableObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B17917159EA800EDDDCB /* ofxSelectableObject.cpp */; };
+		E742B17E1715A04E00EDDDCB /* AnimationBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B17C1715A04E00EDDDCB /* AnimationBlock.cpp */; };
+		E742B1811715AE9A00EDDDCB /* SelectTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B17F1715AE9900EDDDCB /* SelectTool.cpp */; };
+		E742B19D1715B6D200EDDDCB /* ofxModifierKeys_impl_linux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B1971715B6D200EDDDCB /* ofxModifierKeys_impl_linux.cpp */; };
+		E742B19E1715B6D200EDDDCB /* ofxModifierKeys_impl_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E742B1981715B6D200EDDDCB /* ofxModifierKeys_impl_mac.mm */; };
+		E742B19F1715B6D200EDDDCB /* ofxModifierKeys_impl_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B1991715B6D200EDDDCB /* ofxModifierKeys_impl_win.cpp */; };
+		E749B6351701AFB300699521 /* NSAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B6331701AFB300699521 /* NSAnimationManager.cpp */; };
 		E749B6381701B00700699521 /* NSGuiManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B6361701B00700699521 /* NSGuiManager.cpp */; };
 		E749B7351701CCFB00699521 /* libJavascript.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E749B70D1701CCFB00699521 /* libJavascript.dylib */; };
 		E749B7361701CCFB00699521 /* libnspr4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E749B70E1701CCFB00699521 /* libnspr4.dylib */; };
@@ -211,6 +223,15 @@
 		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		E70AE2F617146C8A00619E1B /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		E70AE2F917146C8A00619E1B /* model3DS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = model3DS.cpp; sourceTree = "<group>"; };
+		E70AE2FA17146C8A00619E1B /* model3DS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = model3DS.h; sourceTree = "<group>"; };
+		E70AE2FB17146C8A00619E1B /* texture3DS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture3DS.cpp; sourceTree = "<group>"; };
+		E70AE2FC17146C8A00619E1B /* texture3DS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture3DS.h; sourceTree = "<group>"; };
+		E70AE2FD17146C8A00619E1B /* Vector3DS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3DS.h; sourceTree = "<group>"; };
+		E70AE2FE17146C8A00619E1B /* ofx3DBaseLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofx3DBaseLoader.h; sourceTree = "<group>"; };
+		E70AE2FF17146C8A00619E1B /* ofx3dModelLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofx3dModelLoader.cpp; sourceTree = "<group>"; };
+		E70AE30017146C8A00619E1B /* ofx3DModelLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofx3DModelLoader.h; sourceTree = "<group>"; };
 		E712D5FD170AE7EB0090156E /* NSTransitions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSTransitions.cpp; sourceTree = "<group>"; };
 		E712D5FE170AE7EB0090156E /* NSTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTransitions.h; sourceTree = "<group>"; };
 		E712D603170AF31A0090156E /* easing_terms_of_use.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = easing_terms_of_use.html; sourceTree = "<group>"; };
@@ -240,7 +261,6 @@
 		E712D61B170AF31A0090156E /* ofxEasingSine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingSine.h; sourceTree = "<group>"; };
 		E712D61C170AF31A0090156E /* ofxTween.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTween.cpp; sourceTree = "<group>"; };
 		E712D61D170AF31A0090156E /* ofxTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTween.h; sourceTree = "<group>"; };
-		E712D62B170B0CF80090156E /* ofxScreenLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxScreenLog.cpp; sourceTree = "<group>"; };
 		E712D62C170B0CF80090156E /* ofxScreenLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxScreenLog.h; sourceTree = "<group>"; };
 		E72CAC6017009FDE006A0901 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E72CAC6D17009FDE006A0901 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.md; sourceTree = "<group>"; };
@@ -275,8 +295,29 @@
 		E737B4A51704958D00B656D9 /* fftOctaveAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftOctaveAnalyzer.h; sourceTree = "<group>"; };
 		E737B4A61704958D00B656D9 /* ofxEQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEQ.cpp; sourceTree = "<group>"; };
 		E737B4A71704958D00B656D9 /* ofxEQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEQ.h; sourceTree = "<group>"; };
-		E749B6331701AFB300699521 /* NSEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSEditor.cpp; sourceTree = "<group>"; };
-		E749B6341701AFB300699521 /* NSEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEditor.h; sourceTree = "<group>"; };
+		E742B16017158F5600EDDDCB /* NSEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSEditor.cpp; sourceTree = "<group>"; };
+		E742B16117158F5600EDDDCB /* NSEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEditor.h; sourceTree = "<group>"; };
+		E742B16317158F9100EDDDCB /* NSDataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSDataManager.cpp; sourceTree = "<group>"; };
+		E742B16417158F9100EDDDCB /* NSDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataManager.h; sourceTree = "<group>"; };
+		E742B167171590A900EDDDCB /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		E742B16E171590A900EDDDCB /* license.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.md; sourceTree = "<group>"; };
+		E742B16F171590A900EDDDCB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		E742B171171590A900EDDDCB /* ofxMSAInteractiveObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMSAInteractiveObject.cpp; sourceTree = "<group>"; };
+		E742B172171590A900EDDDCB /* ofxMSAInteractiveObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSAInteractiveObject.h; sourceTree = "<group>"; };
+		E742B176171590F900EDDDCB /* AnimationCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationCanvas.cpp; sourceTree = "<group>"; };
+		E742B177171590F900EDDDCB /* AnimationCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationCanvas.h; sourceTree = "<group>"; };
+		E742B17917159EA800EDDDCB /* ofxSelectableObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSelectableObject.cpp; sourceTree = "<group>"; };
+		E742B17A17159EA800EDDDCB /* ofxSelectableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSelectableObject.h; sourceTree = "<group>"; };
+		E742B17C1715A04E00EDDDCB /* AnimationBlock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationBlock.cpp; sourceTree = "<group>"; };
+		E742B17D1715A04E00EDDDCB /* AnimationBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationBlock.h; sourceTree = "<group>"; };
+		E742B17F1715AE9900EDDDCB /* SelectTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SelectTool.cpp; sourceTree = "<group>"; };
+		E742B1801715AE9900EDDDCB /* SelectTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectTool.h; sourceTree = "<group>"; };
+		E742B1961715B6D200EDDDCB /* ofxModifierKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxModifierKeys.h; sourceTree = "<group>"; };
+		E742B1971715B6D200EDDDCB /* ofxModifierKeys_impl_linux.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxModifierKeys_impl_linux.cpp; sourceTree = "<group>"; };
+		E742B1981715B6D200EDDDCB /* ofxModifierKeys_impl_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxModifierKeys_impl_mac.mm; sourceTree = "<group>"; };
+		E742B1991715B6D200EDDDCB /* ofxModifierKeys_impl_win.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxModifierKeys_impl_win.cpp; sourceTree = "<group>"; };
+		E749B6331701AFB300699521 /* NSAnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSAnimationManager.cpp; sourceTree = "<group>"; };
+		E749B6341701AFB300699521 /* NSAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSAnimationManager.h; sourceTree = "<group>"; };
 		E749B6361701B00700699521 /* NSGuiManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSGuiManager.cpp; sourceTree = "<group>"; };
 		E749B6371701B00700699521 /* NSGuiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSGuiManager.h; sourceTree = "<group>"; };
 		E749B6CF1701CCFB00699521 /* notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = notes.txt; sourceTree = "<group>"; };
@@ -578,6 +619,9 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				E742B1821715B6D100EDDDCB /* ofxModifierKeys */,
+				E742B166171590A900EDDDCB /* ofxMSAInteractiveObject */,
+				E70AE2F517146C8A00619E1B /* ofx3DModelLoader */,
 				E712D600170AF31A0090156E /* ofxTween */,
 				E737B49A1704958D00B656D9 /* ofxEQ */,
 				E749B6CD1701CCFB00699521 /* ofxJavascript */,
@@ -653,21 +697,16 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				E742B15F17158E4A00EDDDCB /* editor */,
+				E742B15E17158E3200EDDDCB /* app */,
 				E778AA2B1700654D00EA034E /* preview */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* app.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* app.h */,
-				E749B6331701AFB300699521 /* NSEditor.cpp */,
-				E749B6341701AFB300699521 /* NSEditor.h */,
-				E749B6361701B00700699521 /* NSGuiManager.cpp */,
-				E749B6371701B00700699521 /* NSGuiManager.h */,
 				E749B7C81701D2B500699521 /* JSBinder.cpp */,
 				E749B7C91701D2B500699521 /* JSBinder.h */,
 				E749B7CB1701D62F00699521 /* Globals.cpp */,
 				E749B7CC1701D62F00699521 /* Globals.h */,
-				E749B7CE1701DFEF00699521 /* NSAnimation.cpp */,
-				E749B7CF1701DFF000699521 /* NSAnimation.h */,
-				E712D62B170B0CF80090156E /* ofxScreenLog.cpp */,
 				E712D62C170B0CF80090156E /* ofxScreenLog.h */,
 			);
 			path = src;
@@ -680,6 +719,39 @@
 				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
 			);
 			name = openFrameworks;
+			sourceTree = "<group>";
+		};
+		E70AE2F517146C8A00619E1B /* ofx3DModelLoader */ = {
+			isa = PBXGroup;
+			children = (
+				E70AE2F617146C8A00619E1B /* install.xml */,
+				E70AE2F717146C8A00619E1B /* src */,
+			);
+			name = ofx3DModelLoader;
+			path = ../../../addons/ofx3DModelLoader;
+			sourceTree = "<group>";
+		};
+		E70AE2F717146C8A00619E1B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E70AE2F817146C8A00619E1B /* 3DS */,
+				E70AE2FE17146C8A00619E1B /* ofx3DBaseLoader.h */,
+				E70AE2FF17146C8A00619E1B /* ofx3dModelLoader.cpp */,
+				E70AE30017146C8A00619E1B /* ofx3DModelLoader.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		E70AE2F817146C8A00619E1B /* 3DS */ = {
+			isa = PBXGroup;
+			children = (
+				E70AE2F917146C8A00619E1B /* model3DS.cpp */,
+				E70AE2FA17146C8A00619E1B /* model3DS.h */,
+				E70AE2FB17146C8A00619E1B /* texture3DS.cpp */,
+				E70AE2FC17146C8A00619E1B /* texture3DS.h */,
+				E70AE2FD17146C8A00619E1B /* Vector3DS.h */,
+			);
+			path = 3DS;
 			sourceTree = "<group>";
 		};
 		E712D600170AF31A0090156E /* ofxTween */ = {
@@ -794,6 +866,79 @@
 				E737B4A51704958D00B656D9 /* fftOctaveAnalyzer.h */,
 				E737B4A61704958D00B656D9 /* ofxEQ.cpp */,
 				E737B4A71704958D00B656D9 /* ofxEQ.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		E742B15E17158E3200EDDDCB /* app */ = {
+			isa = PBXGroup;
+			children = (
+				E749B6331701AFB300699521 /* NSAnimationManager.cpp */,
+				E749B6341701AFB300699521 /* NSAnimationManager.h */,
+				E749B6361701B00700699521 /* NSGuiManager.cpp */,
+				E749B6371701B00700699521 /* NSGuiManager.h */,
+				E749B7CE1701DFEF00699521 /* NSAnimation.cpp */,
+				E749B7CF1701DFF000699521 /* NSAnimation.h */,
+			);
+			name = app;
+			sourceTree = "<group>";
+		};
+		E742B15F17158E4A00EDDDCB /* editor */ = {
+			isa = PBXGroup;
+			children = (
+				E742B16017158F5600EDDDCB /* NSEditor.cpp */,
+				E742B16117158F5600EDDDCB /* NSEditor.h */,
+				E742B16317158F9100EDDDCB /* NSDataManager.cpp */,
+				E742B16417158F9100EDDDCB /* NSDataManager.h */,
+				E742B176171590F900EDDDCB /* AnimationCanvas.cpp */,
+				E742B177171590F900EDDDCB /* AnimationCanvas.h */,
+				E742B17917159EA800EDDDCB /* ofxSelectableObject.cpp */,
+				E742B17A17159EA800EDDDCB /* ofxSelectableObject.h */,
+				E742B17C1715A04E00EDDDCB /* AnimationBlock.cpp */,
+				E742B17D1715A04E00EDDDCB /* AnimationBlock.h */,
+				E742B17F1715AE9900EDDDCB /* SelectTool.cpp */,
+				E742B1801715AE9900EDDDCB /* SelectTool.h */,
+			);
+			name = editor;
+			sourceTree = "<group>";
+		};
+		E742B166171590A900EDDDCB /* ofxMSAInteractiveObject */ = {
+			isa = PBXGroup;
+			children = (
+				E742B167171590A900EDDDCB /* .gitignore */,
+				E742B16E171590A900EDDDCB /* license.md */,
+				E742B16F171590A900EDDDCB /* README.md */,
+				E742B170171590A900EDDDCB /* src */,
+			);
+			name = ofxMSAInteractiveObject;
+			path = ../../../addons/ofxMSAInteractiveObject;
+			sourceTree = "<group>";
+		};
+		E742B170171590A900EDDDCB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E742B171171590A900EDDDCB /* ofxMSAInteractiveObject.cpp */,
+				E742B172171590A900EDDDCB /* ofxMSAInteractiveObject.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		E742B1821715B6D100EDDDCB /* ofxModifierKeys */ = {
+			isa = PBXGroup;
+			children = (
+				E742B1951715B6D200EDDDCB /* src */,
+			);
+			name = ofxModifierKeys;
+			path = ../../../addons/ofxModifierKeys;
+			sourceTree = "<group>";
+		};
+		E742B1951715B6D200EDDDCB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E742B1961715B6D200EDDDCB /* ofxModifierKeys.h */,
+				E742B1971715B6D200EDDDCB /* ofxModifierKeys_impl_linux.cpp */,
+				E742B1981715B6D200EDDDCB /* ofxModifierKeys_impl_mac.mm */,
+				E742B1991715B6D200EDDDCB /* ofxModifierKeys_impl_win.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -935,8 +1080,8 @@
 				E778AA2C1700658100EA034E /* NSScene.cpp */,
 				E778AA2D1700658100EA034E /* NSScene.h */,
 				E778AA2F1700671000EA034E /* NSSharpy.cpp */,
-				E778AA301700671000EA034E /* NSSharpy.h */,
 				E77C9C3C1705A517009B32E0 /* NSSceneManager.cpp */,
+				E778AA301700671000EA034E /* NSSharpy.h */,
 				E77C9C3D1705A517009B32E0 /* NSSceneManager.h */,
 				E712D5FD170AE7EB0090156E /* NSTransitions.cpp */,
 				E712D5FE170AE7EB0090156E /* NSTransitions.h */,
@@ -1131,7 +1276,7 @@
 				E72CAC9017009FDF006A0901 /* PixelatePass.cpp in Sources */,
 				E72CAC9117009FDF006A0901 /* PostProcessing.cpp in Sources */,
 				E72CAC9217009FDF006A0901 /* RenderPass.cpp in Sources */,
-				E749B6351701AFB300699521 /* NSEditor.cpp in Sources */,
+				E749B6351701AFB300699521 /* NSAnimationManager.cpp in Sources */,
 				E749B6381701B00700699521 /* NSGuiManager.cpp in Sources */,
 				E749B73D1701CCFB00699521 /* ofxJavascript.cpp in Sources */,
 				E749B73E1701CCFB00699521 /* ofxJSGlobalFunc.cpp in Sources */,
@@ -1161,7 +1306,19 @@
 				E712D628170AF31A0090156E /* ofxEasingQuint.cpp in Sources */,
 				E712D629170AF31A0090156E /* ofxEasingSine.cpp in Sources */,
 				E712D62A170AF31A0090156E /* ofxTween.cpp in Sources */,
-				E712D62D170B0CF80090156E /* ofxScreenLog.cpp in Sources */,
+				E70AE30117146C8A00619E1B /* model3DS.cpp in Sources */,
+				E70AE30217146C8A00619E1B /* texture3DS.cpp in Sources */,
+				E70AE30317146C8A00619E1B /* ofx3dModelLoader.cpp in Sources */,
+				E742B16217158F5600EDDDCB /* NSEditor.cpp in Sources */,
+				E742B16517158F9100EDDDCB /* NSDataManager.cpp in Sources */,
+				E742B175171590A900EDDDCB /* ofxMSAInteractiveObject.cpp in Sources */,
+				E742B178171590F900EDDDCB /* AnimationCanvas.cpp in Sources */,
+				E742B17B17159EA900EDDDCB /* ofxSelectableObject.cpp in Sources */,
+				E742B17E1715A04E00EDDDCB /* AnimationBlock.cpp in Sources */,
+				E742B1811715AE9A00EDDDCB /* SelectTool.cpp in Sources */,
+				E742B19D1715B6D200EDDDCB /* ofxModifierKeys_impl_linux.cpp in Sources */,
+				E742B19E1715B6D200EDDDCB /* ofxModifierKeys_impl_mac.mm in Sources */,
+				E742B19F1715B6D200EDDDCB /* ofxModifierKeys_impl_win.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1180,7 +1337,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -1233,7 +1390,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;

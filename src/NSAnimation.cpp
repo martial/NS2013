@@ -14,11 +14,14 @@
 
 void NSAnimation::setup(string scriptPath, int id) {
     
-    checkTimer  = 0.f;
-    time        = 0;
-    this->id    = id;
+    checkTimer          = 0.f;
+    time                = 0;
+    this->id            = id;
     
-    this->scriptPath = scriptPath;
+    this->scriptPath    = scriptPath;
+    
+    vector<string>      splittedPath = ofSplitString(scriptPath, "/");
+    this->scriptName    = splittedPath[(splittedPath.size()-1)];
     loadScript();
         
 }
