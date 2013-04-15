@@ -2,7 +2,7 @@ var Random = Animation.extend({
 
     setup: function (s) {
 
-        println("-- Template.js -- ");
+        println("-- Noise.js -- ");
         this._super();
 
         for (var i = 0; i < numSharpy; i++) {

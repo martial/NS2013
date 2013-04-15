@@ -10,7 +10,6 @@
 
 void ofxSelectableObject::setSelected(bool b) {
     
-    printf("selected \n");
     this->bSelected = b;
     
 }

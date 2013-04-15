@@ -98,9 +98,20 @@
 		E749B7CA1701D2B500699521 /* JSBinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7C81701D2B500699521 /* JSBinder.cpp */; };
 		E749B7CD1701D62F00699521 /* Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7CB1701D62F00699521 /* Globals.cpp */; };
 		E749B7D01701DFF000699521 /* NSAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E749B7CE1701DFEF00699521 /* NSAnimation.cpp */; };
+		E76DD26D171837AB00BD47D1 /* ofxDmx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E76DD26B171837AB00BD47D1 /* ofxDmx.cpp */; };
+		E76DD2701718385900BD47D1 /* NSDMXManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E76DD26E1718385900BD47D1 /* NSDMXManager.cpp */; };
 		E778AA2E1700658100EA034E /* NSScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E778AA2C1700658100EA034E /* NSScene.cpp */; };
 		E778AA311700671000EA034E /* NSSharpy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E778AA2F1700671000EA034E /* NSSharpy.cpp */; };
 		E77C9C3E1705A517009B32E0 /* NSSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E77C9C3C1705A517009B32E0 /* NSSceneManager.cpp */; };
+		E7D985401716BD900064BCCC /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D985061716BD8F0064BCCC /* libcurl.a */; };
+		E7D985431716BD900064BCCC /* ofxCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D985301716BD900064BCCC /* ofxCurl.cpp */; };
+		E7D985441716BD900064BCCC /* ofxCurlException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D985321716BD900064BCCC /* ofxCurlException.cpp */; };
+		E7D985451716BD900064BCCC /* ofxCurlFileDownload.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D985341716BD900064BCCC /* ofxCurlFileDownload.cpp */; };
+		E7D985461716BD900064BCCC /* ofxCurlForm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D985361716BD900064BCCC /* ofxCurlForm.cpp */; };
+		E7D985471716BD900064BCCC /* ofxCurlFormType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D985381716BD900064BCCC /* ofxCurlFormType.cpp */; };
+		E7D985481716BD900064BCCC /* ofxCurlFormTypeFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D9853A1716BD900064BCCC /* ofxCurlFormTypeFile.cpp */; };
+		E7D985491716BD900064BCCC /* ofxCurlFormTypeInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D9853C1716BD900064BCCC /* ofxCurlFormTypeInput.cpp */; };
+		E7D9855817170A5A0064BCCC /* NSLoadingScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D9855617170A5A0064BCCC /* NSLoadingScreen.cpp */; };
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
@@ -393,12 +404,47 @@
 		E749B7CC1701D62F00699521 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
 		E749B7CE1701DFEF00699521 /* NSAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSAnimation.cpp; sourceTree = "<group>"; };
 		E749B7CF1701DFF000699521 /* NSAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSAnimation.h; sourceTree = "<group>"; };
+		E76DD26B171837AB00BD47D1 /* ofxDmx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDmx.cpp; sourceTree = "<group>"; };
+		E76DD26C171837AB00BD47D1 /* ofxDmx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDmx.h; sourceTree = "<group>"; };
+		E76DD26E1718385900BD47D1 /* NSDMXManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSDMXManager.cpp; sourceTree = "<group>"; };
+		E76DD26F1718385900BD47D1 /* NSDMXManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDMXManager.h; sourceTree = "<group>"; };
 		E778AA2C1700658100EA034E /* NSScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSScene.cpp; sourceTree = "<group>"; };
 		E778AA2D1700658100EA034E /* NSScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSScene.h; sourceTree = "<group>"; };
 		E778AA2F1700671000EA034E /* NSSharpy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSSharpy.cpp; sourceTree = "<group>"; };
 		E778AA301700671000EA034E /* NSSharpy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSSharpy.h; sourceTree = "<group>"; };
 		E77C9C3C1705A517009B32E0 /* NSSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSSceneManager.cpp; sourceTree = "<group>"; };
 		E77C9C3D1705A517009B32E0 /* NSSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSSceneManager.h; sourceTree = "<group>"; };
+		E7D984F51716BD8F0064BCCC /* compile_mac_7_21_1.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = compile_mac_7_21_1.sh; sourceTree = "<group>"; };
+		E7D984F61716BD8F0064BCCC /* compile_mac_7_21_6.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = compile_mac_7_21_6.sh; sourceTree = "<group>"; };
+		E7D985001716BD8F0064BCCC /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		E7D985061716BD8F0064BCCC /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		E7D9850B1716BD900064BCCC /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		E7D985301716BD900064BCCC /* ofxCurl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCurl.cpp; sourceTree = "<group>"; };
+		E7D985311716BD900064BCCC /* ofxCurl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCurl.h; sourceTree = "<group>"; };
+		E7D985321716BD900064BCCC /* ofxCurlException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCurlException.cpp; sourceTree = "<group>"; };
+		E7D985331716BD900064BCCC /* ofxCurlException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCurlException.h; sourceTree = "<group>"; };
+		E7D985341716BD900064BCCC /* ofxCurlFileDownload.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCurlFileDownload.cpp; sourceTree = "<group>"; };
+		E7D985351716BD900064BCCC /* ofxCurlFileDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCurlFileDownload.h; sourceTree = "<group>"; };
+		E7D985361716BD900064BCCC /* ofxCurlForm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCurlForm.cpp; sourceTree = "<group>"; };
+		E7D985371716BD900064BCCC /* ofxCurlForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCurlForm.h; sourceTree = "<group>"; };
+		E7D985381716BD900064BCCC /* ofxCurlFormType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCurlFormType.cpp; sourceTree = "<group>"; };
+		E7D985391716BD900064BCCC /* ofxCurlFormType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCurlFormType.h; sourceTree = "<group>"; };
+		E7D9853A1716BD900064BCCC /* ofxCurlFormTypeFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCurlFormTypeFile.cpp; sourceTree = "<group>"; };
+		E7D9853B1716BD900064BCCC /* ofxCurlFormTypeFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCurlFormTypeFile.h; sourceTree = "<group>"; };
+		E7D9853C1716BD900064BCCC /* ofxCurlFormTypeInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCurlFormTypeInput.cpp; sourceTree = "<group>"; };
+		E7D9853D1716BD900064BCCC /* ofxCurlFormTypeInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCurlFormTypeInput.h; sourceTree = "<group>"; };
+		E7D9854C1716BF2C0064BCCC /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
+		E7D9854D1716BF2C0064BCCC /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlbuild.h; sourceTree = "<group>"; };
+		E7D9854E1716BF2C0064BCCC /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlrules.h; sourceTree = "<group>"; };
+		E7D9854F1716BF2C0064BCCC /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
+		E7D985501716BF2C0064BCCC /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
+		E7D985511716BF2C0064BCCC /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
+		E7D985521716BF2C0064BCCC /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
+		E7D985531716BF2C0064BCCC /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
+		E7D985541716BF2C0064BCCC /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
+		E7D985551716BF2C0064BCCC /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		E7D9855617170A5A0064BCCC /* NSLoadingScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSLoadingScreen.cpp; sourceTree = "<group>"; };
+		E7D9855717170A5A0064BCCC /* NSLoadingScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSLoadingScreen.h; sourceTree = "<group>"; };
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
@@ -461,6 +507,7 @@
 				E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */,
 				E749B7351701CCFB00699521 /* libJavascript.dylib in Frameworks */,
 				E749B7361701CCFB00699521 /* libnspr4.dylib in Frameworks */,
+				E7D985401716BD900064BCCC /* libcurl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,6 +666,8 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				E76DD26A171837AB00BD47D1 /* ofxDMX */,
+				E7D984F41716BD8F0064BCCC /* ofxCurl */,
 				E742B1821715B6D100EDDDCB /* ofxModifierKeys */,
 				E742B166171590A900EDDDCB /* ofxMSAInteractiveObject */,
 				E70AE2F517146C8A00619E1B /* ofx3DModelLoader */,
@@ -708,6 +757,8 @@
 				E749B7CB1701D62F00699521 /* Globals.cpp */,
 				E749B7CC1701D62F00699521 /* Globals.h */,
 				E712D62C170B0CF80090156E /* ofxScreenLog.h */,
+				E76DD26E1718385900BD47D1 /* NSDMXManager.cpp */,
+				E76DD26F1718385900BD47D1 /* NSDMXManager.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -879,6 +930,8 @@
 				E749B6371701B00700699521 /* NSGuiManager.h */,
 				E749B7CE1701DFEF00699521 /* NSAnimation.cpp */,
 				E749B7CF1701DFF000699521 /* NSAnimation.h */,
+				E7D9855617170A5A0064BCCC /* NSLoadingScreen.cpp */,
+				E7D9855717170A5A0064BCCC /* NSLoadingScreen.h */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -1074,6 +1127,16 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		E76DD26A171837AB00BD47D1 /* ofxDMX */ = {
+			isa = PBXGroup;
+			children = (
+				E76DD26B171837AB00BD47D1 /* ofxDmx.cpp */,
+				E76DD26C171837AB00BD47D1 /* ofxDmx.h */,
+			);
+			name = ofxDMX;
+			path = ../../../addons/ofxDMX;
+			sourceTree = "<group>";
+		};
 		E778AA2B1700654D00EA034E /* preview */ = {
 			isa = PBXGroup;
 			children = (
@@ -1087,6 +1150,91 @@
 				E712D5FE170AE7EB0090156E /* NSTransitions.h */,
 			);
 			name = preview;
+			sourceTree = "<group>";
+		};
+		E7D984F41716BD8F0064BCCC /* ofxCurl */ = {
+			isa = PBXGroup;
+			children = (
+				E7D984F51716BD8F0064BCCC /* compile_mac_7_21_1.sh */,
+				E7D984F61716BD8F0064BCCC /* compile_mac_7_21_6.sh */,
+				E7D985001716BD8F0064BCCC /* install.xml */,
+				E7D985011716BD8F0064BCCC /* lib */,
+				E7D9850B1716BD900064BCCC /* README.txt */,
+				E7D9850C1716BD900064BCCC /* src */,
+			);
+			name = ofxCurl;
+			path = ../../../addons/ofxCurl;
+			sourceTree = "<group>";
+		};
+		E7D985011716BD8F0064BCCC /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				E7D985021716BD8F0064BCCC /* mac */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		E7D985021716BD8F0064BCCC /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				E7D985051716BD8F0064BCCC /* llvm-gcc_x86_64 */,
+			);
+			path = mac;
+			sourceTree = "<group>";
+		};
+		E7D985051716BD8F0064BCCC /* llvm-gcc_x86_64 */ = {
+			isa = PBXGroup;
+			children = (
+				E7D985061716BD8F0064BCCC /* libcurl.a */,
+			);
+			path = "llvm-gcc_x86_64";
+			sourceTree = "<group>";
+		};
+		E7D9850C1716BD900064BCCC /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E7D9854A1716BF2C0064BCCC /* include_llvm-gcc_i386 */,
+				E7D985301716BD900064BCCC /* ofxCurl.cpp */,
+				E7D985311716BD900064BCCC /* ofxCurl.h */,
+				E7D985321716BD900064BCCC /* ofxCurlException.cpp */,
+				E7D985331716BD900064BCCC /* ofxCurlException.h */,
+				E7D985341716BD900064BCCC /* ofxCurlFileDownload.cpp */,
+				E7D985351716BD900064BCCC /* ofxCurlFileDownload.h */,
+				E7D985361716BD900064BCCC /* ofxCurlForm.cpp */,
+				E7D985371716BD900064BCCC /* ofxCurlForm.h */,
+				E7D985381716BD900064BCCC /* ofxCurlFormType.cpp */,
+				E7D985391716BD900064BCCC /* ofxCurlFormType.h */,
+				E7D9853A1716BD900064BCCC /* ofxCurlFormTypeFile.cpp */,
+				E7D9853B1716BD900064BCCC /* ofxCurlFormTypeFile.h */,
+				E7D9853C1716BD900064BCCC /* ofxCurlFormTypeInput.cpp */,
+				E7D9853D1716BD900064BCCC /* ofxCurlFormTypeInput.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		E7D9854A1716BF2C0064BCCC /* include_llvm-gcc_i386 */ = {
+			isa = PBXGroup;
+			children = (
+				E7D9854B1716BF2C0064BCCC /* curl */,
+			);
+			path = "include_llvm-gcc_i386";
+			sourceTree = "<group>";
+		};
+		E7D9854B1716BF2C0064BCCC /* curl */ = {
+			isa = PBXGroup;
+			children = (
+				E7D9854C1716BF2C0064BCCC /* curl.h */,
+				E7D9854D1716BF2C0064BCCC /* curlbuild.h */,
+				E7D9854E1716BF2C0064BCCC /* curlrules.h */,
+				E7D9854F1716BF2C0064BCCC /* curlver.h */,
+				E7D985501716BF2C0064BCCC /* easy.h */,
+				E7D985511716BF2C0064BCCC /* mprintf.h */,
+				E7D985521716BF2C0064BCCC /* multi.h */,
+				E7D985531716BF2C0064BCCC /* stdcheaders.h */,
+				E7D985541716BF2C0064BCCC /* typecheck-gcc.h */,
+				E7D985551716BF2C0064BCCC /* types.h */,
+			);
+			path = curl;
 			sourceTree = "<group>";
 		};
 		ba6760ac87647dd61a92bd416dbd7a9c /* win32 */ = {
@@ -1319,6 +1467,16 @@
 				E742B19D1715B6D200EDDDCB /* ofxModifierKeys_impl_linux.cpp in Sources */,
 				E742B19E1715B6D200EDDDCB /* ofxModifierKeys_impl_mac.mm in Sources */,
 				E742B19F1715B6D200EDDDCB /* ofxModifierKeys_impl_win.cpp in Sources */,
+				E7D985431716BD900064BCCC /* ofxCurl.cpp in Sources */,
+				E7D985441716BD900064BCCC /* ofxCurlException.cpp in Sources */,
+				E7D985451716BD900064BCCC /* ofxCurlFileDownload.cpp in Sources */,
+				E7D985461716BD900064BCCC /* ofxCurlForm.cpp in Sources */,
+				E7D985471716BD900064BCCC /* ofxCurlFormType.cpp in Sources */,
+				E7D985481716BD900064BCCC /* ofxCurlFormTypeFile.cpp in Sources */,
+				E7D985491716BD900064BCCC /* ofxCurlFormTypeInput.cpp in Sources */,
+				E7D9855817170A5A0064BCCC /* NSLoadingScreen.cpp in Sources */,
+				E76DD26D171837AB00BD47D1 /* ofxDmx.cpp in Sources */,
+				E76DD2701718385900BD47D1 /* NSDMXManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1347,7 +1505,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
@@ -1401,7 +1559,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
@@ -1524,6 +1682,9 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
+					"\"$(SRCROOT)/../../../addons/ofxCurl/lib/mac/llvm-gcc_i386\"",
+					"\"$(SRCROOT)/../../../addons/ofxCurl/lib/mac/llvm-gcc_x86_64\"",
+					"\"$(SRCROOT)/../../../addons/ofxCurl/lib/win\"",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../addons/ofxJavaScript/javascript/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../addons/ofxJavaScript/javascript/lib/win32\"";
@@ -1619,6 +1780,9 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
+					"\"$(SRCROOT)/../../../addons/ofxCurl/lib/mac/llvm-gcc_i386\"",
+					"\"$(SRCROOT)/../../../addons/ofxCurl/lib/mac/llvm-gcc_x86_64\"",
+					"\"$(SRCROOT)/../../../addons/ofxCurl/lib/win\"",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../addons/ofxJavaScript/javascript/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../addons/ofxJavaScript/javascript/lib/win32\"";

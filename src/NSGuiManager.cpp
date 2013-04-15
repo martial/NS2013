@@ -11,6 +11,8 @@
 
 NSGuiManager::NSGuiManager() {
     
+    mode = 0;
+    
 }
 
 void NSGuiManager::setup() {
@@ -21,8 +23,10 @@ void NSGuiManager::setup() {
     guiLeft = new ofxUICanvas(220, ofGetHeight());
     guiLeft->setDrawBack(true);
     guiLeft->addLabel("NS 2013 BITCH");
+    guiLeft->addSpacer();
+    guiLeft->addLabelButton("TOGGLE EDITOR", false, true);
     
-    guiLeft->addValuePlotter("FPS", 126, 0.0, 120, &fps );
+    guiLeft->addValuePlotter("FPS", 512, 0.0, 60, &fps );
     guiLeft->addFPS();
     guiLeft->addSpacer();
     
@@ -74,15 +78,23 @@ void NSGuiManager::setup() {
     guiEditorLeft->setDrawBack(true);
     guiEditorLeft->addLabel("NS 2013 EDITOR BITCH");
     guiEditorLeft->addSpacer();
+    guiEditorLeft->addLabelButton("TOGGLE EDITOR", false, true);
+
     guiEditorLeft->addLabel("INSPECTOR GADGET");
     guiEditorLeft->addSpacer();
     guiEditorLeft->addLabel("NAME");
     nameInput = guiEditorLeft->addTextInput("NAME", "...");
     guiEditorLeft->addSpacer();
-    guiEditorLeft->addSlider("SPEED", 0.0, 1.0,  &Globals::instance()->editor->playVel);
-    guiEditorLeft->addLabelButton("SAVE", false);
-    guiEditorLeft->addLabelButton("RELOAD", false);
+    guiEditorLeft->addSlider("speed", 0.0, 1.0,  &Globals::instance()->editor->playVel);
+    guiEditorLeft->addSpacer();
+    guiEditorLeft->addLabelButton("NEW ANIM", false, true);
+    guiEditorLeft->addLabelButton("NEW FRAME", false, true);
+    guiEditorLeft->addLabelButton("DELETE", false, true);
+    guiEditorRight = new ofxUICanvas(220, ofGetHeight());
+    animationsEditorDropDown  = guiEditorRight->addDropDownList("ANIMS", Globals::instance()->dataManager->getAnimationsLabels());
+
     
+    ofAddListener(guiEditorLeft->newGUIEvent,this,&NSGuiManager::guiEvent);
     //guiEditorLeft->
     
     setMode(1);
@@ -94,17 +106,22 @@ void NSGuiManager::setMode(int mode) {
     if(mode == 0) {
         
         guiLeft->enable();
-        guiEditorLeft->disable();
+        guiRight->enable();
         
+        guiEditorLeft->disable();
+        guiEditorRight->disable();
         
         
     } else {
         
+        guiEditorLeft->enable();
+        guiEditorRight->enable();
         guiRight->disable();
         guiLeft->disable();
         
     }
     
+    this->mode = mode;
     
 }
 
@@ -119,10 +136,27 @@ void NSGuiManager::populateAnimations() {
     
 }
 
+
+void NSGuiManager::populateEditorAnimations() {
+    
+    animationsEditorDropDown->setAllowMultiple(false);
+    animationsEditorDropDown->clearToggles();
+    
+    vector<string> anims = Globals::instance()->dataManager->getAnimationsLabels();
+    for ( int i=0; i<anims.size(); i++)
+        animationsEditorDropDown->addToggle(anims[i]);
+    
+}
+
 void NSGuiManager::update() {
     guiRight->getRect()->x      = ofGetWidth() - guiRight->getRect()->getWidth();
+    guiEditorRight->getRect()->x      = ofGetWidth() - guiEditorRight->getRect()->getWidth();
+    
     guiLeft->getRect()->height  = ofGetHeight();
     guiRight->getRect()->height = ofGetHeight();
+    
+    guiEditorLeft->getRect()->height  = ofGetHeight();
+    guiEditorRight->getRect()->height = ofGetHeight();
     
     fps = ofGetFrameRate();
 
@@ -167,10 +201,26 @@ void NSGuiManager::guiEvent(ofxUIEventArgs &e) {
     if(name == "ANIMATIONS") {
         
         vector<ofxUIWidget *> &selected = animationsDropDown->getSelected();
-        for(int i = 0; i < selected.size(); i++)
-        {
-            
+        for(int i = 0; i < selected.size(); i++){
             Globals::instance()->animationManager->setAnimation(selected[i]->getName(),0);
+        }
+        
+    }
+    
+    if(name == "TOGGLE EDITOR") {
+        
+        ofxUIButton *button = (ofxUIButton *) e.widget;
+        
+        if(button->getValue() == 0) {
+
+        
+        int mode = ( this->mode == 0 ) ? 1 : 0;
+        
+        printf("mode %d", mode);
+        
+        setMode(mode);
+        Globals::instance()->app->mode = mode;
+            
         }
         
     }

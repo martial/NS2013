@@ -8,7 +8,8 @@
 #include "ofxScreenLog.h"
 #include "NSEditor.h"
 #include "NSDataManager.h"
-
+#include "NSLoadingScreen.h"
+#include "NSDMXManager.h"
 
 #define animationManager_MODE
 
@@ -38,7 +39,8 @@ class app : public ofBaseApp{
         NSGuiManager            guiManager;
         NSAnimationManager      animationManager;
         NSDataManager           dataManager;
-    
+        NSLoadingScreen         loadingScreen;
+        NSDMXManager            dmxManager;
         NSEditor                editor;
     
         ofxEQ                   eq;

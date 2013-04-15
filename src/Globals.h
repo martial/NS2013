@@ -15,6 +15,8 @@
 #include "NSEditor.h"
 #include "NSGuiManager.h"
 #include "NSDataManager.h"
+#include "NSLoadingScreen.h"
+#include "app.h"
 
 class Globals
 {
@@ -33,6 +35,9 @@ public:
     
     NSGuiManager *              gui;
     NSDataManager   *           dataManager;
+    
+    NSLoadingScreen *           loadingScreen;
+    app         *               app;
     
 	    
 private:

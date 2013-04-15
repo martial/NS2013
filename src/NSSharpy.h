@@ -6,6 +6,8 @@
 //
 //
 
+
+
 #ifndef __NS2013__NSSharpy__
 #define __NS2013__NSSharpy__
 
@@ -23,7 +25,7 @@ public:
     void    update();
     void    draw();
 
-    
+    ofNode  childNode;
     void    transToTargetOrientation();
     void    setTargetOrientation(ofVec3f orientation);
     
@@ -40,17 +42,20 @@ public:
     void    reset();
     
     /* */
-    void    sendToDmx();
+    void                        sendToDmx();
+    ofEvent<vector<ofPoint> >   dmxEvent;
     
     NSSharpyTarget *    target;
+    
+    float               brightness;
+    float               goboPct;
     
     
 private:
     
     int                 id;
     float               maxRadius;
-    float               brightness;
-    float               goboPct;
+  
     
     ofMesh              cylinder;
     
@@ -101,7 +106,7 @@ public:
             tweens[i]->update();
     }
     
-    ofVec4f  setTweenedOrientation (ofQuaternion & current) {
+        ofVec4f         setTweenedOrientation (ofQuaternion & current) {
         
         ofVec4f         currentQuatVec  = current.asVec4();
         
@@ -169,3 +174,8 @@ public:
 };
 
 #endif /* defined(__NS2013__NSSharpyTarget__) */
+
+
+
+
+

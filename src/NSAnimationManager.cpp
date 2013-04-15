@@ -119,7 +119,7 @@ void NSAnimationManager::setAnimation(string scriptPathName, int scene) {
         
         if(scriptPathName == animations[i]->scriptName) {
             setAnimation(i, scene);
-        break;
+            break;
         }
     }
     

@@ -16,7 +16,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>DOF</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -36,20 +36,20 @@
 <Widget>
     <Kind>4</Kind>
     <Name>RANGE</Name>
-    <Value>15.504716873</Value>
+    <Value>14.372641563</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>OVERRIDE</Name>
-    <Value>11.612092972</Value>
+    <Value>13.502491951</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>SOUND ALPHA</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>SOUND GOBO</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>

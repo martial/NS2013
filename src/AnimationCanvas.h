@@ -32,6 +32,7 @@ public:
     
     float alpha;
     
+    void        setSelecteds(vector<int> data);
     vector<int> getSelecteds();
     
     

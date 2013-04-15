@@ -270,7 +270,6 @@ void NSScene::draw() {
     float depth = 75;
     
     ofTranslate(-floorSize.x + (w*.5), 0, zPos + (depth*.5));
-    
     ofMesh b =box(w, floorSize.y*2, depth, 16, 16, 16);
     ofSetColor(0.6 * 255);
     b.draw();
@@ -279,7 +278,11 @@ void NSScene::draw() {
     //ofCylinder();
     ofPopMatrix();
     
+    
+    /*
     flash.draw();
+     
+     */
     
     // walls
     //int groundWidth = 4000, groundHeight = 1000;
@@ -443,14 +446,57 @@ void NSScene::setBrightness(int sharpyIndex, float pct) {
     
 }
 
+void NSScene::setPanTilt(int sharpyIndex, ofVec2f angles) {
+    
+    sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
+    ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
+    
+    
+    
+    ofQuaternion pan, tilt;
+    pan.makeRotate  ( angles.x, 0, 0, 1);
+    tilt.makeRotate ( angles.y, 0, 1, 0);
+
+    sharpyRef->target->setOrientation(pan);
+    sharpyRef->childNode.setOrientation(tilt);
+    
+}
+
 void NSScene::setOrientation(int sharpyIndex, ofVec3f eulerAngles) {
     
     sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
-    
     ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
-    //sharpyRef->setOrientation(eulerAngles);
+
+    
+    
+    
     sharpyRef->target->setOrientation(eulerAngles);
     
+    
+    /*
+    
+    ofQuaternion pan, tilt;
+    pan.makeRotate( eulerAngles.x, 0, 0, 1);
+    tilt.makeRotate( eulerAngles.y, 0, 1, 0);
+    
+    
+    
+    sharpyRef->target->setOrientation(pan * tilt);
+    sharpyRef->childNode.setOrientation(tilt);
+    
+    //sharpyRef->target->setOrientation(pan * tilt);
+     
+
+    ofQuaternion pan, tilt;
+    pan.makeRotate  ( eulerAngles.x, 0, 0, 1);
+    tilt.makeRotate ( eulerAngles.y, 0, 1, 0);
+    
+    sharpyRef->tmpQuaternion.setOrientation(pan * tilt);
+    
+    sharpyRef->target->setOrientation(eulerAngles);
+     
+     */
+
     
 }
 

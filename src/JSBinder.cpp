@@ -21,6 +21,7 @@ bool initJS()
     ofxJSDefineFunctionGlobal("getPosX",                        &getPosX,                           2);
     ofxJSDefineFunctionGlobal("getPosY",                        &getPosY,                           2);
     ofxJSDefineFunctionGlobal("getPosZ",                        &getPosZ,                           2);
+    ofxJSDefineFunctionGlobal("setPanTilt",                     &setPanTilt,                        4);
     ofxJSDefineFunctionGlobal("setOrientation",					&setOrientation,					5); // name, function pointer, args number
     ofxJSDefineFunctionGlobal("setBrightness",					&setBrightness,                     3); // name, function pointer, args number
     ofxJSDefineFunctionGlobal("setGobo",                        &setGobo,                           3); // name, function pointer, args number
@@ -183,6 +184,23 @@ ofxJSDefineFunctionCpp(setName){
         
 		//float val = Globals::instance()->M_getClientBass(indexClient,indexChannel);
 		//*retVal = float_TO_ofxJSValue(val);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(setPanTilt){
+    
+	if (argc == 4){
+        
+        int scene           = ofxJSValue_TO_int(argv[0]);
+		int indexSharpy		= ofxJSValue_TO_int(argv[1]);
+		float pan           = ofxJSValue_TO_float(argv[2]);
+        float tilt          = ofxJSValue_TO_float(argv[3]);
+        
+        Globals::instance()->nsSceneManager->getScene(scene)->setPanTilt(indexSharpy, ofVec2f(pan, tilt));
         
 		return JS_TRUE;
 	}

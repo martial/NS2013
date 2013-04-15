@@ -4,7 +4,7 @@ var CosAnimation = Animation.extend({
 
         this._super();
 
-        println("-- Cosinus example.js -- ");
+        println("-- cos example.js -- ");
 
         var time = of.GetElapsedTimeMillis();
 
@@ -41,15 +41,17 @@ var CosAnimation = Animation.extend({
 
 
                 var index = i * 16 + j;
-                var cnt = ( i ==0 ) ? (16 + index) :  (32 - index);
+                var cnt = ( i == 0 ) ? (16 + index) :  (31 - index);
                 var yo = 0.5 + Math.cos( (time + index * 14 ) / 50 * speedPct) * 0.5;
+
+
 
                 x = Math.cos(cnt * a) * radius;
                 y = Math.sin(cnt * a) * radius;
 
                 lookAt(s, index,   x, y, -300 );
-                setGobo(s, cnt,  yo);
-                setBrightness(s, cnt, 1);
+                setGobo(s, cnt,  1);
+                setBrightness(s, cnt, yo);
 
             }
 

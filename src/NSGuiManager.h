@@ -24,14 +24,12 @@ public:
     void setMode(int mode);
     
     void populateAnimations();
+    void populateEditorAnimations();
     void guiEvent(ofxUIEventArgs &e);
     
     bool isBusy();
     
     ofxUITextInput *     nameInput;
-
-    
-private:
     
     ofxUICanvas     *    guiLeft;
     ofxUICanvas     *    guiRight;
@@ -41,8 +39,15 @@ private:
     
     ofxUISlider     *    overrideSlider;
     ofxUIDropDownList*   animationsDropDown;
+    ofxUIDropDownList*   animationsEditorDropDown;
+
+    
+private:
+    
+   
     
     float                fps;
+    int                  mode;
     
 };
 
