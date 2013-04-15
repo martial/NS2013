@@ -22,6 +22,12 @@ void NSEditor::setup() {
     ofAddListener( selectTool.onReleaseEvent, this, &NSEditor::onSelectedHandler );
     ofAddListener( ofEvents().keyPressed, this,    &NSEditor::onKeyPressed );
     
+    ofAddListener( Globals::instance()->dataManager->onUploadSuccess, this, &NSEditor::onUploadSuccessHandler );
+    ofAddListener( Globals::instance()->dataManager->onLoadSuccess, this, &NSEditor::onLoadSuccessHandler );
+    ofAddListener( Globals::instance()->dataManager->onError, this, &NSEditor::onErrorHandler );
+    
+    ofAddListener( Globals::instance()->gui->guiEditorRight->newGUIEvent, this, &NSEditor::guiEvent );
+    
 }
 void NSEditor::update() {
     
@@ -66,9 +72,14 @@ void NSEditor::draw() {
 
 void NSEditor::createNew () {
     
+    
+    currentAnimData = ofPtr<AnimData>( new AnimData());
+    
     editableCanvas = new AnimationCanvas();
     editableCanvas->setup();
     previewCanvas.push_back(editableCanvas);
+    
+    
     
 }
 
@@ -132,6 +143,54 @@ void NSEditor::clone(AnimationCanvas * in, AnimationCanvas * out) {
         
 }
 
+void NSEditor::setAnim(int index) {
+    
+    currentFrame = 0;
+    currentAnimData = Globals::instance()->dataManager->getAnimation(index);
+    populateAnim();
+    setCurrentFrame(0);
+    
+}
+
+void NSEditor::setAnim(string name) {
+    
+    
+
+    ofPtr<AnimData> anim = Globals::instance()->dataManager->getAnimation(name);
+    
+    if(anim) {
+    
+    currentAnimData = anim;
+    populateAnim();
+    setCurrentFrame(0);
+        
+    }
+}
+
+void NSEditor::populateAnim() {
+    
+        // set gui text
+    
+    stop();
+    
+    Globals::instance()->gui->nameInput->setTextString(currentAnimData->name);
+    
+    previewCanvas.clear();
+    
+    
+    for ( int i=0; i<currentAnimData->data.size(); i++ ) {
+        
+        AnimationCanvas  * canvas = new AnimationCanvas();
+        canvas->setup();
+        canvas->setSelecteds(currentAnimData->data[i]);
+        
+        previewCanvas.push_back(canvas);
+        
+    }
+    
+}
+
+
 void NSEditor::play() {
     bIsPlaying = true;
 }
@@ -142,22 +201,47 @@ void NSEditor::stop() {
 
 void NSEditor::save () {
     
+    stop();
+    
     vector<vector<int> > data;
-    for (int i=0; i<previewCanvas.size(); i++) {
-        
-        
+    for (int i=0; i<previewCanvas.size(); i++) {        
         data.push_back(previewCanvas[i]->getSelecteds());
-        
     }
     
-    AnimData anim;
-    anim.data = data;
-    anim.name = Globals::instance()->gui->nameInput->getLabel()->getLabel();
-    
-    anim.toXML();
-    
+    Globals::instance()->loadingScreen->show();
+    currentAnimData->data = data;
+    currentAnimData->name = Globals::instance()->gui->nameInput->getLabel()->getLabel();
+    currentAnimData->toXML();
     
     
+    Globals::instance()->dataManager->startUpload();
+    
+
+    
+}
+
+void NSEditor::onErrorHandler(int &e) {
+    
+    
+    Globals::instance()->loadingScreen->error();
+}
+
+void NSEditor::onLoadSuccessHandler(int & e) {
+    
+    // we should reload the current animation right?
+    
+    Globals::instance()->gui->populateEditorAnimations();
+    Globals::instance()->loadingScreen->hide();
+    
+    if(currentAnimData)
+        setAnim(currentAnimData->name);
+}
+
+void NSEditor::onUploadSuccessHandler(int & e) {
+    
+    
+    currentAnimData->id = ofToString(e);
+    Globals::instance()->dataManager->load();
 }
 
 void NSEditor::onKeyPressed (ofKeyEventArgs & e) {
@@ -188,11 +272,27 @@ void NSEditor::onKeyPressed (ofKeyEventArgs & e) {
     
 }
 
+void NSEditor::guiEvent(ofxUIEventArgs &e) {
+    
+     string name = e.widget->getName();
+    
+    if (name == "ANIMS") {
+        
+        ofxUIDropDownList* dropDown = (ofxUIDropDownList *)e.widget;
+        vector<ofxUIWidget *> &selected = dropDown->getSelected();
+        
+        for(int i = 0; i < selected.size(); i++){
+            setAnim(selected[i]->getName());
+        }
+        
+    }
+       
+    
+}
+
 void NSEditor::onSelectedHandler(ofRectangle & e) {
     
     if(editableCanvas)
         editableCanvas->selectOnRect(e, !ofGetModifierPressed(OF_KEY_SHIFT));
-    
-    
-    
+        
 }

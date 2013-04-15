@@ -17,6 +17,7 @@ ofxJSDeclareFunctionCpp(getPosY);
 ofxJSDeclareFunctionCpp(getPosZ);
 
 ofxJSDeclareFunctionCpp(lookAt);
+ofxJSDeclareFunctionCpp(setPanTilt);
 ofxJSDeclareFunctionCpp(setOrientation);
 ofxJSDeclareFunctionCpp(setBrightness);
 ofxJSDeclareFunctionCpp(setGobo);

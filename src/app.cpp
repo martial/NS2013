@@ -4,13 +4,14 @@
 //--------------------------------------------------------------
 void app::setup(){
     
-    ofSetFrameRate(120);
-    //ofSetVerticalSync(true);
+    ofSetFrameRate(60);
+    ofSetVerticalSync(true);
     ofBackground(0);
     
     
     ofxJSInitialize();
-        
+    
+    Globals::instance()->app                = this;
     Globals::instance()->nsSceneManager     = &sceneManager;
     Globals::instance()->eq                 = &eq;
     Globals::instance()->screenLog          = &screenLog;
@@ -18,6 +19,7 @@ void app::setup(){
     Globals::instance()->editor             = &editor;
     Globals::instance()->gui                = &guiManager;
     Globals::instance()->dataManager        = &dataManager;
+    Globals::instance()->loadingScreen      = &loadingScreen;
     
     ofSoundStreamSetup(0,2,this, 44100, 512, 4);
     eq.setup();
@@ -46,9 +48,16 @@ void app::setup(){
     
     // editor
     
+    
     editor.setup();
     
+    dataManager.setup();
+    dataManager.load();
+    
     mode = 1;
+    
+    dmxManager.setup(&sceneManager.getScene(0)->sharpies);
+    
     
     
 }
@@ -63,6 +72,7 @@ void app::update(){
         
         animationManager.update(sceneManager.getNumScenes());
         sceneManager.update();
+        dmxManager.update();
         
         
     } else {
@@ -84,16 +94,18 @@ void app::draw(){
     
     
     if(mode == 0 ) {
-    sceneManager.draw();
         
-    ofSetColor(255);
-    screenLog.draw();
+        sceneManager.draw();
+        ofSetColor(255);
+        screenLog.draw();
         
     } else {
         
         editor.draw();
         
     }
+    
+    loadingScreen.draw();
 
 }
 
@@ -114,7 +126,7 @@ void app::keyPressed(int key){
     if (key == ' ') {
         animationManager.nextAnimation(0);
     }
-    
+      
     if (key == 'f') {
         ofToggleFullscreen();
     }
@@ -175,6 +187,7 @@ void app::dragEvent(ofDragInfo dragInfo){
 void app::exit(){
     ofxJSFinalize();
     guiManager.exit();
+    dataManager.exit();
 }
 
 

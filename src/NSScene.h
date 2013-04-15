@@ -33,6 +33,8 @@ public:
     void sharpyLookAt(int sharpyIndex, ofVec3f pos);
     void setGobo(int sharpyIndex, float pct);
     void setBrightness(int sharpyIndex, float pct);
+    
+    void setPanTilt(int sharpyIndex, ofVec2f angles);
     void setOrientation(int sharpyIndex, ofVec3f eulerAngles);
     
     float                       dofFocus;
@@ -50,6 +52,8 @@ public:
     // not sur if that would be there
     ofPtr<NSAnimation>          animationRef;
     ofxPostProcessing           post;
+    
+    vector<ofPtr<NSSharpy> >    sharpies;
     
     
     void onResize(int width, int height);
@@ -71,7 +75,7 @@ private:
     int                         numSharpies;
     ofVec3f                     sharpiesCenter;
     
-    vector<ofPtr<NSSharpy> >    sharpies;
+    
     vector<ofLight*>            lights;
     
     ofx3DModelLoader            flash;

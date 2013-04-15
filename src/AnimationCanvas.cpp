@@ -13,14 +13,10 @@ AnimationCanvas::AnimationCanvas() {
     xPadding    = 20.0;
     yPadding    = 20.0;
     rectSize    = 20.0;
-    
     alpha       = 255;
-    
-    //blocks.reserve(32);
     
     set(0, 0, getWidth(), getHeight());
     
-    //disableAppEvents();
     
     
 }
@@ -144,6 +140,12 @@ void AnimationCanvas::selectOnRect(ofRectangle r, bool select) {
     }
     
        
+}
+
+void AnimationCanvas::setSelecteds(vector<int> data) {
+    
+    for (int i=0; i<data.size(); i++)
+        blocks[data[i]]->setSelected(true);
 }
 
 vector<int> AnimationCanvas::getSelecteds() {

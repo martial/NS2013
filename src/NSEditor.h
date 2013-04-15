@@ -12,7 +12,8 @@
 #include "ofMain.h"
 #include "AnimationCanvas.h"
 #include "SelectTool.h"
-
+#include "NSDataManager.h"
+#include "ofxUI.h"
 
 class NSDataManager;
 
@@ -41,12 +42,22 @@ public:
     void play();
     void stop();
     
+    void setAnim(int index);
+    void setAnim(string name);
+    void populateAnim();
     
+    
+    void onErrorHandler(int & e);
+    void onLoadSuccessHandler(int & e);
+    void onUploadSuccessHandler(int & e);
+    void guiEvent(ofxUIEventArgs &e);
     
     void onKeyPressed (ofKeyEventArgs & e);
     
     
     //void load(int id);
+    
+    
     
     void onSelectedHandler(ofRectangle & e);
     
@@ -61,6 +72,8 @@ private:
     
     // a way to visualize frames
     vector<AnimationCanvas*>    previewCanvas;
+    
+    ofPtr<AnimData>             currentAnimData;
     
     int                         currentFrame;
     
