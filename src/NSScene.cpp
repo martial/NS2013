@@ -10,6 +10,11 @@
 #include "Globals.h"
 #include "ofxEQ.h"
 
+bool MyDataSortPredicate(const pair<int, float>& lhs, const pair<int, float>& rhs)
+{
+    return lhs.second < rhs.second;
+}
+
 NSScene::NSScene () {
     
     bEnableFFSA     = true;
@@ -20,8 +25,27 @@ NSScene::NSScene () {
     bToggleCamera   = false;
     bSndAlpha       = false;
     bSndGobo        = false;
+    bdrawArrows     = false;
+    bdrawLookAt     = false;
+    bdrawModels     = true;
+    
+    bmapAnims       = true;
+    
+    
     dofAperture     = 1.0;
     dofFocus        = 0.2;
+    
+    globalDecay     = 1.0;
+    
+    
+    depth           = -22677.165354331 / 100.0f;;
+    width           = 158740.157492 / 100.0f;
+    height          = 60472.440949 / 100.0f;
+    
+    
+    floorSize.x = width;
+    floorSize.y = height;
+
     
     
 }
@@ -72,16 +96,10 @@ void NSScene::setup (int width, int height) {
     dofAperture = 0.92;
     dofFocus = 0.4;
     
-    //load the squirrel model - the 3ds and the texture file need to be in the same folder
-    flash.loadModel("model/model.3ds", 0.5);
+    sharpyModel.setup();
     
-    //you can create as many rotations as you want
-    //choose which axis you want it to effect
-    //you can update these rotations later on
-    
-    //flash.setRotation(0, 90, 0, 0, 1);
-    flash.setScale(0.9, 0.9, 0.9);
-    flash.setPosition(0, 0, -215);
+    // creat box
+   
     
 }
 
@@ -115,7 +133,7 @@ void NSScene::update () {
     
     resetTransform();
     
-    ofVec3f screenCenter;
+    
     screenCenter.set(ofGetWidth() * .5, ofGetHeight() * .5 , 0.f);
     setPosition(screenCenter);
     
@@ -126,24 +144,58 @@ void NSScene::update () {
     
     sharpiesCenter.set(ofVec3f( ( (float)numSharpies *.25  * xDistance) - xDistance*.5, yDistance * .5));
     
-    ofxEQ * eq = Globals::instance()->eq;
+    ofxEQ * eq          = Globals::instance()->eq;
+    NSEditor * editor   = Globals::instance()->editor;
+    
+    vector<int> data    = editor->getActualFrameData();
+    
+    //printf("size %d", data.size());
     
      for (int i=0; i<sharpies.size(); i++) {
         
         ofPtr<NSSharpy> sharpyRef = sharpies[i];
-        sharpyRef->setPosition(-getPosition() + pos - sharpiesCenter);
-        
+         
+         sharpyRef->setPosition(-getPosition() + pos - sharpiesCenter);
+         sharpyRef->decay = globalDecay;
+       
         
         int index = ( i < 16 ) ? i : i - 16;
         float * eqChannel = ( i < 16 ) ?  eq->left :  eq->right;
         int indexMapped = ofMap(index, 0, 16, 0, 512);
+        
+                          
+         // map to anim
+         
+        if (bmapAnims) {
+             
+             if (find(data.begin(), data.end(), i) != data.end()) {
+                 sharpyRef->target->brt = 1.0;
+             
+             }
+             else {
+                 sharpyRef->target->brt = 0.0;
+             }
+         
+        } else {
+            sharpyRef->target->brt = 1.0;
+            
+        }
+         
+         // force lights
+         
+         
+         if(sharpyRef->forcedBrightness >= 0.0)
+             sharpyRef->target->brt = sharpyRef->forcedBrightness;
+         
+        // sound
         
         if(bSndAlpha)
             sharpyRef->target->brt *= sharpyRef->target->brt * eqChannel[indexMapped];
 
         if(bSndGobo)
             sharpyRef->target->goboPct *= sharpyRef->target->goboPct * eqChannel[indexMapped];
-        
+         
+                 
         sharpyRef->update();
         pos.x += xDistance;
         if( i == (floor)((float)numSharpies *.5) -1) {
@@ -158,61 +210,30 @@ void NSScene::update () {
 
 //--------------------------------------------------------------
 
-void NSScene::draw() {
-    
-    
-    
-    if(bCamMouseInput) {
-        cam.enableMouseInput();
-    } else {
-        setCameraMode(camMode);
-        cam.disableMouseInput();
-        
-    }
-        
-    // copy enable part of gl state
-    glPushAttrib(GL_ENABLE_BIT);
 
-    light.enable();
-    lightUp.disable();
-    
-    // begin scene to post process
-    
-    post.begin(cam);
+void NSScene::drawBox() {
     
     ofPushMatrix();
-    
-    //ofScale(ofGetMouseY() /1000, ofGetMouseY() /1000);
-    
+  
     glEnable(GL_CULL_FACE);
-
+    
     ofSetColor(255);
-    //ofDrawGrid(1000, 2, true);
     
     
-    //float width = sharpiesCenter.x * 2.f;
-    //float height = 300;
-    
-    ofDisableAlphaBlending();
     
     light.setAmbientColor(0);
     light.setDiffuseColor(.3);
     
     lightUp.setAmbientColor(ofFloatColor(.01));
     lightUp.setDiffuseColor(ofFloatColor(.1));
+    
 
     
     
-    glEnable(GL_DEPTH_TEST);
     glBegin(GL_QUADS);
-
-    // sol
-    //float zPos = -300.0;
-    float zPos = -20787.401576 / 100.0f;
-    ofVec3f floorSize;
-    floorSize.x = 158740.157492 / 100.0f;
-    floorSize.y = 60472.440949 / 100.0f;
     
+
+    float zPos = depth;
     
     float floorScale = 10.0;
     
@@ -226,21 +247,11 @@ void NSScene::draw() {
     
     float floorColor = 0.6;
     glColor3f(floorColor,floorColor,floorColor);    glVertex3f(-floorSize.x* floorScale, -floorSize.y* floorScale, zPos);
-    glColor3f(floorColor,floorColor,floorColor);     glVertex3f(floorSize.x* floorScale, -floorSize.y* floorScale, zPos);
-    glColor3f(floorColor,floorColor,floorColor);        glVertex3f(floorSize.x* floorScale, floorSize.y* floorScale, zPos);
-    glColor3f(floorColor,floorColor,floorColor);             glVertex3f(-floorSize.x* floorScale, floorSize.y* floorScale, zPos);
+    glColor3f(floorColor,floorColor,floorColor);    glVertex3f(floorSize.x* floorScale, -floorSize.y* floorScale, zPos);
+    glColor3f(floorColor,floorColor,floorColor);    glVertex3f(floorSize.x* floorScale, floorSize.y* floorScale, zPos);
+    glColor3f(floorColor,floorColor,floorColor);    glVertex3f(-floorSize.x* floorScale, floorSize.y* floorScale, zPos);
     
-    /*
-    glColor3f(0.95, 0.95, 0.95);    glVertex3f(-floorSize.x* floorScale, -floorSize.y* floorScale, zPos);
-    glColor3f(.85, 0.85, 0.85);     glVertex3f(floorSize.x* floorScale, -floorSize.y* floorScale, zPos);
-    glColor3f(.9, 0.9, 0.9);        glVertex3f(floorSize.x* floorScale, floorSize.y* floorScale, zPos);
-    glColor3f(1, 1, 1);             glVertex3f(-floorSize.x* floorScale, floorSize.y* floorScale, zPos);
-     
-     */
-    // right
-    
-    
-   
+      
     glColor3f(.85, 0.85, 0.85);     glVertex3f(-floorSize.x, -floorSize.y, 0);
     glColor3f(0.95, 0.95, 0.95);    glVertex3f(floorSize.x, -floorSize.y, 0);
     glColor3f(1, 1, 1);             glVertex3f(floorSize.x, -floorSize.y, zPos);
@@ -258,55 +269,68 @@ void NSScene::draw() {
     
     glEnd();
     
-    
-    //3779,5275595 / 100 = 1 Meter
-    
-    
-    
     ofPushMatrix();
     
-    float w = 3779.5275595 * 4 / 100;
-    float h = 60472.440949 / 100.0f;
+    
+    // ----------------------------------  scene box
+    
+    
+    float w     = 3779.5275595 * 4 / 100;
     float depth = 75;
     
+    if(!sceneBox.hasVertices())
+        sceneBox = box(w, floorSize.y*2, depth, 16, 16, 16);;
+    
     ofTranslate(-floorSize.x + (w*.5), 0, zPos + (depth*.5));
-    ofMesh b =box(w, floorSize.y*2, depth, 16, 16, 16);
     ofSetColor(0.6 * 255);
-    b.draw();
+    sceneBox.draw();
     ofPopMatrix();
     
-    //ofCylinder();
-    ofPopMatrix();
-    
-    
-    /*
-    flash.draw();
-     
-     */
-    
-    // walls
-    //int groundWidth = 4000, groundHeight = 1000;
-    
-    //ofRect(0, 0, groundWidth, groundHeight);
-    
-    light.setAmbientColor(1.0);
-    lightUp.setAmbientColor(0.001);
-    
-    light.draw();
-    lightUp.draw();
 
-   
+    ofPopMatrix();
     
-    ofSetColor(255);
-    ofSphere (light.getPosition(), 10);
-    
-   
-    
-    //ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
     ofSetColor(255);
     ofEnableAlphaBlending();
     glDisable(GL_CULL_FACE);
     
+
+}
+
+void NSScene::drawModels() {
+    
+   
+    float zPos  = depth;
+    
+    light.setAmbientColor(ofFloatColor(.001,.001,.001));
+    light.setDiffuseColor(ofFloatColor(.1,.1,.1));
+    light.setSpecularColor(ofFloatColor(.001,.001,.001));
+    
+    ofSetColor(255);
+
+    ofEnableAlphaBlending();
+    ofSetColor(255, 255, 255, 255);
+    
+    
+    for (int i=0; i<sharpies.size(); i++) {
+        
+        ofPtr<NSSharpy> sharpyRef = sharpies[i];
+        sharpyRef->transformGL();
+        
+        if(bdrawModels)
+            sharpyModel.draw(ofVec3f(0,0,0), sharpyRef->rotationX, sharpyRef->rotationY);
+        else
+            sharpyModel.drawBlocks(ofVec3f(0,0,0), sharpyRef->rotationX, sharpyRef->rotationY);
+        
+        sharpyRef->restoreTransformGL();
+        
+    }
+    
+    
+    light.setAmbientColor(1.0);
+    lightUp.setAmbientColor(0.001);
+    
+    
+
     
     if(bDrawGrid) {
         ofPushMatrix();
@@ -314,33 +338,94 @@ void NSScene::draw() {
         ofDrawGrid(3779.5275595 / 100 * 256, 128, false, false, false, true);
         ofPopMatrix();
     }
-
     
-    for (int i=0; i<sharpies.size(); i++) {
+    list< pair<int, float> > depthList;
+    
+    // put indexed points and z-values into the list
+    for(int i=0; i<sharpies.size(); i++) {
+        depthList.push_back( make_pair(i, sharpies[i]->getPosition().x) );
+    }
+    
+    // sort the list
+    depthList.sort(MyDataSortPredicate);
+    
+    glAlphaFunc ( GL_GREATER, 0.1 ) ;
+    glEnable ( GL_ALPHA_TEST ) ;
+
+    std::list<pair<int, float> >::iterator it;
+    for(it = depthList.begin(); it != depthList.end(); it++) {
         
+        int i = it->first;
         ofPtr<NSSharpy> sharpyRef = sharpies[i];
         sharpyRef->draw();
         
+        
+        
+        if(bdrawLookAt) {
+            ofPushMatrix();
+            ofTranslate(sharpyRef->lookAtPnt);
+            ofSphere(0, 0, 0, 20);
+            ofPopMatrix();
+            
+        }
+        
     }
     
-  
-    ofSetColor(255);
+    //glDisable( GL_ALPHA_TEST ) ;
 
+    ofSetColor(255);
+    
+    
+    ofPopMatrix();
+   
+    
+}
+
+
+
+void NSScene::draw() {
+    
+    
+    
+    if(bCamMouseInput) {
+        cam.enableMouseInput();
+    } else {
+        setCameraMode(camMode);
+        cam.disableMouseInput();
+        
+    }
+    
+    
+        
+    // copy enable part of gl state
+   
+
+    glPushAttrib(GL_ENABLE_BIT);
+    light.enable();
+    lightUp.disable();
+    
+    
+    post.begin(cam);
+    
+    
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_NICEST);
+
+    
+    
+    drawBox();
+    drawModels();
     
     ofDisableAlphaBlending();
     
-    ofPopMatrix();
-    
-    //ofDisableBlendMode();
-    //cam.end();
+    glDisable(GL_DEPTH_TEST); 
+
     post.end(false);
-    //restoreTransformGL();
     
+      glPopAttrib();
+ 
     
-    glDisable(GL_DEPTH_TEST);
-    glPopAttrib();
-    
-    //post.draw();
+
    
 }
 
@@ -398,23 +483,55 @@ void NSScene::setCameraMode(int camMode) {
  //--------------------------------------------------------------
  */
 
+void NSScene::reset() {
+    
+    for (int i=0; i<sharpies.size(); i++) {
+        
+        ofPtr<NSSharpy> sharpyRef = sharpies[i];
+        sharpyRef->forcedBrightness = -1.0;
+    }
+    
+    
+}
+
+void NSScene::setSharpyDecay(float decay) {
+    
+    for (int i=0; i<sharpies.size(); i++) {
+        
+        ofPtr<NSSharpy> sharpyRef = sharpies[i];
+        sharpyRef->decay = decay;
+    }
+    
+}
+
+void NSScene::setRotation(int sharpyIndex, ofVec2f angles) {
+    
+    
+    sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
+    ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
+
+    
+    
+    sharpyRef->target->rotationX = angles.x;
+    sharpyRef->target->rotationY = angles.y;
+    
+}
+
 void NSScene::sharpyLookAt(int sharpyIndex, ofVec3f pos) {
     
     sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
     ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
+
+    ofVec3f pnt = pos  -getPosition() - sharpyRef->getPosition();;
     
-    ofNode tmpNode;
-    tmpNode.setParent(*this);
-    tmpNode.setPosition(sharpyRef->getPosition());
-    tmpNode.lookAt(pos);
+    sharpyRef->lookAtPnt =pos;
     
-    sharpyRef->target->setOrientation(tmpNode.getOrientationQuat());
+    float rotx = ofRadToDeg(atan2(pnt.x, pnt.y));
+    float roty = ofRadToDeg(atan2(sqrt(pow(pnt.x,2) + pow(pnt.y,2)),pnt.z));
     
-    
-    
-    //sharpyRef->lookAt(pos);
-    
-    
+      
+    sharpyRef->target->rotationX =  - rotx;
+    sharpyRef->target->rotationY =  180 - roty;
     
     
 }
@@ -451,14 +568,10 @@ void NSScene::setPanTilt(int sharpyIndex, ofVec2f angles) {
     sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
     ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
     
-    
-    
-    ofQuaternion pan, tilt;
-    pan.makeRotate  ( angles.x, 0, 0, 1);
-    tilt.makeRotate ( angles.y, 0, 1, 0);
 
-    sharpyRef->target->setOrientation(pan);
-    sharpyRef->childNode.setOrientation(tilt);
+    sharpyRef->target->orientation.x = angles.x;
+    sharpyRef->target->orientation.y = angles.y;
+    //sharpyRef->childNode.setOrientation(tilt);
     
 }
 
@@ -466,36 +579,23 @@ void NSScene::setOrientation(int sharpyIndex, ofVec3f eulerAngles) {
     
     sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
     ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
+    
+    if(eulerAngles.z >= 0 ) eulerAngles.z = -1;
 
     
+    ofVec3f pnt = eulerAngles  - getPosition() - sharpyRef->getPosition();;
     
+    sharpyRef->lookAtPnt = pnt;
     
-    sharpyRef->target->setOrientation(eulerAngles);
+    float rotx = ofRadToDeg(atan2(eulerAngles.x, eulerAngles.y));
+    float roty = ofRadToDeg(atan2(sqrt(pow(eulerAngles.x,2) + pow(eulerAngles.y,2)),eulerAngles.z));
     
+        
     
-    /*
+    sharpyRef->target->rotationX =  - rotx;
+    sharpyRef->target->rotationY =  180 - roty;
     
-    ofQuaternion pan, tilt;
-    pan.makeRotate( eulerAngles.x, 0, 0, 1);
-    tilt.makeRotate( eulerAngles.y, 0, 1, 0);
-    
-    
-    
-    sharpyRef->target->setOrientation(pan * tilt);
-    sharpyRef->childNode.setOrientation(tilt);
-    
-    //sharpyRef->target->setOrientation(pan * tilt);
-     
 
-    ofQuaternion pan, tilt;
-    pan.makeRotate  ( eulerAngles.x, 0, 0, 1);
-    tilt.makeRotate ( eulerAngles.y, 0, 1, 0);
-    
-    sharpyRef->tmpQuaternion.setOrientation(pan * tilt);
-    
-    sharpyRef->target->setOrientation(eulerAngles);
-     
-     */
 
     
 }

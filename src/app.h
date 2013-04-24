@@ -32,6 +32,7 @@ class app : public ofBaseApp{
         void audioReceived (float * input, int bufferSize, int nChannels);
 
     
+        void setMode(int mode);
     
         void exit();
     

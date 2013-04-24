@@ -54,10 +54,11 @@ void app::setup(){
     dataManager.setup();
     dataManager.load();
     
-    mode = 1;
+   
     
     dmxManager.setup(&sceneManager.getScene(0)->sharpies);
     
+    setMode(0);
     
     
 }
@@ -66,6 +67,9 @@ void app::setup(){
 void app::update(){
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
+    
+    editor.update();
+
     
     if(mode == 0 ) {
         
@@ -77,7 +81,6 @@ void app::update(){
         
     } else {
         
-        editor.update();
         
     }
     
@@ -96,6 +99,7 @@ void app::draw(){
     if(mode == 0 ) {
         
         sceneManager.draw();
+        editor.drawAsPreview(ofGetWidth() * .5, 0, 20, true);
         ofSetColor(255);
         screenLog.draw();
         
@@ -107,6 +111,25 @@ void app::draw(){
     
     loadingScreen.draw();
 
+}
+
+void app::setMode(int mode) {
+    
+    this->mode = mode;
+    guiManager.setMode(mode);
+    
+    if(mode == 1 ) {
+        
+        editor.init();
+        editor.stop();
+        
+        
+    } else {
+        editor.play();
+        editor.exit();
+        
+    }
+    
 }
 
 
@@ -129,6 +152,14 @@ void app::keyPressed(int key){
       
     if (key == 'f') {
         ofToggleFullscreen();
+    }
+    
+    if (key == OF_KEY_RIGHT && mode == 0) {
+        editor.pushAnim(true);
+    }
+    
+    if(key== OF_KEY_LEFT && mode == 0) {
+        editor.popAnim(true);
     }
     
 #ifndef animationManager_MODE

@@ -14,23 +14,31 @@
 //class JSObject;
 //--------------------------------------------------------------
 bool initJS()
-{
+{ 
 	// Some functions
 	//
     ofxJSDefineFunctionGlobal("lookAt",                         &lookAt,                            5);
     ofxJSDefineFunctionGlobal("getPosX",                        &getPosX,                           2);
     ofxJSDefineFunctionGlobal("getPosY",                        &getPosY,                           2);
     ofxJSDefineFunctionGlobal("getPosZ",                        &getPosZ,                           2);
-    ofxJSDefineFunctionGlobal("setPanTilt",                     &setPanTilt,                        4);
-    ofxJSDefineFunctionGlobal("setOrientation",					&setOrientation,					5); // name, function pointer, args number
-    ofxJSDefineFunctionGlobal("setBrightness",					&setBrightness,                     3); // name, function pointer, args number
-    ofxJSDefineFunctionGlobal("setGobo",                        &setGobo,                           3); // name, function pointer, args number
-    ofxJSDefineFunctionGlobal("setName",                        &setName,                           0); // name, function pointer, args number
+    ofxJSDefineFunctionGlobal("setRotation",                    &setRotation,                       4);
+    ofxJSDefineFunctionGlobal("setOrientation",					&setOrientation,					5); 
+    ofxJSDefineFunctionGlobal("forceLight",                     &forceLight,                        3); 
+    ofxJSDefineFunctionGlobal("setGobo",                        &setGobo,                           3); 
+    ofxJSDefineFunctionGlobal("setName",                        &setName,                           0); 
     
-    ofxJSDefineFunctionGlobal("getMouseX",                      &getMouseX,                           0);
-    ofxJSDefineFunctionGlobal("getMouseY",                      &getMouseY,                           0);
+    ofxJSDefineFunctionGlobal("getMouseX",                      &getMouseX,                         0);
+    ofxJSDefineFunctionGlobal("getMouseY",                      &getMouseY,                         0);
+
+    ofxJSDefineFunctionGlobal("getPos",                         &getPos,                            1);
     
-    ofxJSDefineFunctionGlobal("getPos",                      &getPos,                           1);
+    ofxJSDefineFunctionGlobal("getCurrentTotalFrames",          &getCurrentTotalFrames,             0);
+    ofxJSDefineFunctionGlobal("getCurrentAnimFrame",            &getCurrentAnimFrame,               0);
+    
+    
+    ofxJSDefineFunctionGlobal("getWidth",                       &getWidth,                          0);
+    ofxJSDefineFunctionGlobal("getHeight",                      &getHeight,                         0);
+    ofxJSDefineFunctionGlobal("getDepth",                       &getDepth,                          0);
     
 	// Load globals
 	ofxJSScript * pScript = ofxJSLoadFromData("app.js", "app"); 
@@ -44,6 +52,72 @@ bool initJS()
 	} 
 	
 	return true; // TODO err checking
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getWidth){
+    
+	if (argc == 0){
+        
+        //array_TO
+		*retVal = float_TO_ofxJSValue(Globals::instance()->nsSceneManager->getScene(0)->width);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getHeight){
+    
+	if (argc == 0){
+        
+        //array_TO
+		*retVal = float_TO_ofxJSValue(Globals::instance()->nsSceneManager->getScene(0)->height);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getDepth){
+    
+	if (argc == 0){
+        
+        //array_TO
+		*retVal = float_TO_ofxJSValue(Globals::instance()->nsSceneManager->getScene(0)->depth);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getCurrentTotalFrames){
+    
+	if (argc == 0){
+        
+        //array_TO
+		*retVal = int_TO_ofxJSValue(Globals::instance()->editor->getTotalFrames());
+        
+		return JS_TRUE;
+	}
+    
+	return JS_FALSE;
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(getCurrentAnimFrame){
+    
+	if (argc == 0){
+        
+        //array_TO
+		*retVal = int_TO_ofxJSValue(Globals::instance()->editor->currentFrame);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
 }
 
 //--------------------------------------------------------------
@@ -191,7 +265,7 @@ ofxJSDefineFunctionCpp(setName){
 }
 
 //--------------------------------------------------------------
-ofxJSDefineFunctionCpp(setPanTilt){
+ofxJSDefineFunctionCpp(setRotation){
     
 	if (argc == 4){
         
@@ -200,7 +274,7 @@ ofxJSDefineFunctionCpp(setPanTilt){
 		float pan           = ofxJSValue_TO_float(argv[2]);
         float tilt          = ofxJSValue_TO_float(argv[3]);
         
-        Globals::instance()->nsSceneManager->getScene(scene)->setPanTilt(indexSharpy, ofVec2f(pan, tilt));
+        Globals::instance()->nsSceneManager->getScene(scene)->setRotation(indexSharpy, ofVec2f(pan, tilt));
         
 		return JS_TRUE;
 	}
@@ -226,7 +300,7 @@ ofxJSDefineFunctionCpp(setOrientation){
 }
 
 //--------------------------------------------------------------
-ofxJSDefineFunctionCpp(setBrightness){
+ofxJSDefineFunctionCpp(forceLight){
     
 	if (argc == 3){
         

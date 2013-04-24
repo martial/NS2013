@@ -183,11 +183,23 @@ void NSAnimationManager::update (int numScenes) {
 
 void NSAnimationManager::callMainSetup() {
     
+    
+    // reset props
+    for( int i =0; i<Globals::instance()->nsSceneManager->getNumScenes(); i++) {
+        
+        ofPtr<NSScene>  sceneRef = Globals::instance()->nsSceneManager->getScene(i);
+        sceneRef->reset();
+        
+    }
+    
+    
+    
     ofxJSValue retVal;
     ofxJSValue args[1];
     
     args[0] = int_TO_ofxJSValue(0);
     ofxJSCallFunctionNameGlobal_IfExists("setup", args,1,retVal);
+    
     
     
 }

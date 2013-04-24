@@ -20,6 +20,7 @@ public:
     string     id;
     string name;
     vector<vector<int> > data;
+        
     AnimData() {
         id = "";
     }
@@ -76,6 +77,7 @@ public:
     
     void startUpload();
     void upload();
+    void deleteAnim(int id);
     void urlResponse(ofHttpResponse & response);
     
     
@@ -83,12 +85,15 @@ public:
     
     ofPtr<AnimData>         getAnimation(int index);
     ofPtr<AnimData>         getAnimation(string name);
+    int                     getAnimationId(string name);
+    
     
     vector<string>          getAnimationsLabels();
     
     ofEvent<int>            onError;
     ofEvent<int>            onUploadSuccess;
     ofEvent<int>            onLoadSuccess;
+    ofEvent<int>            onDeleteSuccess;
     
     vector<ofPtr<AnimData> >   animations;
     

@@ -35,6 +35,7 @@ var CosAnimation = Animation.extend({
         var a       = (Math.PI * 2.0) / numSharpy;
 
 
+
         for ( var i=0; i<2; i++) {
 
             for (var j=0; j<16; j++) {
@@ -45,11 +46,13 @@ var CosAnimation = Animation.extend({
                 var yo = 0.5 + Math.cos( (time + index * 14 ) / 50 * speedPct) * 0.5;
 
 
+                //println(x)
 
                 x = Math.cos(cnt * a) * radius;
                 y = Math.sin(cnt * a) * radius;
 
-                lookAt(s, index,   x, y, -300 );
+                //lookAt(s, index,   x, y, -300 );
+                lookAt(s, index,   x, y, -200 );
                 setGobo(s, cnt,  1);
                 setBrightness(s, cnt, yo);
 

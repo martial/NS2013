@@ -15,7 +15,7 @@ AnimationCanvas::AnimationCanvas() {
     rectSize    = 20.0;
     alpha       = 255;
     
-    set(0, 0, getWidth(), getHeight());
+    bounds.set(0, 0, getWidth(), getHeight());
     
     
     
@@ -29,9 +29,9 @@ void AnimationCanvas::setup() {
         blocks.push_back(block);
     }
     
-    set(0, 0, getWidth(), getHeight());
+    bounds.set(0, 0, getWidth(), getHeight());
     
-    disableMouseEvents();
+    //disableMouseEvents();
 
     
 }
@@ -49,7 +49,7 @@ void AnimationCanvas::draw() {
     ofSetColor(255, alpha);
     
     ofPushMatrix();
-    ofTranslate(x, y);
+    ofTranslate(bounds.x, bounds.y);
     
     ofNoFill();
     
@@ -61,7 +61,6 @@ void AnimationCanvas::draw() {
         
         for (int j=0; j<16; j++) {
             
-            
             int index = i * 16 + j;
             
             float xBlockPos = xPadding + i * (rectSize + xPadding);
@@ -71,13 +70,10 @@ void AnimationCanvas::draw() {
             ofTranslate(xBlockPos, yBlockPos);
             blocks[index]->alpha = alpha;
             
-            blocks[index]->setPosition(x + xBlockPos, y + yBlockPos);
+            blocks[index]->setPosition(bounds.x + xBlockPos, bounds.y + yBlockPos);
             blocks[index]->draw();
             
-            //printf("rect w h %f %f", blocks[i]->width, blocks[i]->height);
-            
             ofPopMatrix();
-            //ofRect(xPadding + i * (rectSize + xPadding), yPadding + j * (rectSize + yPadding), rectSize, rectSize);
             
         }
         
@@ -92,16 +88,8 @@ void AnimationCanvas::setEditable(bool b) {
     
     this->bEditable = b;
     
-    if(this->bEditable) {
-        
-        enableMouseEvents();
-		enableKeyEvents();
-        
-    } else {
-        
-        disableMouseEvents();
-        disableKeyEvents();
-        
+    for (int i=0; i<32; i++) {
+        blocks[i]->setEditable(b);
     }
     
 }

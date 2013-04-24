@@ -36,9 +36,12 @@ void NSGuiManager::setup() {
     guiLeft->addToggle("FFSA", &mainScene->bEnableFFSA);
     guiLeft->addToggle("BLOOM", &mainScene->bEnableBloom);
     guiLeft->addToggle("DOF", &mainScene->bEnableDof);
-    guiLeft->addSlider("DOF APERTURE", 0.0, 2.0, &mainScene->dofAperture);
+    guiLeft->addToggle("LOOKAT", &mainScene->bdrawLookAt);
+    guiLeft->addToggle("ARROWS", &mainScene->bdrawArrows);
+    guiLeft->addSlider("DOF APERTURE", 0.99, 1.1, &mainScene->dofAperture);
     guiLeft->addSlider("DOF FOCUS", 0.0, 5.0, &mainScene->dofFocus);
     guiLeft->addToggle("DRAW GRID", &mainScene->bDrawGrid);
+    guiLeft->addToggle("DRAW MODEL", &mainScene->bdrawModels);
     
     guiLeft->addLabelButton("TOGGLE CAMERA", false);
     guiLeft->addSpacer();
@@ -56,8 +59,12 @@ void NSGuiManager::setup() {
     
     guiLeft->addSlider("RANGE", 1, 16, 8);
     overrideSlider = guiLeft->addSlider("OVERRIDE", -1, 16, 8);
+    guiLeft->addToggle("MAP ANIMS",   &mainScene->bmapAnims);
     guiLeft->addToggle("SOUND ALPHA", &mainScene->bSndAlpha);
-    guiLeft->addToggle("SOUND GOBO", &mainScene->bSndGobo);
+    guiLeft->addToggle("SOUND GOBO",  &mainScene->bSndGobo);
+    
+    guiLeft->addSlider("SPEED", -1.0, 1.0,  &Globals::instance()->editor->playVel);
+    guiLeft->addSlider("DECAY", 1.0, 10.0,  &Globals::instance()->nsSceneManager->getScene(0)->globalDecay);
     
     
     guiRight = new ofxUICanvas(220, ofGetHeight());
@@ -87,7 +94,7 @@ void NSGuiManager::setup() {
     guiEditorLeft->addSpacer();
     guiEditorLeft->addSlider("speed", 0.0, 1.0,  &Globals::instance()->editor->playVel);
     guiEditorLeft->addSpacer();
-    guiEditorLeft->addLabelButton("NEW ANIM", false, true);
+    guiEditorLeft->addLabelButton("NEW", false, true);
     guiEditorLeft->addLabelButton("NEW FRAME", false, true);
     guiEditorLeft->addLabelButton("DELETE", false, true);
     guiEditorRight = new ofxUICanvas(220, ofGetHeight());
@@ -97,7 +104,7 @@ void NSGuiManager::setup() {
     ofAddListener(guiEditorLeft->newGUIEvent,this,&NSGuiManager::guiEvent);
     //guiEditorLeft->
     
-    setMode(1);
+    setMode(0);
     
 }
 
@@ -216,12 +223,21 @@ void NSGuiManager::guiEvent(ofxUIEventArgs &e) {
         
         int mode = ( this->mode == 0 ) ? 1 : 0;
         
-        printf("mode %d", mode);
-        
-        setMode(mode);
-        Globals::instance()->app->mode = mode;
+                Globals::instance()->app->setMode(mode);
             
         }
+        
+    }
+    
+    if(name == "DELETE") {
+        
+        Globals::instance()->editor->deleteAnim();
+        
+    }
+    
+    if(name == "NEW") {
+        
+        Globals::instance()->editor->createNew();
         
     }
 }

@@ -1,7 +1,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>CAMERA MOUSE</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -11,22 +11,32 @@
 <Widget>
     <Kind>2</Kind>
     <Name>BLOOM</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>DOF</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>LOOKAT</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>ARROWS</Name>
     <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>DOF APERTURE</Name>
-    <Value>1.000000000</Value>
+    <Value>0.998301923</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>DOF FOCUS</Name>
-    <Value>0.212264150</Value>
+    <Value>0.023584906</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -34,14 +44,24 @@
     <Value>1</Value>
 </Widget>
 <Widget>
+    <Kind>2</Kind>
+    <Name>DRAW MODEL</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
     <Kind>4</Kind>
     <Name>RANGE</Name>
-    <Value>14.372641563</Value>
+    <Value>16.000000000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>OVERRIDE</Name>
-    <Value>13.502491951</Value>
+    <Value>16.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MAP ANIMS</Name>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -52,4 +72,14 @@
     <Kind>2</Kind>
     <Name>SOUND GOBO</Name>
     <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>SPEED</Name>
+    <Value>0.103773594</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>DECAY</Name>
+    <Value>1.000000000</Value>
 </Widget>

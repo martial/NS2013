@@ -26,12 +26,28 @@ void NSDataManager::exit() {
 
 void NSDataManager::urlResponse(ofHttpResponse & response) {
     
-    if(response.status !=200 )
+    
+    printf("response %d", response.status);
+    
+    if(response.status !=200 ) {
+        int tmp = 0;
+        ofNotifyEvent(onError, tmp, this);
         return;
+
+    }
+           
+    if(response.request.name == "load" ) {
     
     ofxXmlSettings xml;
-    xml.loadFromBuffer(response.data);
-    xml.saveFile("anims.xml");
+        
+    if(response.status ==200 ) {
+        xml.loadFromBuffer(response.data);
+        xml.saveFile("anims.xml");
+        
+    } else {
+        xml.loadFile("anims.xml");
+
+    }
     
     animations.clear();
         
@@ -67,7 +83,9 @@ void NSDataManager::urlResponse(ofHttpResponse & response) {
                 
                 //xml.pushTag("id", j);
                 //printf("id %d\n", xml.getValue("id", 0, k));
-                ids.push_back(xml.getValue("id", 0, k));
+                int val = xml.getValue("id", -1, k);
+                if(val > -1 )
+                ids.push_back(val);
                 
                 
             }
@@ -87,7 +105,19 @@ void NSDataManager::urlResponse(ofHttpResponse & response) {
     }
     
     int tmp = 0;
+    
     ofNotifyEvent(onLoadSuccess, tmp, this);
+        
+    }
+    
+    if(response.request.name == "delete") {
+        
+        
+        int tmp = 0;
+        
+        ofNotifyEvent(onDeleteSuccess, tmp, this);
+        
+    }
     
 }
 
@@ -104,7 +134,14 @@ vector<string> NSDataManager::getAnimationsLabels() {
 
 void NSDataManager::load() {
     
-    ofLoadURLAsync("http://www.forme-libre.com/ns2013/ns/getxml");
+    ofLoadURLAsync("http://www.forme-libre.com/ns2013/ns/getxml", "load");
+    Globals::instance()->loadingScreen->show();
+    
+}
+
+void NSDataManager::deleteAnim(int id) {
+    
+    ofLoadURLAsync("http://www.forme-libre.com/ns2013/ns/delete/"+ofToString(id), "delete");
     Globals::instance()->loadingScreen->show();
     
 }
@@ -123,6 +160,22 @@ ofPtr<AnimData>  NSDataManager::getAnimation(string name) {
             return animations[i];
         
     }
+    
+    return ofPtr<AnimData>();
+    
+}
+
+
+int  NSDataManager::getAnimationId(string name) {
+    
+    for (int i=0; i<animations.size(); i++) {
+        
+        if (name == animations[i]->name)
+            return i;
+        
+    }
+    
+    return -1;
     
 }
 
