@@ -13,7 +13,7 @@
 #include "ofxMSAInteractiveObject.h"
 #include "AnimationBlock.h"
 
-class AnimationCanvas : public ofxMSAInteractiveObject {
+class AnimationCanvas {
     
 public:
     
@@ -37,7 +37,9 @@ public:
     
     
     vector<vector<int> > serialize();
-
+    bool bEditable;
+    
+    ofRectangle bounds;
     
 private:
     
@@ -45,7 +47,7 @@ private:
     float yPadding;
     float rectSize;
     
-    bool bEditable;
+    
     
     vector<AnimationBlock*>  blocks;
     

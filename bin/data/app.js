@@ -19,15 +19,29 @@ var horizontalSharpies  = new Array();
 var animations          = new Array();
 var previewAnimIndex    = 0;
 
+var width               = getWidth();
+var height              = getHeight();
+var depth               = getDepth();
+
+var numFrame            = 0;
+var totalFrame          = 0;
+var animProgress        = 0.0;
+
+
 var speedPct            = 1.0;
 var timeMillis          = 0.0;
 
-var yoyoPct             = 0.0;
 
-var tween = new TWEEN.Tween(yoyoPct)
-    .to(1.0,.0)
-    .easing(TWEEN.Easing.Quintic.Out)
-    .start();
+function getSharpyPos (s, index) {
+
+    var x = getPosX(s, index);
+    var y = getPosY(s, index);
+    var z = getPosZ(s, index);
+
+    return new Object({x:x,y:y,z:z});
+
+}
+
 
 function setVariables() {
 
@@ -106,14 +120,17 @@ function setup() {
 function update(speed, timeMs) {
 
     TWEEN.update();
-    speedPct    = speed;
-    timeMillis  = timeMs;
 
-   // println(speed);
+    speedPct        = speed;
+    timeMillis      = timeMs;
 
+    numFrame        = getCurrentAnimFrame();
+    totalFrame      = getCurrentTotalFrames();
+    animProgress    =  numFrame / totalFrame;
 
     mainAnimation.update(0);
     if(previewAnimation)previewAnimation.update(1);
+
 }
 
 var Animation = fk.Class.extend({
@@ -134,13 +151,17 @@ var Animation = fk.Class.extend({
 
             setOrientation  (s, i, 0 , 0, 0);
             setGobo         (s, i, 1.0);
-            setBrightness   (s, i, 1.0);
+            //forceLight      (s, i, 1.0);
 
         }
 
     },
 
     update: function () {
+
+
+
+
     }
 });
 

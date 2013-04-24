@@ -7,7 +7,7 @@ var NoiseExample = Animation.extend({
         this._super();
         this.noise = new SimplexNoise();
 
-
+f
     },
 
     update: function (s) {

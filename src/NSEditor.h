@@ -24,6 +24,7 @@ public:
     void setup();
     void update();
     void draw();
+    void drawAsPreview(float x, float y, float w, bool horizontal);
     
     void createNew();
     void addFrame(bool bCopyCurrent = false);
@@ -35,53 +36,66 @@ public:
     void popFrame();
     void setCurrentFrame(int index);
     
-    void clone(AnimationCanvas * in, AnimationCanvas * out);
+    void clone(ofPtr<AnimationCanvas>  in, ofPtr<AnimationCanvas>  out);
     
     void save();
+    void deleteAnim();
     
     void play();
     void stop();
     
+    void pushAnim(bool bAutoPlay = false);
+    void popAnim(bool bAutoPlay = false);
     void setAnim(int index);
     void setAnim(string name);
     void populateAnim();
+    void loadAll();
+    
+    vector<int> getActualFrameData();
     
     
     void onErrorHandler(int & e);
     void onLoadSuccessHandler(int & e);
     void onUploadSuccessHandler(int & e);
+    void onDeleteSuccessHandler(int & e);
     void guiEvent(ofxUIEventArgs &e);
     
     void onKeyPressed (ofKeyEventArgs & e);
-    
-    
-    //void load(int id);
-    
-    
-    
     void onSelectedHandler(ofRectangle & e);
     
     float                       playVel;
+    
+    int                         currentFrame;
+    int                         currentAnimation;
+    
+    int getTotalFrames() {return previewCanvas.size ();}
+    
+    
+    void init();
+    void exit();
 
     
 private:
     
     
     // the current we're going to edit
-    AnimationCanvas       *     editableCanvas;
+    ofPtr<AnimationCanvas>                      editableCanvas;
     
     // a way to visualize frames
-    vector<AnimationCanvas*>    previewCanvas;
+    vector<ofPtr<AnimationCanvas> >            previewCanvas;
     
-    ofPtr<AnimData>             currentAnimData;
+    // cache
+    vector<vector<ofPtr<AnimationCanvas> > >   animations;
     
-    int                         currentFrame;
+    ofPtr<AnimData>                             currentAnimData;
+    
+
     
     
-    SelectTool                  selectTool;
+    SelectTool                                  selectTool;
     
-    float                       currentFrameCnt;
-    bool                        bIsPlaying;
+    float                                       currentFrameCnt;
+    bool                                        bIsPlaying;
     
     
 };

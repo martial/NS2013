@@ -17,10 +17,12 @@ ofxJSDeclareFunctionCpp(getPosY);
 ofxJSDeclareFunctionCpp(getPosZ);
 
 ofxJSDeclareFunctionCpp(lookAt);
-ofxJSDeclareFunctionCpp(setPanTilt);
+ofxJSDeclareFunctionCpp(setRotation);
 ofxJSDeclareFunctionCpp(setOrientation);
-ofxJSDeclareFunctionCpp(setBrightness);
+ofxJSDeclareFunctionCpp(forceLight);
 ofxJSDeclareFunctionCpp(setGobo);
+
+
 
 ofxJSDeclareFunctionCpp(setName);
 
@@ -29,3 +31,10 @@ ofxJSDeclareFunctionCpp(getMouseX);
 ofxJSDeclareFunctionCpp(getMouseY);
 
 ofxJSDeclareFunctionCpp(getPos);
+
+ofxJSDeclareFunctionCpp(getWidth);
+ofxJSDeclareFunctionCpp(getHeight);
+ofxJSDeclareFunctionCpp(getDepth);
+
+ofxJSDeclareFunctionCpp(getCurrentTotalFrames);
+ofxJSDeclareFunctionCpp(getCurrentAnimFrame);

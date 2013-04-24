@@ -13,6 +13,7 @@
 
 #include "ofMain.h"
 #include "ofxTween.h"
+#include "SharpyModel.h"
 
 class NSSharpyTarget;
 class NSSharpy : public ofNode {
@@ -21,25 +22,28 @@ class NSSharpy : public ofNode {
 public:
     
     NSSharpy();
-    void    setup();
-    void    update();
-    void    draw();
+    void        setup();
+    void        update();
+    void        draw();
 
-    ofNode  childNode;
-    void    transToTargetOrientation();
-    void    setTargetOrientation(ofVec3f orientation);
+    void        transToTargetOrientation();
+    void        setTargetOrientation(ofVec3f orientation);
     
-    void    setBrightness(float brighntessPct);
-    float   getBrightness();
-    void    setGobo(float pct);
-    float   getGobo();
+    void        setBrightness(float brighntessPct);
+    float       getBrightness();
+    void        setGobo(float pct);
+    float       getGobo();
     
-    void    setID(int id);
-    int     getID() {return this->id;}
+    void        setID(int id);
+    int         getID() {return this->id;}
     
-    ofVec3f   getEulerDistance();
+    ofVec2f     calculatePanTilt();
+    ofVec3f     getEulerDistance();
+    int         getAngleDIstance(float a, float b);
     
-    void    reset();
+    void        reset();
+    
+    ofVec3f     lookAtPnt;
     
     /* */
     void                        sendToDmx();
@@ -48,16 +52,31 @@ public:
     NSSharpyTarget *    target;
     
     float               brightness;
+    float               forcedBrightness;
     float               goboPct;
+    
+    float               rotationX, rotationY;
+    float               decay;
+    
+    
+    ofNode              tmpParentNode;
+    ofNode              tmpChildNode;
     
     
 private:
     
+    void                updateCylinder();
+    
     int                 id;
     float               maxRadius;
-  
-    
     ofMesh              cylinder;
+    
+    float               currentAlpha;
+    
+    float               alpha, beta;
+    
+    ofxTween            brtTween;
+    ofxEasingLinear     linear;
     
     
     
@@ -91,73 +110,40 @@ public:
         orientation = ofVec3f(0,0,0);
         slerpPct    = 0.0;
         
-        for(int i=0; i<5; i++ ) {
+        
+        for(int i=0; i<2; i++ ) {
             ofxTween  * tween = new ofxTween();
             tween->setParameters(linear, ofxTween::easeOut, 0, 0, 1, 0);
             tween->start();
             tweens.push_back(tween);
             
-        }
+            }
         
     }
     
-    void  update() {
-        for (int i = 0; i<4; i++)
-            tweens[i]->update();
-    }
     
-        ofVec4f         setTweenedOrientation (ofQuaternion & current) {
-        
-        ofVec4f         currentQuatVec  = current.asVec4();
-        
-        ofQuaternion    targetQuat      = this->getOrientationQuat();
-        ofVec4f         targetQuatVec   = targetQuat.asVec4();
-        
-        float xDist = fabs(targetQuatVec.x - currentQuatVec.x);
-        float yDist = fabs(targetQuatVec.y - currentQuatVec.y);
-        float zDist = fabs(targetQuatVec.z - currentQuatVec.z);
-        float wDist = fabs(targetQuatVec.w - currentQuatVec.w);
-        
-        // update with the largest distance
-        
-        
+    
+        ofVec2f         setTweenedOrientation (float rotationX, float rotationY ) {
+            
+            
+     
+            
+        float xDist = fabs(this->rotationX - rotationX);
+        float yDist = fabs(this->rotationY - rotationY);
+               
         float maxDist = 0.0;
         maxDist = max(maxDist, xDist);
         maxDist = max(maxDist, yDist);
-        maxDist = max(maxDist, zDist);
-        maxDist = max(maxDist, wDist);
-         
-         
-        
-        // or min
-        /*
-        float maxDist = 99999999.0;
-        maxDist = min(maxDist, xDist);
-        maxDist = min(maxDist, yDist);
-        maxDist = min(maxDist, zDist);
-        maxDist = min(maxDist, wDist);
-         
-         */
-        
-        
-        // try to get rollspeed
-        
-        float time = 120;
+            
+        maxDist = 1.0 - ofNormalize(maxDist, 0, 360);
+               
+
+        float time = 1 + (maxDist * 5);
                 
-        tweens[0]->setParameters(linear, ofxTween::easeOut, currentQuatVec.x, targetQuatVec.x, maxDist * time, 0);
-        tweens[1]->setParameters(linear, ofxTween::easeOut, currentQuatVec.y, targetQuatVec.y, maxDist * time, 0);
-        tweens[2]->setParameters(linear, ofxTween::easeOut, currentQuatVec.z, targetQuatVec.z, maxDist * time, 0);
-        tweens[3]->setParameters(linear, ofxTween::easeOut, currentQuatVec.w, targetQuatVec.w, maxDist * time, 0);
- 
-        
-        //tweens[4]->setParameters(linear, ofxTween::easeOut, 0, 1, maxDist * 100, 0);
-        
-       // ofQuaternion q;
-        //q.slerp(tweens[4]->update(), current, this->getOrientationQuat());
-        
-        //return q.asVec4();
-        
-        return ofVec4f(tweens[0]->update(), tweens[1]->update(), tweens[2]->update(), tweens[3]->update());
+        tweens[0]->setParameters(linear, ofxTween::easeOut, rotationX, this->rotationX,  time, 0);
+        tweens[1]->setParameters(linear, ofxTween::easeOut, rotationY, this->rotationY,  time, 0);
+       
+        return ofVec2f(tweens[0]->update(), tweens[1]->update());
         
         
     }
@@ -170,6 +156,8 @@ public:
     vector<ofxTween* >  tweens;
     ofxEasingLinear linear;
     float   slerpPct;
+    
+    float rotationX, rotationY;
         
 };
 

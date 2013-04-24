@@ -18,11 +18,20 @@ public:
     
     AnimationBlock() {
         
-        enableMouseEvents();
+        //enableMouseEvents();
         alpha = 255;
 
     }
     
+    void setEditable ( bool b) {
+        
+        if(b) {
+            enableMouseEvents();
+        } else {
+            disableMouseEvents();
+        }
+        
+    }
     
     
     void draw() {

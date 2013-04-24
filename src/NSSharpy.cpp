@@ -10,8 +10,15 @@
 
 NSSharpy::NSSharpy() {
     
-    maxRadius = 4.f;
-    brightness = 1.0;
+    maxRadius           = 4.f;
+    brightness          = 1.0;
+    
+    rotationX           = 0.0;
+    rotationY           = 0.0;
+    
+    decay               = 1.0;
+    
+    forcedBrightness    = -1.0;
     
       
 }
@@ -21,6 +28,10 @@ NSSharpy::NSSharpy() {
 void NSSharpy::setup(){
     
     target = new NSSharpyTarget();
+    
+    
+    brtTween.setParameters(linear, ofxTween::easeOut, 0, 0, 1, 0);
+    brtTween.start();
     
     reset();
     
@@ -34,17 +45,12 @@ void NSSharpy::reset(){
     
 }
 
-//--------------------------------------------------------------
-
-
-void NSSharpy::update(){
-    
-    // update mesh
+void NSSharpy::updateCylinder() {
     
     cylinder.clear();
     
     int rings = 32, resolution = 32;
-    float length = 1024*2, radius = maxRadius * this->goboPct;
+    float length = 1024*4, radius = maxRadius * this->goboPct;
     
     
     for(int i = 0; i < rings; i++) {
@@ -56,7 +62,7 @@ void NSSharpy::update(){
             ofVec2f cur(radius, 0);
             cur.rotate(theta);
             cylinder.addVertex(offset + cur);
-           
+            
         }
     }
     
@@ -74,36 +80,39 @@ void NSSharpy::update(){
     
     cylinder.setMode(OF_PRIMITIVE_TRIANGLES);
     
+    
+}
+
+//--------------------------------------------------------------
+
+
+void NSSharpy::update(){
+    
+    // update mesh
+    
+    if(!cylinder.hasVertices() ) {
+        updateCylinder();
+    }
+    
     // update props
+    brtTween.setParameters(linear, ofxTween::easeOut, this->brightness, this->target->brt, decay, 0);
+    this->goboPct       = 1.0;    
+    this->brightness    = brtTween.update();
     
-    this->goboPct       = this->target->goboPct;
-    this->brightness    = this->target->brt;
-    
-    //currentQuat *= targetQuat;
-    //this->setOrientation( this->target->getOrientationQuat());
-    //ofVec3f o = this->target->getOrientationEuler();
-    
-    //getEulerDistance();
     transToTargetOrientation();
     
     sendToDmx();
     
-    //ofNotifyEvent(dmxEvent, <#ArgumentsType &args#>, <#SenderType *sender#>)
     
     
     
 }
 
 void NSSharpy::transToTargetOrientation () {
-    
-    float blurRate = 0.99;
-    
-    ofQuaternion currentQuat = this->getOrientationQuat();
-    ofVec4f      currentQuatVec = currentQuat.asVec4();
-    
-    
         
-    this->setOrientation(ofQuaternion(this->target->setTweenedOrientation(currentQuat)));
+    ofVec2f rot = this->target->setTweenedOrientation(rotationX, rotationY);    
+    this->rotationX = rot.x;
+    this->rotationY = rot.y;
 
     
 }
@@ -132,69 +141,188 @@ void NSSharpy::sendToDmx() {
     // frost
     dmxData.push_back(ofPoint(8, 0));
     
-    // pan
-    ofVec3f orientation                 = this->getOrientationEuler();
-    ofVec3f childOrientation            = this->childNode.getOrientationEuler();
-    ofVec3f globalOrientation           = this->getGlobalOrientation().getEuler();
-    ofQuaternion q                      = this->getOrientationQuat();
     
     
-    int pan = (int)( (270 + orientation.x) * 255 / 540);
-    dmxData.push_back(ofPoint(10, pan));
+    ofPoint panTilt = calculatePanTilt();
     
-    int tilt = (int)( (135 + childOrientation.y) * 255 / 270);
-    dmxData.push_back(ofPoint(12, tilt));
+    dmxData.push_back(ofPoint(10, panTilt.x));
     
-    if(id==8) {
-        
-        ofLog(OF_LOG_NOTICE, "real pan : %f, real titl : %f, real z : %f", orientation.x, orientation.y, orientation.z);
-        ofLog(OF_LOG_NOTICE, "gl pan : %f, gl titl : %f, gl z : %f", globalOrientation.x, globalOrientation.y, globalOrientation.z);
-        ofLog(OF_LOG_NOTICE, "dmxPan x : %d, dmxTilt : %d", pan, tilt);
-    
-    }
-    
+    dmxData.push_back(ofPoint(12, panTilt.y));
+       
     ofNotifyEvent(dmxEvent, dmxData, this);
 
     
 }
+
+ofVec2f NSSharpy::calculatePanTilt() {
+    
+
+    
+    /*
+    ofMatrix4x4 m = this->getLocalTransformMatrix();
+    ofVec3f t,s;
+    ofQuaternion r,so;
+    
+    m.decompose(t, r, s, so);
+    
+    float pitch = atan2(2*(r.y()*r.z()+r.w()*r.x()),r.w()*r.w()-r.x()*r.x()-r.y()*r.y()+r.z()*r.z());
+    float roll  = atan2(2*(r.x()*r.y()+r.w()*r.z()),r.w()*r.w()+r.x()*r.x()-r.y()*r.y()-r.z()*r.z());
+    float yaw   = asin(-2*(r.x()*r.z()-r.w()*r.y()));
+    
+   
+    
+    if(id==-1) {
+        printf("---------------------------------\n");
+        printf("orx %f\n", orientation.x);
+        printf("ory %f\n", orientation.y);
+        printf("orz %f\n", orientation.z);
+        printf("rx %f\n", rotationX);
+        printf("rx %f\n", rotationY);
+        
+    }
+    
+    //float xRad = ofDegToRad(orientation.x);
+    //float yRad = ofDegToRad(orientation.y);
+    
+    
+    float xRad = ofDegToRad(rotationX);
+    float yRad = ofDegToRad(rotationY);
+     
+    
+    
+     alpha = atan(tan(yRad) / tan(xRad));
+     beta  = atan(sqrt(pow(tan(xRad),2) + pow(tan(yRad),2)));
+    
+    
+    
+    if(rotationX < 0 ) {
+        //beta *= -1.0;
+    }
+    
+    // convert into degress
+    alpha   = ofRadToDeg(alpha);
+    beta    = ofRadToDeg(beta);
+    
+      */
+    alpha = rotationX;
+    beta = rotationY;
+    
+    
+     
+    //alpha   = rotationY;
+    //beta    = rotationX;
+    
+    /*
+    float alpha = ofRadToDeg(pitch);
+    float beta = ofRadToDeg(roll);
+    */
+    
+    // --------------------- distance tests
+    
+    int distance = getAngleDIstance(currentAlpha, alpha);
+    
+    float nalpha =  alpha  + 180;
+    float nbeta  =  beta * -1;
+    
+
+    int distance2 = getAngleDIstance(currentAlpha, nalpha);
+    
+    if(id==-1) {
+        
+        printf("---\n");
+        printf("distance %d\n", distance);
+        printf("distance2 %d\n", distance2);
+        
+    }
+    
+    if ( distance > distance2 ) {
+        alpha = nalpha;
+        beta = nbeta;        
+    }
+    
+   
+
+    
+  
+    
+    // store old value
+    currentAlpha = alpha;
+    
+    if(id==-1) {
+        printf("---\n");
+        printf("alpha %f\n", alpha);
+        printf("beta %f\n", beta);
+        
+    }
+    
+    tmpParentNode.setPosition(this->getGlobalPosition());
+       // map to shapry angles
+    
+    
+    float pan   = ofMap(alpha, -90, 450, 0, 540);
+    float tilt  = ofMap(beta, -90, 90, 45, 225);
+    
+    if(id==-1) {
+    printf("---\n");
+    printf("pan %f\n", pan);
+    printf("tilt %f\n", tilt);
+        
+    }
+    
+    
+
+    
+    // map to DMX values
+    
+    pan     = ofMap(pan, 0, 540, 0, 255);
+    tilt    = ofMap(tilt, 0, 270, 0, 255);
+    
+    return ofVec2f(pan, tilt);
+    
+}
+
+
+int NSSharpy:: getAngleDIstance(float a, float b) {
+    
+    double diff = (a > b ? a - b : b - a);
+    double mod_diff = fmod(diff, 360);
+    double result = (mod_diff < 180 ? mod_diff : 360 - mod_diff);
+    
+};
+
 
 //--------------------------------------------------------------
 
 
 void NSSharpy::draw(){
     
-   
+   // ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+    ofSetColor(200);
+    
     transformGL();
     ofPushMatrix();
-    //ofRotate(180);
     
-    ofSetColor(255, 255);
-    //ofCone(0, 0, 0, maxRadius*2, maxRadius*2);
+    ofRotateZ(alpha);
     
-    ofBox(0,0,0,40);
+    //printf("brt %f", brightness);
     
-    // then child node
+    ofPushMatrix();
+    ofRotateX(beta);
+    ofSetColor(255, 255, 255, brightness * 255.f);
+    if(brightness > 0.0)
+    cylinder.draw();
+    ofPopMatrix();
+    ofPopMatrix();
     
-    ofSetColor(255, 0, 0);
     
+    ofSetColor(255, 255, 255, 255.f);
     ofPushMatrix();
     ofSetDrawBitmapMode(OF_BITMAPMODE_MODEL_BILLBOARD);
     ofDrawBitmapString(ofToString(id), 0,0);
     ofPopMatrix();
     
-    childNode.transformGL();
     
-    ofPushMatrix();
-    //ofTranslate(0, 0, -1024);
-    ofSetColor(255, brightness * 255.f);
-    cylinder.draw();
-    ofPopMatrix();
-    
-    childNode.restoreTransformGL();
-
-    ofPopMatrix();
     restoreTransformGL();
-    
     
 }
 
@@ -214,7 +342,7 @@ ofVec3f NSSharpy::getEulerDistance() {
         distance.y = abs(distance.y);
         distance.z = abs(distance.z);
         
-        ofLog(OF_LOG_NOTICE, "Distance x : %f, y : %f, z : %f", distance.x, distance.y, distance.z);
+       // ofLog(OF_LOG_NOTICE, "Distance x : %f, y : %f, z : %f", distance.x, distance.y, distance.z);
                 
     }
     
@@ -236,7 +364,9 @@ void NSSharpy::setTargetOrientation(ofVec3f orientation) {
 
 void NSSharpy::setBrightness(float brighntessPct){
     //this->brightness = brighntessPct;
-    this->target->brt = brighntessPct;
+    //this->target->brt = brighntessPct;
+    this->forcedBrightness = brighntessPct;
+    
 }
 
 float NSSharpy::getBrightness(){
