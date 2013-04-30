@@ -18,9 +18,7 @@
     
 }
 void NSLoadingScreen::draw() {
-    
-    //printf("pct %f\n", pct);
-    
+        
     if(!tween.isCompleted())
         pct = tween.update();
     
@@ -28,7 +26,6 @@ void NSLoadingScreen::draw() {
     
     float strSize = messageStr.size() * 8;
     float xPos = pct * (ofGetWidth() * .5 - strSize * .5);
-    
     
     ofEnableAlphaBlending();
     ofFill();

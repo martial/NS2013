@@ -41,6 +41,8 @@ public:
     
     ofRectangle bounds;
     
+    bool    bAddIds;
+    
 private:
     
     float xPadding;

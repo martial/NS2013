@@ -10,16 +10,14 @@
 
 void NSDMXManager::setup(vector<ofPtr<NSSharpy> > * sharpies) {
     
-    dmx.connect(0);
+    dmx.connect(0, 512);
     
     this->sharpies = sharpies;
     
     for (int i=0; i<this->sharpies->size(); i++) {
         
         ofPtr<NSSharpy>  sharpy = sharpies->at(i);
-        
-        if(i==8)
-            ofAddListener(sharpy->dmxEvent, this, &NSDMXManager::onSharpyEvent);
+        ofAddListener(sharpy->dmxEvent, this, &NSDMXManager::onSharpyEvent);
         
         
     }
@@ -37,7 +35,6 @@ void NSDMXManager::onSharpyEvent(vector<ofPoint> & data) {
 
 void NSDMXManager::update() {
     dmx.update();
-    
 }
 void NSDMXManager::draw() {
     
@@ -46,6 +43,18 @@ void NSDMXManager::draw() {
 
 
 void NSDMXManager::resetAll() {
+    
+    
+    for (int i=0; i<this->sharpies->size(); i++) {
+        
+        ofPtr<NSSharpy>  sharpy = sharpies->at(i);
+        
+        int id = i * 16;
+        dmx.setLevel(id + 15, 128);
+        
+    }
+    
+
     
     
 }

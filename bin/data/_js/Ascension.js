@@ -11,6 +11,8 @@ var Ascension = Animation.extend({
 
     update: function (s) {
 
+
+
         var time = of.GetElapsedTimeMillis() / 1000;
 
 

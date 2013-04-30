@@ -41,11 +41,11 @@ void NSSceneManager::draw() {
         
         
         int padding = 1;
-        int x = ( i == 0) ? 0 : ofGetWidth() - scenes[i]->post.width - padding;
-        int y = ( i == 0) ? 0 : -padding;
+        int x = ( i == 0) ? 0 : ofGetWidth() / 2 - scenes[i]->post.width /2 - padding;
+        int y = ( i == 0) ? 0 : -padding - 55;
         
         if(i > 0) {
-            ofRect(ofGetWidth() - scenes[i]->post.width - padding*2, -padding*2, scenes[i]->post.width + padding*2, scenes[i]->post.height + padding*2);
+            ofRect(ofGetWidth()  / 2 - scenes[i]->post.width / 2 - padding*2, -padding*2 - 55 , scenes[i]->post.width + padding*2, scenes[i]->post.height + padding*2);
         }
         
         tex.draw(x,y, scenes[i]->post.width, scenes[i]->post.height);

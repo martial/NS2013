@@ -12,11 +12,12 @@ var Template = Animation.extend({
     update: function (s) {
 
 
-       //println(x)
+        var pos = getSharpyPos(s, 31);
 
-        for (var i = 0; i < numSharpy; i++) {
+        lookAt(s, 0, pos.x, pos.y, depth)
 
-        }
+
+
 
     }
 

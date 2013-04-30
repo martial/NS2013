@@ -10,8 +10,10 @@
 #include "NSDataManager.h"
 #include "NSLoadingScreen.h"
 #include "NSDMXManager.h"
+#include "SvgHelper.h"
+#include "NSMidiManager.h"
 
-#define animationManager_MODE
+#define PROD_MODE
 
 class app : public ofBaseApp{
 
@@ -43,6 +45,8 @@ class app : public ofBaseApp{
         NSLoadingScreen         loadingScreen;
         NSDMXManager            dmxManager;
         NSEditor                editor;
+        NSEditor                editorPreview;
+        NSMidiManager           midiManager;
     
         ofxEQ                   eq;
     

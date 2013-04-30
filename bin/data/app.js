@@ -8,6 +8,7 @@ include("Scripts/libraries/tween.min.js")
 include("Scripts/libraries/SimplexNoise.js")
 include("Scripts/libraries/EasedPct.js")
 
+
 // ----------------------------
 // Global variables and functions
 

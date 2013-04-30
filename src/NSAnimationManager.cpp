@@ -23,6 +23,11 @@ void NSAnimationManager::setup() {
     globalSpeed         = 100;
     
     listAnimations();
+    
+    
+    bNeedsUpdate        = false;
+    bNeedsSetAnimation  = false;
+    bFrameHasChanged    = false;
     //(0, 0);
     
     
@@ -100,12 +105,11 @@ void NSAnimationManager::setAnimation(int index, int scene) {
     
     // set animation to scene
     
-    Globals::instance()->nsSceneManager->getScene(scene)->animationRef.reset();
-    Globals::instance()->nsSceneManager->getScene(scene)->animationRef = animations[index];
-    Globals::instance()->nsSceneManager->getScene(scene)->animationRef->init(scene);
+  
     
-    callMainSetup();
-    
+    animToGo            = index;
+    sceneToGo           = scene;
+    bNeedsSetAnimation  = true;
     
 }
 
@@ -122,6 +126,39 @@ void NSAnimationManager::setAnimation(string scriptPathName, int scene) {
             break;
         }
     }
+    
+}
+
+void NSAnimationManager::prevAnimation(int scene) {
+    
+    if(scene==0) {
+        
+        int index = Globals::instance()->nsSceneManager->getScene(scene)->animationRef->id - 1;
+        if(index < 0) {
+            index = animations.size() -1 ;
+        }
+        setAnimation(index, scene);
+        
+        
+    } else {
+        
+        currentPreviewIndex --;
+        if(currentPreviewIndex < 0 ) {
+            currentPreviewIndex = animations.size() -1;
+        }
+        
+        // Call main setup
+        ofxJSValue retVal;
+        ofxJSValue args[1];
+        args[0] = int_TO_ofxJSValue(currentPreviewIndex);
+        ofxJSCallFunctionNameGlobal_IfExists("nextPreviewAnim", args,1,retVal);
+        
+        
+        callMainSetup();
+        
+        
+    }
+    
     
 }
 
@@ -149,16 +186,38 @@ void NSAnimationManager::nextAnimation(int scene) {
         args[0] = int_TO_ofxJSValue(currentPreviewIndex);
         ofxJSCallFunctionNameGlobal_IfExists("nextPreviewAnim", args,1,retVal);
         
+        
         callMainSetup();
         
         
     }
     
-    
      
 }
 
 void NSAnimationManager::update (int numScenes) {
+    
+    
+    if(bNeedsPushPreview)
+        nextAnimation(1);
+    
+    if(bNeedsPopPreview)
+        prevAnimation(1);
+        
+    bNeedsPushPreview = false;
+    bNeedsPopPreview = false;
+    
+    if(bNeedsSetAnimation) {
+        
+        Globals::instance()->nsSceneManager->getScene(sceneToGo)->animationRef.reset();
+        Globals::instance()->nsSceneManager->getScene(sceneToGo)->animationRef = animations[animToGo];
+        Globals::instance()->nsSceneManager->getScene(sceneToGo)->animationRef->init(sceneToGo);
+        
+        callMainSetup();
+        
+        bNeedsSetAnimation = false;
+        
+    }
     
     // update main JS update
         

@@ -96,6 +96,7 @@ private:
     
     float                                       currentFrameCnt;
     bool                                        bIsPlaying;
+    bool                                        bDrawIds;
     
     
 };

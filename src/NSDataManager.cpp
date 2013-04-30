@@ -27,9 +27,9 @@ void NSDataManager::exit() {
 void NSDataManager::urlResponse(ofHttpResponse & response) {
     
     
-    printf("response %d", response.status);
+    //printf("response %d", response.status);
     
-    if(response.status !=200 ) {
+    if(response.status !=200 && response.request.name != "load" ) {
         int tmp = 0;
         ofNotifyEvent(onError, tmp, this);
         return;

@@ -31,6 +31,8 @@ public:
     void callMainUpdate();
     void setAnimation(int index, int scene);
     void setAnimation(string scriptPathName, int scene);
+    
+    void prevAnimation(int scene);
     void nextAnimation(int scene);
     
     
@@ -46,6 +48,13 @@ public:
     
     float                           speedPct;
     
+    bool                            bNeedsPushPreview, bNeedsPopPreview;
+    
+    int                             currentPreviewIndex;
+    
+    bool                            bNeedsSetAnimation;
+    int                             animToGo, sceneToGo;
+    
     
 private :
     
@@ -54,11 +63,14 @@ private :
     vector<ofPtr<NSAnimation> >     animations;
     
     int                             currentIndex;
-    int                             currentPreviewIndex;
     
     long                            globalCount;
     int                             globalSpeed;
    
+    bool                            bNeedsUpdate;
+    bool                            bFrameHasChanged;
+    
+    
     
 
     
