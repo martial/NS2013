@@ -18,7 +18,16 @@ NSSharpy::NSSharpy() {
     
     decay               = 1.0;
     
+    currentGoboPct      = 1.0;
+    goboPct             = 1.0;
+    
     forcedBrightness    = -1.0;
+    
+    currentFrost        = false;
+    bFrost              = false;
+    
+    color.set(255, 255, 255);
+    colorName           = "BLANC";
     
       
 }
@@ -49,8 +58,11 @@ void NSSharpy::updateCylinder() {
     
     cylinder.clear();
     
+    float stepPct = (1 + round(goboPct * 5) ) / 5;
+    
+    
     int rings = 32, resolution = 32;
-    float length = 1024*4, radius = maxRadius * this->goboPct;
+    float length = 1024*4, radius = maxRadius * stepPct;
     
     
     for(int i = 0; i < rings; i++) {
@@ -58,6 +70,8 @@ void NSSharpy::updateCylinder() {
         ofVec3f offset(0, 0, ofMap(i, 0, rings, 0, -length) );
         //offset.z -= length;
         for(int j = 0; j < resolution; j++) {
+            
+            if(bFrost) radius += 0.1;
             float theta = ofMap(j, 0, resolution, 0, 360);
             ofVec2f cur(radius, 0);
             cur.rotate(theta);
@@ -90,13 +104,14 @@ void NSSharpy::update(){
     
     // update mesh
     
-    if(!cylinder.hasVertices() ) {
+    if(!cylinder.hasVertices() || goboPct != currentGoboPct || currentFrost != bFrost) {
         updateCylinder();
+        currentGoboPct = goboPct;
+        currentFrost = bFrost;
     }
     
     // update props
     brtTween.setParameters(linear, ofxTween::easeOut, this->brightness, this->target->brt, decay, 0);
-    this->goboPct       = 1.0;    
     this->brightness    = brtTween.update();
     
     transToTargetOrientation();
@@ -121,36 +136,94 @@ void NSSharpy::sendToDmx() {
     
     // positions events
     
+    int channel = this->id * 16;
+    
     vector<ofPoint> dmxData;
     
     // color
-    dmxData.push_back(ofPoint(1, 8));
+    
+    
+    dmxData.push_back(ofPoint(channel + 1, getColorAdressByName(colorName)));
     
     // shutter    
-    dmxData.push_back(ofPoint(2, 255));
+    dmxData.push_back(ofPoint(channel + 2, 255));
     
     // dimmer
-    dmxData.push_back(ofPoint(3, (int)(brightness * 255)));
+    dmxData.push_back(ofPoint(channel + 3, (int)(brightness * 255)));
+    
+    
+    
+    int goboValue = 7 + (int)((goboPct ) * 19);
+    int goboStep  = round(goboPct * 5);
+    if(goboStep == 5)
+        goboValue == 0;
+    
+    //printf("gobo pct %f", goboPct);
     
     // Gobo
-    dmxData.push_back(ofPoint(4, 0));
+    dmxData.push_back(ofPoint(channel + 4, goboValue));
     
     // Prism
-    dmxData.push_back(ofPoint(5, 0));
+    dmxData.push_back(ofPoint(channel + 5, 0));
     
     // frost
-    dmxData.push_back(ofPoint(8, 0));
+    dmxData.push_back(ofPoint(channel + 8, (bFrost) ? 255 : 0));
+    
+    // lampe
+    dmxData.push_back(ofPoint(channel + 16, 178));
     
     
     
     ofPoint panTilt = calculatePanTilt();
     
-    dmxData.push_back(ofPoint(10, panTilt.x));
+    dmxData.push_back(ofPoint(channel + 10, panTilt.x));
     
-    dmxData.push_back(ofPoint(12, panTilt.y));
+    dmxData.push_back(ofPoint(channel + 12, panTilt.y));
        
     ofNotifyEvent(dmxEvent, dmxData, this);
 
+    
+}
+
+int NSSharpy::getColorAdressByName(string name) {
+    
+    
+    if(name == "BLANC")
+        return 0;
+    
+    if(name == "ROUGE")
+        return 9;
+    
+    if(name == "ORANGE")
+        return 18;
+    
+    if(name == "CYAN")
+        return 26;
+    
+    if(name == "VERT")
+        return 35;
+    
+    if(name == "VERT CLAIR")
+        return 43;
+    
+    if(name == "LILA")
+        return 52;
+    
+    if(name == "ROSE")
+        return 60;
+    
+    if(name == "JAUNE")
+        return 69;
+    
+    if(name == "MAGENTA")
+        return 77;
+    
+    if(name == "BLEU")
+        return 86;
+    
+
+        
+        
     
 }
 
@@ -294,7 +367,7 @@ int NSSharpy:: getAngleDIstance(float a, float b) {
 //--------------------------------------------------------------
 
 
-void NSSharpy::draw(){
+void NSSharpy::draw(bool bDrawIds){
     
    // ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
     ofSetColor(200);
@@ -308,19 +381,19 @@ void NSSharpy::draw(){
     
     ofPushMatrix();
     ofRotateX(beta);
-    ofSetColor(255, 255, 255, brightness * 255.f);
+    ofSetColor(color.r  , color.g, color.b, brightness * 255.f);
     if(brightness > 0.0)
     cylinder.draw();
     ofPopMatrix();
     ofPopMatrix();
     
-    
+    if(bDrawIds) {
     ofSetColor(255, 255, 255, 255.f);
     ofPushMatrix();
     ofSetDrawBitmapMode(OF_BITMAPMODE_MODEL_BILLBOARD);
     ofDrawBitmapString(ofToString(id), 0,0);
     ofPopMatrix();
-    
+    }
     
     restoreTransformGL();
     

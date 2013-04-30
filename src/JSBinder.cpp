@@ -17,6 +17,10 @@ bool initJS()
 { 
 	// Some functions
 	//
+    
+    ofxJSDefineFunctionGlobal("lookAtSvg",                      &lookAtSvg,                         2);
+
+    
     ofxJSDefineFunctionGlobal("lookAt",                         &lookAt,                            5);
     ofxJSDefineFunctionGlobal("getPosX",                        &getPosX,                           2);
     ofxJSDefineFunctionGlobal("getPosY",                        &getPosY,                           2);
@@ -52,6 +56,22 @@ bool initJS()
 	} 
 	
 	return true; // TODO err checking
+}
+
+//--------------------------------------------------------------
+ofxJSDefineFunctionCpp(lookAtSvg){
+    
+	if (argc == 2){
+        
+        
+        int scene       = ofxJSValue_TO_int(argv[0]);
+		string name		= ofxJSValue_TO_string(argv[1]);
+        
+        Globals::instance()->nsSceneManager->getScene(scene)->setSvg(name);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
 }
 
 //--------------------------------------------------------------

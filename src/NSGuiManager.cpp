@@ -21,6 +21,8 @@ void NSGuiManager::setup() {
     ofPtr<NSScene> mainScene = Globals::instance()->nsSceneManager->getScene(0);
     
     guiLeft = new ofxUICanvas(220, ofGetHeight());
+   // guiLeft->setRetinaResolution();
+    
     guiLeft->setDrawBack(true);
     guiLeft->addLabel("NS 2013 BITCH");
     guiLeft->addSpacer();
@@ -35,11 +37,7 @@ void NSGuiManager::setup() {
     guiLeft->addToggle("CAMERA MOUSE", &mainScene->bCamMouseInput);
     guiLeft->addToggle("FFSA", &mainScene->bEnableFFSA);
     guiLeft->addToggle("BLOOM", &mainScene->bEnableBloom);
-    guiLeft->addToggle("DOF", &mainScene->bEnableDof);
     guiLeft->addToggle("LOOKAT", &mainScene->bdrawLookAt);
-    guiLeft->addToggle("ARROWS", &mainScene->bdrawArrows);
-    guiLeft->addSlider("DOF APERTURE", 0.99, 1.1, &mainScene->dofAperture);
-    guiLeft->addSlider("DOF FOCUS", 0.0, 5.0, &mainScene->dofFocus);
     guiLeft->addToggle("DRAW GRID", &mainScene->bDrawGrid);
     guiLeft->addToggle("DRAW MODEL", &mainScene->bdrawModels);
     
@@ -47,7 +45,7 @@ void NSGuiManager::setup() {
     guiLeft->addSpacer();
     guiLeft->addLabel("SOUND", OFX_UI_FONT_MEDIUM);
     guiLeft->addLabel("SPECTRUM", OFX_UI_FONT_SMALL);
-    guiLeft->addWaveform("SPECTRUMF", Globals::instance()->eq->rawInput, 512, 0.0, .1);
+    //guiLeft->addWaveform("SPECTRUMF", Globals::instance()->eq->rawInput, 512, 0.0, .1);
     ofxUISpectrum* leftSpectrum     = guiLeft->addSpectrum("SPECTRUML", Globals::instance()->eq->leftPreview, 512, 0.0, 1.0);
     ofxUISpectrum* rightSpectrum    = guiLeft->addSpectrum("SPECTRUMR", Globals::instance()->eq->rightPreview, 512, 0.0, 1.0);
     
@@ -59,12 +57,51 @@ void NSGuiManager::setup() {
     
     guiLeft->addSlider("RANGE", 1, 16, 8);
     overrideSlider = guiLeft->addSlider("OVERRIDE", -1, 16, 8);
+    
+    guiLeft->addSlider("ALPHA", 0.0, 1.0,  &Globals::instance()->nsSceneManager->getScene(0)->globalAlpha);
+    guiLeft->addSlider("GOBO", 0.0, 1.0,  &Globals::instance()->nsSceneManager->getScene(0)->globalGobo);
     guiLeft->addToggle("MAP ANIMS",   &mainScene->bmapAnims);
     guiLeft->addToggle("SOUND ALPHA", &mainScene->bSndAlpha);
-    guiLeft->addToggle("SOUND GOBO",  &mainScene->bSndGobo);
+    guiLeft->addToggle("FROST",  &Globals::instance()->nsSceneManager->getScene(0)->bGlobalFrost);
+   // guiLeft->addToggle("SOUND GOBO",  &mainScene->bSndGobo);
     
     guiLeft->addSlider("SPEED", -1.0, 1.0,  &Globals::instance()->editor->playVel);
     guiLeft->addSlider("DECAY", 1.0, 10.0,  &Globals::instance()->nsSceneManager->getScene(0)->globalDecay);
+    
+    guiLeft->addSpacer();
+    
+    //guiLeft->addImageButton("BLANC", "imgs/red.png", true, 20, 20);
+    guiLeft->addImageButton("BLANC", "imgs/blanc.png", true, 20, 20);
+    guiLeft->addWidgetEastOf(new ofxUIImageButton( 20, 20,  true, "imgs/rouge.png", "ROUGE"), "BLANC");;
+    
+    guiLeft->addWidgetEastOf(new ofxUIImageButton( 20, 20,  true, "imgs/orange.png", "ORANGE"), "ROUGE");;
+      
+    guiLeft->addWidgetEastOf(new ofxUIImageButton( 20, 20,  true, "imgs/cyan.png", "CYAN"), "ORANGE");;
+    guiLeft->addWidgetEastOf(new ofxUIImageButton( 20, 20,  true, "imgs/vert.png", "VERT"), "CYAN");;
+  
+    guiLeft->addWidgetEastOf(new ofxUIImageButton( 20, 20,  true, "imgs/vertclair.png", "VERT CLAIR"), "VERT");;
+    guiLeft->addWidgetEastOf(new ofxUIImageButton( 20, 20,  true, "imgs/lila.png", "LILA"), "VERT CLAIR");;
+    guiLeft->addWidgetEastOf(new ofxUIImageButton( 20, 20,  true, "imgs/rose.png", "ROSE"), "LILA");;
+    guiLeft->addWidgetSouthOf(new ofxUIImageButton( 20, 20,  true, "imgs/jaune.png", "JAUNE"), "BLANC");;
+    
+    guiLeft->addWidgetEastOf(new ofxUIImageButton( 20, 20,  true, "imgs/Magenta.png", "MAGENTA"), "JAUNE");;
+    guiLeft->addWidgetEastOf(new ofxUIImageButton( 20, 20,  true, "imgs/bleu.png", "BLEU"), "MAGENTA");;
+    
+    guiLeft->addSpacer();
+    
+    
+    
+
+    /*
+    guiLeft->addToggle("PLAIN",  &mainScene->bSndGobo);
+    guiLeft->addToggle("% 2",  &mainScene->bSndGobo);
+     
+     */
+    
+     
+
+    guiLeft->autoSizeToFitWidgets();
+    
     
     
     guiRight = new ofxUICanvas(220, ofGetHeight());
@@ -95,14 +132,13 @@ void NSGuiManager::setup() {
     guiEditorLeft->addSlider("speed", 0.0, 1.0,  &Globals::instance()->editor->playVel);
     guiEditorLeft->addSpacer();
     guiEditorLeft->addLabelButton("NEW", false, true);
-    guiEditorLeft->addLabelButton("NEW FRAME", false, true);
+    //guiEditorLeft->addLabelButton("NEW FRAME", false, true);
     guiEditorLeft->addLabelButton("DELETE", false, true);
     guiEditorRight = new ofxUICanvas(220, ofGetHeight());
     animationsEditorDropDown  = guiEditorRight->addDropDownList("ANIMS", Globals::instance()->dataManager->getAnimationsLabels());
 
     
     ofAddListener(guiEditorLeft->newGUIEvent,this,&NSGuiManager::guiEvent);
-    //guiEditorLeft->
     
     setMode(0);
     
@@ -240,6 +276,41 @@ void NSGuiManager::guiEvent(ofxUIEventArgs &e) {
         Globals::instance()->editor->createNew();
         
     }
+    
+    if(name == "BLANC")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(255,255,255), name);
+    
+    if(name == "ROUGE")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(255,0,0), name);
+    
+    if(name == "ORANGE")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(255,90,0), name);
+    
+    if(name == "CYAN")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(0,255,255), name);
+    
+    if(name == "VERT")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(0,255,0), name);
+    
+    if(name == "VERT CLAIR")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(161,255,161), name);
+    
+    if(name == "LILA")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(255,144,255), name);
+    
+    if(name == "ROSE")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(255,150,255), name);
+    
+    if(name == "JAUNE")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(255,255,0), name);
+    
+    if(name == "MAGENTA")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(255,0,255), name);
+    
+    if(name == "BLEU")
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(0,0,255), name);
+    
+    
 }
 
 bool NSGuiManager::isBusy() {

@@ -15,28 +15,8 @@
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>DOF</Name>
-    <Value>0</Value>
-</Widget>
-<Widget>
-    <Kind>2</Kind>
     <Name>LOOKAT</Name>
     <Value>0</Value>
-</Widget>
-<Widget>
-    <Kind>2</Kind>
-    <Name>ARROWS</Name>
-    <Value>1</Value>
-</Widget>
-<Widget>
-    <Kind>4</Kind>
-    <Name>DOF APERTURE</Name>
-    <Value>0.998301923</Value>
-</Widget>
-<Widget>
-    <Kind>4</Kind>
-    <Name>DOF FOCUS</Name>
-    <Value>0.023584906</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -56,7 +36,17 @@
 <Widget>
     <Kind>4</Kind>
     <Name>OVERRIDE</Name>
-    <Value>16.000000000</Value>
+    <Value>9.514340401</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>ALPHA</Name>
+    <Value>1.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>GOBO</Name>
+    <Value>1.000000000</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -70,13 +60,13 @@
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>SOUND GOBO</Name>
+    <Name>FROST</Name>
     <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>SPEED</Name>
-    <Value>0.103773594</Value>
+    <Value>0.100000024</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>

@@ -24,7 +24,7 @@ public:
     NSSharpy();
     void        setup();
     void        update();
-    void        draw();
+    void        draw(bool bDrawIds);
 
     void        transToTargetOrientation();
     void        setTargetOrientation(ofVec3f orientation);
@@ -53,7 +53,9 @@ public:
     
     float               brightness;
     float               forcedBrightness;
-    float               goboPct;
+    float               currentGoboPct, goboPct;
+    
+    bool                currentFrost, bFrost;
     
     float               rotationX, rotationY;
     float               decay;
@@ -62,10 +64,16 @@ public:
     ofNode              tmpParentNode;
     ofNode              tmpChildNode;
     
+    ofColor             color;
+    string              colorName;
+    
+    
+    
     
 private:
     
     void                updateCylinder();
+    int                 getColorAdressByName(string name);
     
     int                 id;
     float               maxRadius;
@@ -138,7 +146,7 @@ public:
         maxDist = 1.0 - ofNormalize(maxDist, 0, 360);
                
 
-        float time = 1 + (maxDist * 5);
+        float time = 1 + (maxDist * 10);
                 
         tweens[0]->setParameters(linear, ofxTween::easeOut, rotationX, this->rotationX,  time, 0);
         tweens[1]->setParameters(linear, ofxTween::easeOut, rotationY, this->rotationY,  time, 0);

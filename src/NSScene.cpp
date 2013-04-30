@@ -28,14 +28,20 @@ NSScene::NSScene () {
     bdrawArrows     = false;
     bdrawLookAt     = false;
     bdrawModels     = true;
+    bDrawIds        = false;
     
     bmapAnims       = true;
+    
+    bGlobalFrost    = false;
     
     
     dofAperture     = 1.0;
     dofFocus        = 0.2;
     
     globalDecay     = 1.0;
+    globalGobo      = 1.0;
+    globalStrob     = 0.0;
+    globalFullStrob = 0.0;
     
     
     depth           = -22677.165354331 / 100.0f;;
@@ -83,11 +89,11 @@ void NSScene::setup (int width, int height) {
     post.init(width , height);
     post.createPass<FxaaPass>()->setEnabled(bEnableFFSA);
     post.createPass<BloomPass>()->setEnabled(bEnableBloom);
-    post.createPass<DofPass>()->setEnabled(bEnableDof);
+    //post.createPass<DofPass>()->setEnabled(bEnableDof);
     
     
 
-    dof = post.getPasses()[2];
+    //dof = post.getPasses()[2];
     
     
     cam.setOrientation(ofVec3f(90, 90, 0));
@@ -124,12 +130,16 @@ void NSScene::update () {
     
     post.getPasses()[0]->setEnabled(bEnableFFSA);
     post.getPasses()[1]->setEnabled(bEnableBloom);
+    
+    /*
     post.getPasses()[2]->setEnabled(bEnableDof);
     
     shared_ptr<DofPass> pass = static_pointer_cast<DofPass>(dof);
     pass->setFocus(dofAperture);
     pass->setAperture(dofFocus);
-    pass->setMaxBlur(.3);
+    pass->setMaxBlur(.3);`
+     
+     */
     
     resetTransform();
     
@@ -156,7 +166,11 @@ void NSScene::update () {
         ofPtr<NSSharpy> sharpyRef = sharpies[i];
          
          sharpyRef->setPosition(-getPosition() + pos - sharpiesCenter);
-         sharpyRef->decay = globalDecay;
+         
+         
+         sharpyRef->decay   = globalDecay;
+         sharpyRef->goboPct = globalGobo;
+         sharpyRef->bFrost  = bGlobalFrost;
        
         
         int index = ( i < 16 ) ? i : i - 16;
@@ -170,6 +184,7 @@ void NSScene::update () {
              
              if (find(data.begin(), data.end(), i) != data.end()) {
                  sharpyRef->target->brt = 1.0;
+                 sharpyRef->brightness = 1.0;
              
              }
              else {
@@ -194,6 +209,42 @@ void NSScene::update () {
 
         if(bSndGobo)
             sharpyRef->target->goboPct *= sharpyRef->target->goboPct * eqChannel[indexMapped];
+         
+         
+         sharpyRef->target->brt *= globalAlpha;
+         
+         
+        // finally global strobz
+         
+         if(globalStrob > 0.0 ) {
+             
+             int strobStep  = 1 + (int)(globalStrob * 12);
+             sharpyRef->decay = 0.0;
+             if( ofGetFrameNum() % strobStep > (strobStep / 2) ) {
+                 sharpyRef->target->brt *= 0.0;
+                 sharpyRef->brightness  *= 0.0;
+             } else {
+                 sharpyRef->target->brt *= 1.0;
+                 sharpyRef->brightness  *= 1.0;
+             }
+             
+         }
+         
+         if(globalFullStrob > 0.0 ) {
+             
+             int strobStep  = 1 + (int)(globalFullStrob * 12);
+             sharpyRef->decay = 0.0;
+             if( ofGetFrameNum() % strobStep > (strobStep / 2) ) {
+                 sharpyRef->target->brt = 0.0;
+                 sharpyRef->brightness  = 0.0;
+             } else {
+                 sharpyRef->target->brt = 1.0;
+                 sharpyRef->brightness  = 1.0;
+             }
+             
+         }
+         
+         
          
                  
         sharpyRef->update();
@@ -357,7 +408,7 @@ void NSScene::drawModels() {
         
         int i = it->first;
         ofPtr<NSSharpy> sharpyRef = sharpies[i];
-        sharpyRef->draw();
+        sharpyRef->draw(bDrawIds);
         
         
         
@@ -482,6 +533,34 @@ void NSScene::setCameraMode(int camMode) {
 /*
  //--------------------------------------------------------------
  */
+
+void NSScene:: setSharpyColor(ofColor color, string name) {
+    
+    for (int i=0; i<sharpies.size(); i++) {
+        
+        ofPtr<NSSharpy> sharpyRef = sharpies[i];
+        sharpyRef->color = color;
+        sharpyRef->colorName = name;
+        
+    }
+    
+}
+
+void NSScene::setSvg(string name) {
+    
+    vector<ofVec3f> position = svg.getPositions(name);
+    
+    for (int i=0; i<position.size(); i++) {
+        
+        ofVec3f pos = position[i];
+        sharpyLookAt(pos.z -1, ofVec3f(-width / 2 + pos.y, -height/2 + pos.x, depth));
+        
+        
+    }
+     
+    
+    
+}
 
 void NSScene::reset() {
     

@@ -12,11 +12,13 @@
 
 void NSEditor::setup() {
     
-    bIsPlaying = false;
+    bIsPlaying          = false;
     currentFrame        = 0;
     playVel             = 0.1;
     currentFrameCnt     = 0.0;
     currentAnimation    = -1;
+    
+    bDrawIds            = false;
    
     createNew();
     
@@ -84,6 +86,12 @@ void NSEditor::draw() {
         
         float xStart   = ofGetWidth() * .5 - currentFrame * (xPadding + previewCanvas[i]->getWidth());
         float alpha = ( i == currentFrame ) ? 255 : (bIsPlaying) ? 0 : 25;
+        
+        if(bDrawIds)
+            previewCanvas[i]->bAddIds = ( i == currentFrame );
+           else
+             previewCanvas[i]->bAddIds = false;
+           
            
         previewCanvas[i]->alpha = alpha;
         previewCanvas[i]->bounds.setPosition(xStart - previewCanvas[i]->getWidth() * .5 + i * (xPadding + previewCanvas[i]->getWidth()), ofGetHeight() * .5 - previewCanvas[i]->getHeight() * .5);
@@ -124,6 +132,7 @@ void NSEditor::drawAsPreview(float x, float y, float w, bool horizontal) {
     ofScale(scale, scale);
     editableCanvas->alpha = 255;
     editableCanvas->bounds.setPosition(0, 0);
+    editableCanvas->bAddIds = false;
     editableCanvas->draw();
     
     ofPopMatrix();
@@ -442,6 +451,9 @@ void NSEditor::onKeyPressed (ofKeyEventArgs & e) {
     
     if ( e.key == 's')
         save();
+    
+    if ( e.key == 'i')
+        bDrawIds = !bDrawIds;
     
     
 }

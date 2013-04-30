@@ -38,3 +38,5 @@ ofxJSDeclareFunctionCpp(getDepth);
 
 ofxJSDeclareFunctionCpp(getCurrentTotalFrames);
 ofxJSDeclareFunctionCpp(getCurrentAnimFrame);
+
+ofxJSDeclareFunctionCpp(lookAtSvg);

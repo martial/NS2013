@@ -15,6 +15,8 @@ AnimationCanvas::AnimationCanvas() {
     rectSize    = 20.0;
     alpha       = 255;
     
+    bAddIds     = false;
+    
     bounds.set(0, 0, getWidth(), getHeight());
     
     
@@ -73,14 +75,22 @@ void AnimationCanvas::draw() {
             blocks[index]->setPosition(bounds.x + xBlockPos, bounds.y + yBlockPos);
             blocks[index]->draw();
             
+           
+            
             ofPopMatrix();
+            
+            if(bAddIds) {
+                ofSetColor(255, 0, 0);
+                ofDrawBitmapString(ofToString(index), xBlockPos + 3, yBlockPos + 14);
+                
+            }
             
         }
         
     }
     
     ofPopMatrix();
-    
+    ofSetColor(255);
 }
 
 

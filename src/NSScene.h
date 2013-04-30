@@ -15,6 +15,7 @@
 #include "NSAnimation.h"
 #include "ofx3DModelLoader.h"
 #include "SharpyModel.h"
+#include "SvgHelper.h"
 
 
 class NSScene : public ofNode{
@@ -46,6 +47,10 @@ public:
     void setRotation(int sharpyIndex, ofVec2f angles);
     void setOrientation(int sharpyIndex, ofVec3f eulerAngles);
     
+    void setSvg(string name);
+    
+    void setSharpyColor(ofColor color, string name);
+    
     float                       dofFocus;
     float                       dofAperture;
     
@@ -61,6 +66,9 @@ public:
     bool                        bdrawLookAt;
     bool                        bdrawArrows;
     bool                        bdrawModels;
+    bool                        bDrawIds;
+    
+    bool                        bGlobalFrost;
     
     bool                        bmapAnims;
     
@@ -72,6 +80,9 @@ public:
     
     float                       globalDecay;
     float                       globalAlpha;
+    float                       globalGobo;
+    float                       globalStrob;
+    float                       globalFullStrob;
     
     float                       width, height;
     float                       depth;
@@ -109,6 +120,8 @@ private:
     
     ofVec3f                     floorSize;
     //ofMesh                      box;
+    
+    SvgHelper                   svg;
     
    
 };

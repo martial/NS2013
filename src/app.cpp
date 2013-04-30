@@ -27,18 +27,23 @@ void app::setup(){
         
     sceneManager.setup();
     sceneManager.createScene(ofGetWidth(), ofGetHeight());
+    sceneManager.getScene(0)->bDrawIds      = true;
     
-#ifndef animationManager_MODE
-    sceneManager.createScene(320, 240);
+#ifdef PROD_MODE
+    sceneManager.createScene(160, 120);
     sceneManager.getScene(1)->bEnableDof    = false;
     sceneManager.getScene(1)->bEnableFFSA   = false;
+    sceneManager.getScene(1)->bdrawModels   = false;
+    
+    sceneManager.getScene(1)->globalAlpha   = 1.0;
     sceneManager.getScene(1)->setCameraMode(1);
+   
 #endif
     guiManager.setup();
     animationManager.setup();
     animationManager.setAnimation(0, 0);
     guiManager.populateAnimations();
-#ifndef animationManager_MODE
+#ifdef PROD_MODE
     animationManager.setAnimation(0, 1);
     animationManager.nextAnimation(1);
 #endif
@@ -51,6 +56,8 @@ void app::setup(){
     
     editor.setup();
     
+    editorPreview.setup();
+    
     dataManager.setup();
     dataManager.load();
     
@@ -61,6 +68,9 @@ void app::setup(){
     setMode(0);
     
     
+    midiManager.setup();
+
+    
 }
 
 //--------------------------------------------------------------
@@ -69,6 +79,10 @@ void app::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     editor.update();
+    
+    editorPreview.update();
+    
+    midiManager.update();
 
     
     if(mode == 0 ) {
@@ -99,7 +113,7 @@ void app::draw(){
     if(mode == 0 ) {
         
         sceneManager.draw();
-        editor.drawAsPreview(ofGetWidth() * .5, 0, 20, true);
+        editorPreview.drawAsPreview(ofGetWidth() * .5, 0, 20, true);
         ofSetColor(255);
         screenLog.draw();
         
@@ -156,20 +170,27 @@ void app::keyPressed(int key){
     
     if (key == OF_KEY_RIGHT && mode == 0) {
         editor.pushAnim(true);
+        editorPreview.pushAnim(true);
     }
     
     if(key== OF_KEY_LEFT && mode == 0) {
         editor.popAnim(true);
+        editorPreview.popAnim(true);
     }
     
-#ifndef animationManager_MODE
+#ifdef PROD_MODE
     if (key == 'p') {
+        sceneManager.getScene(1)->bmapAnims     = false;
         animationManager.nextAnimation(1);        
     }
 #endif
     
     if (key == 'e') {
         eq.setup();
+    }
+    
+    if (key == 'r' && mode == 0 ) {
+        dmxManager.resetAll();
     }
 
 }
