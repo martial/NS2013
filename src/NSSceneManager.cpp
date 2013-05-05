@@ -46,24 +46,47 @@ void NSSceneManager::draw() {
         
         if(i > 0) {
             ofRect(ofGetWidth()  / 2 - scenes[i]->post.width / 2 - padding*2, -padding*2 - 55 , scenes[i]->post.width + padding*2, scenes[i]->post.height + padding*2);
+            
+            
         }
         
         tex.draw(x,y, scenes[i]->post.width, scenes[i]->post.height);
         glPopMatrix();
+        
+        
+        if(i>0) {
+            
+            // draw preview name
+            
+            ofxJSValue retVal;
+            ofxJSValue args[0];
+            ofxJSCallFunctionNameGlobal_IfExists("getCurrentPreviewName", args,1,retVal);
+            
+            ofDrawBitmapString(ofxJSValue_TO_string(retVal), ofGetWidth()  / 2 - scenes[i]->post.width / 2 - padding*2 + 6, 70 );
+            
+        }
+        
      }
+    
+    
+    
+    
+    
     
     
  }
 
 
 
-void NSSceneManager::createScene(int width, int height) {
+void NSSceneManager::createScene(int width, int height, NSEditor * editor) {
     
     ofPtr<NSScene> scene(new NSScene());
-    scene->setup(width, height);
+    scene->setup(width, height, editor);
     scenes.push_back(scene);
     
 }
+
+
 
 
 ofPtr<NSScene>  NSSceneManager::getScene(int index) {

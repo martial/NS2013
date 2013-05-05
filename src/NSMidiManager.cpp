@@ -22,11 +22,11 @@ void NSMidiManager::setup() {
     
 	// don't ignore sysex, timing, & active sense messages,
 	// these are ignored by default
-	midiIn.ignoreTypes(false, false, false);
+	midiIn.ignoreTypes(true, false, false);
     
 	// add testApp as a listener
 	midiIn.addListener(this);
-    
+
     
     
 }
@@ -34,6 +34,7 @@ void NSMidiManager::setup() {
 void NSMidiManager::update() {
     
     bIsFrameNew = true;
+    
     
 }
 
@@ -43,7 +44,7 @@ void NSMidiManager::newMidiMessage(ofxMidiMessage& msg) {
     
     
    // if(msg.control > 0 )
-    printf("channel received %d, pitch %d,note %d, velocity %d, control %d \n", msg.channel, msg.pitch, msg.value, msg.velocity, msg.control);
+    //printf("channel received %d, pitch %d,note %d, velocity %d, control %d \n", msg.channel, msg.pitch, msg.value, msg.velocity, msg.control);
     
     float normalized = ofNormalize((float)msg.value, 0, 127);
     float val;
@@ -54,7 +55,44 @@ void NSMidiManager::newMidiMessage(ofxMidiMessage& msg) {
             break;
             
         case 21:
+           
+            
             Globals::instance()->nsSceneManager->getScene(0)->globalGobo = normalized;
+
+            break;
+            
+        case 22:
+            
+            Globals::instance()->editor->playVel                = normalized;
+            Globals::instance()->app->editorPreview.playVel     = normalized;
+            break;
+            
+        case 23:
+            
+            val = -1 + normalized * 16.0;
+            Globals::instance()->eq->setFilterRange(val);
+            break;
+            
+            
+        case 35:
+            
+            Globals::instance()->nsSceneManager->getScene(0)->bEqualizerMode = !Globals::instance()->nsSceneManager->getScene(0)->bEqualizerMode;
+            
+            break;
+            
+        case 31:
+            
+            Globals::instance()->nsSceneManager->getScene(0)->bSndAlpha = !Globals::instance()->nsSceneManager->getScene(0)->bSndAlpha;
+
+            break;
+
+            
+            
+        case 30:
+            
+            val = -1 + normalized * 2.0;
+            Globals::instance()->editor->playVel                *= - 1;
+            Globals::instance()->app->editorPreview.playVel     *= - 1;
             break;
             
         case 26:
@@ -95,13 +133,10 @@ void NSMidiManager::newMidiMessage(ofxMidiMessage& msg) {
             
         case 96:
             
+            if(ofGetFrameNum() % 4 != 0 )
+                return;
+            
             if(msg.channel == 1) {
-                Globals::instance()->editor->popAnim(true);
-            }
-             
-            else {
-                
-                if(msg.channel == 1) {
                     Globals::instance()->app->editorPreview.popAnim(true);
 
                 } else {
@@ -109,11 +144,15 @@ void NSMidiManager::newMidiMessage(ofxMidiMessage& msg) {
                         
                 }
                 
-            }
+            
             
         break;
 
         case 97:
+            
+            if(ofGetFrameNum() % 4 != 0 )
+                return;
+            
         if(msg.channel == 1)
             Globals::instance()->app->editorPreview.pushAnim(true);
         else
@@ -128,6 +167,14 @@ void NSMidiManager::newMidiMessage(ofxMidiMessage& msg) {
     }
     
     switch (msg.pitch) {
+            
+        case 44:
+            
+            Globals::instance()->editor->bTapTempoMode = true;
+            Globals::instance()->editor->pushFrame();
+            
+            break;
+
             
         case 48:
             
@@ -147,15 +194,26 @@ void NSMidiManager::newMidiMessage(ofxMidiMessage& msg) {
             Globals::instance()->nsSceneManager->getScene(0)->bGlobalFrost = !Globals::instance()->nsSceneManager->getScene(0)->bGlobalFrost;
             
             break;
+            
+            
+        case 38:
+            
+            
+            
+            
+            Globals::instance()->animationManager->bNeedsAnimFromPreview = true;
+            Globals::instance()->editor->setAnim(Globals::instance()->app->editorPreview.currentAnimation);
+            Globals::instance()->editor->play();
+            
+        case 37:
+            
 
             
-        case 36:
-            
-            Globals::instance()->animationManager->setAnimation( Globals::instance()->animationManager->currentPreviewIndex, 0);
+            Globals::instance()->animationManager->bNeedsAnimFromPreview = true;
             
             break;
             
-        case 37:
+        case 36:
             
             Globals::instance()->editor->setAnim(Globals::instance()->app->editorPreview.currentAnimation);
             Globals::instance()->editor->play();

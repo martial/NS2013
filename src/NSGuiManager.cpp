@@ -63,6 +63,8 @@ void NSGuiManager::setup() {
     guiLeft->addToggle("MAP ANIMS",   &mainScene->bmapAnims);
     guiLeft->addToggle("SOUND ALPHA", &mainScene->bSndAlpha);
     guiLeft->addToggle("FROST",  &Globals::instance()->nsSceneManager->getScene(0)->bGlobalFrost);
+    guiLeft->addToggle("TAP TEMPO",   &Globals::instance()->editor->bTapTempoMode );
+
    // guiLeft->addToggle("SOUND GOBO",  &mainScene->bSndGobo);
     
     guiLeft->addSlider("SPEED", -1.0, 1.0,  &Globals::instance()->editor->playVel);
@@ -89,32 +91,21 @@ void NSGuiManager::setup() {
     
     guiLeft->addSpacer();
     
-    
-    
-
-    /*
-    guiLeft->addToggle("PLAIN",  &mainScene->bSndGobo);
-    guiLeft->addToggle("% 2",  &mainScene->bSndGobo);
-     
-     */
-    
-     
+    guiLeft->addSlider("VAR", 0.0, 1.0,  &Globals::instance()->animationManager->speedPct);
+    guiLeft->addToggle("RELOAD JS", false);
 
     guiLeft->autoSizeToFitWidgets();
     
     
     
-    guiRight = new ofxUICanvas(220, ofGetHeight());
-    guiRight->setDrawBack(true);
-    guiRight->addLabel("GLOBALS");
-    guiRight->addToggle("RELOAD JS", false);
-    guiRight->addSlider("SPEED", 0.0, 1.0,  &Globals::instance()->animationManager->speedPct);
-    animationsDropDown = guiRight->addDropDownList("ANIMATIONS", Globals::instance()->animationManager->getAnimations());
+    //guiRight = new ofxUICanvas(220, ofGetHeight());
+    //guiRight->setDrawBack(true);
+    //animationsDropDown = guiRight->addDropDownList("ANIMATIONS", Globals::instance()->animationManager->getAnimations());
     
     guiLeft->loadSettings("gui.xml");
     
     ofAddListener(guiLeft->newGUIEvent,this,&NSGuiManager::guiEvent);
-    ofAddListener(guiRight->newGUIEvent,this,&NSGuiManager::guiEvent);
+    //ofAddListener(guiRight->newGUIEvent,this,&NSGuiManager::guiEvent);
     
     guiLeft->disable();
     
@@ -129,10 +120,9 @@ void NSGuiManager::setup() {
     guiEditorLeft->addLabel("NAME");
     nameInput = guiEditorLeft->addTextInput("NAME", "...");
     guiEditorLeft->addSpacer();
-    guiEditorLeft->addSlider("speed", 0.0, 1.0,  &Globals::instance()->editor->playVel);
+    guiEditorLeft->addSlider("MAX SPEED", 0.0, 1.0,  &Globals::instance()->editor->playVel);
     guiEditorLeft->addSpacer();
     guiEditorLeft->addLabelButton("NEW", false, true);
-    //guiEditorLeft->addLabelButton("NEW FRAME", false, true);
     guiEditorLeft->addLabelButton("DELETE", false, true);
     guiEditorRight = new ofxUICanvas(220, ofGetHeight());
     animationsEditorDropDown  = guiEditorRight->addDropDownList("ANIMS", Globals::instance()->dataManager->getAnimationsLabels());
@@ -149,18 +139,26 @@ void NSGuiManager::setMode(int mode) {
     if(mode == 0) {
         
         guiLeft->enable();
-        guiRight->enable();
+        //guiRight->enable();
         
         guiEditorLeft->disable();
         guiEditorRight->disable();
+        
+        for (int i=rightCanvases.size() -1 ;  i>=0; i--) {
+            rightCanvases[i]->enable();
+        }
         
         
     } else {
         
         guiEditorLeft->enable();
         guiEditorRight->enable();
-        guiRight->disable();
+        //guiRight->disable();
         guiLeft->disable();
+        
+        for (int i=rightCanvases.size() -1 ;  i>=0; i--) {
+            rightCanvases[i]->disable();
+        }
         
     }
     
@@ -170,12 +168,39 @@ void NSGuiManager::setMode(int mode) {
 
 void NSGuiManager::populateAnimations() {
     
-    animationsDropDown->setAllowMultiple(false);
-    animationsDropDown->clearToggles();
-    
+    // let's say 32
     vector<string> anims = Globals::instance()->animationManager->getAnimations();
-    for ( int i=0; i<anims.size(); i++)
-        animationsDropDown->addToggle(anims[i]);
+
+    int numOfDropDowns = ceil(anims.size() / 52) +1;
+    
+   // printf("num drops %d", numOfDropDowns);
+    
+    
+    
+    for (int i = rightCanvases.size(); i<numOfDropDowns; i++) {
+                
+        rightCanvases.push_back(new ofxUICanvas(180));
+        ofAddListener(rightCanvases[i]->newGUIEvent,this,&NSGuiManager::guiEvent);
+        
+        
+        animationsDropDownList.push_back( rightCanvases[i]->addDropDownList("BANK"+ofToString(i+1), Globals::instance()->animationManager->getAnimations()) );
+       
+        animationsDropDownList[i]->setAllowMultiple(false);
+        animationsDropDownList[i]->clearToggles();
+        
+    }
+    
+    for ( int i=0; i<numOfDropDowns; i++) {
+        animationsDropDownList[i]->clearToggles();
+    }
+    
+    for ( int i=0; i<anims.size(); i++) {
+        
+        int step = floor( i / 52);
+        animationsDropDownList[step]->addToggle(anims[i]);
+    
+    }
+
     
 }
 
@@ -192,11 +217,25 @@ void NSGuiManager::populateEditorAnimations() {
 }
 
 void NSGuiManager::update() {
-    guiRight->getRect()->x      = ofGetWidth() - guiRight->getRect()->getWidth();
-    guiEditorRight->getRect()->x      = ofGetWidth() - guiEditorRight->getRect()->getWidth();
+    //guiRight->getRect()->x              = ofGetWidth() - guiRight->getRect()->getWidth();
+    
+    guiEditorRight->getRect()->x            = ofGetWidth() - guiEditorRight->getRect()->getWidth();
+    
+    // translate drop downs
+    
+    
+    for (int i=rightCanvases.size() -1 ;  i>=0; i--) {
+        
+        float x = rightCanvases.size() * rightCanvases[i]->getRect()->getWidth();
+        x = ofGetWidth() -x;
+        rightCanvases[i]->getRect()->x      = x + ( (i ) * rightCanvases[i]->getRect()->getWidth() );
+        rightCanvases[i]->getRect()->height = ofGetHeight();
+        
+    }
+     
+     
     
     guiLeft->getRect()->height  = ofGetHeight();
-    guiRight->getRect()->height = ofGetHeight();
     
     guiEditorLeft->getRect()->height  = ofGetHeight();
     guiEditorRight->getRect()->height = ofGetHeight();
@@ -241,12 +280,24 @@ void NSGuiManager::guiEvent(ofxUIEventArgs &e) {
         populateAnimations();
     }
     
-    if(name == "ANIMATIONS") {
+    if(name == "BANK1") {
         
-        vector<ofxUIWidget *> &selected = animationsDropDown->getSelected();
+        vector<ofxUIWidget *> &selected = animationsDropDownList[0]->getSelected();
         for(int i = 0; i < selected.size(); i++){
             Globals::instance()->animationManager->setAnimation(selected[i]->getName(),0);
         }
+         if(animationsDropDownList.size() > 1 ) animationsDropDownList[1]->clearSelected();
+        
+    }
+    
+    
+    if(name == "BANK2") {
+        
+        vector<ofxUIWidget *> &selected = animationsDropDownList[1]->getSelected();
+        for(int i = 0; i < selected.size(); i++){
+            Globals::instance()->animationManager->setAnimation(selected[i]->getName(),0);
+        }
+        animationsDropDownList[0]->clearSelected();
         
     }
     
@@ -309,6 +360,15 @@ void NSGuiManager::guiEvent(ofxUIEventArgs &e) {
     
     if(name == "BLEU")
         Globals::instance()->nsSceneManager->getScene(0)->setSharpyColor(ofColor(0,0,255), name);
+    
+    
+    
+    
+}
+
+void NSGuiManager::setColorByIndex(int index) {
+    
+    
     
     
 }

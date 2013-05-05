@@ -28,10 +28,10 @@ var numFrame            = 0;
 var totalFrame          = 0;
 var animProgress        = 0.0;
 
-
 var speedPct            = 1.0;
 var timeMillis          = 0.0;
 
+var tempname            = "";
 
 function getSharpyPos (s, index) {
 
@@ -39,10 +39,9 @@ function getSharpyPos (s, index) {
     var y = getPosY(s, index);
     var z = getPosZ(s, index);
 
-    return new Object({x:x,y:y,z:z});
+    return new Object({x:x, y:y, z:z});
 
 }
-
 
 function setVariables() {
 
@@ -84,6 +83,7 @@ function radians(deg) {
 }
 
 function setPreviewAnim(index) {
+    previewAnimIndex = index;
     previewAnimation = animations[index];
 
 }
@@ -114,11 +114,17 @@ function strob(object) {
 
 function setup() {
 
+    if(!mainAnimation) return;
+
     mainAnimation.setup(0);
     if(previewAnimation)previewAnimation.setup(1);
 }
 
+
+
 function update(speed, timeMs) {
+
+    if(!mainAnimation) return;
 
     TWEEN.update();
 
@@ -134,14 +140,60 @@ function update(speed, timeMs) {
 
 }
 
+// this function is used at launch to define filename via OF
+// Sadly there's no way to get the filename directly from .js
+// so I store in temp var :/
+function setName (name) {
+
+    tempname = name;
+}
+
+function getCurrentPreviewName () {
+
+    return previewAnimation.name;
+
+}
+
+function addAnim(anim) {
+
+    // check if anim already exists
+    // is yes, replace it
+
+    var exists = false;
+    for ( var i=0; i<animations.length; i++) {
+
+        if(animations[i].name == anim.name) {
+            animations[i] = anim;
+            exists = true;
+            break;
+
+        }
+
+    }
+
+    if(!exists)
+        animations.push(anim);
+
+
+}
+
 var Animation = fk.Class.extend({
 
-    init: function (name) {
+
+    init: function () {
 
         // set name and default for main ( reloading )
-        this.name = name;
-        animations.push(this);
+
+        if( null == this.name ) {
+
+            this.name = tempname;
+            println("set anim name " + tempname)
+        }
+
+
+        addAnim(this);
         mainAnimation = this;
+
 
     },
 

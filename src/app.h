@@ -12,6 +12,7 @@
 #include "NSDMXManager.h"
 #include "SvgHelper.h"
 #include "NSMidiManager.h"
+#include "NSMidiMiniManager.h"
 
 #define PROD_MODE
 
@@ -47,6 +48,7 @@ class app : public ofBaseApp{
         NSEditor                editor;
         NSEditor                editorPreview;
         NSMidiManager           midiManager;
+        NSMidiMiniManager       midiMiniManager;
     
         ofxEQ                   eq;
     

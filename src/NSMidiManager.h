@@ -24,7 +24,9 @@ private :
     
     
     ofxMidiIn midiIn;
+    ofxMidiOut midiOut;
     bool        bIsFrameNew;
+    
     
 };
 

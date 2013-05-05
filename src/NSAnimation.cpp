@@ -34,6 +34,13 @@ bool NSAnimation::loadScript() {
     
 	if (scriptPath != "")
 	{
+        
+        // set name via OF :)
+        ofxJSValue retVal;
+        ofxJSValue args[1];
+        args[0] = string_TO_ofxJSValue(scriptName);
+        ofxJSCallFunctionNameGlobal_IfExists("setName", args,1,retVal);
+        
 		script = ofxJSLoad(ofToDataPath(scriptPath),"___tmpScript___");
                
 		if (script){
@@ -60,8 +67,6 @@ bool NSAnimation::loadScript() {
 
 void NSAnimation::init (int scene) {
     ofLog(OF_LOG_NOTICE, "INIT FROM OF -------------------------------------------");
-    
-    
     loadScript();
     
     
@@ -76,7 +81,7 @@ void NSAnimation::update(int scene) {
     if (script)
 	{
 		// Reload
-            checkTimer += .1;
+            checkTimer += .05;
 			if (checkTimer>=1.0f){
                 
                 checkTimer = 0.0f;

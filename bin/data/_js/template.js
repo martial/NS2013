@@ -2,7 +2,7 @@ var Template = Animation.extend({
 
     setup: function (s) {
 
-        println("-- Template.js -- ");
+        println("-- CrossHouse.js -- ");
         this._super();
 
 
@@ -14,7 +14,7 @@ var Template = Animation.extend({
 
         var pos = getSharpyPos(s, 31);
 
-        lookAt(s, 0, pos.x, pos.y, depth)
+        lookAt(s, 0, -getMouseX(), -getMouseY(), depth)
 
 
 

@@ -16,17 +16,19 @@
 #include "ofx3DModelLoader.h"
 #include "SharpyModel.h"
 #include "SvgHelper.h"
-
+#include "NSEditor.h"
 
 class NSScene : public ofNode{
     
 public:
     
     NSScene();
-    void setup(int width, int height);
+    void setup(int width, int height,  NSEditor * editor);
     void update();
     void draw();
     
+    
+    void setEditor(NSEditor * editor);
     
     void drawBox();
     void drawModels();
@@ -51,6 +53,8 @@ public:
     
     void setSharpyColor(ofColor color, string name);
     
+    void setSharpyFinePanTilt(int index, float pan, float tilt);
+    
     float                       dofFocus;
     float                       dofAperture;
     
@@ -67,6 +71,8 @@ public:
     bool                        bdrawArrows;
     bool                        bdrawModels;
     bool                        bDrawIds;
+    
+    bool                        bEqualizerMode;
     
     bool                        bGlobalFrost;
     
@@ -122,6 +128,10 @@ private:
     //ofMesh                      box;
     
     SvgHelper                   svg;
+    
+    NSEditor            *       editor;
+    
+    vector<int>                 horizontalSharpiesIndex;
     
    
 };

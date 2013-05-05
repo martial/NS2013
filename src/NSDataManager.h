@@ -18,7 +18,8 @@ class AnimData {
 public:
     
     string     id;
-    string name;
+    string  name;
+    float   maxSpeed;
     vector<vector<int> > data;
         
     AnimData() {
@@ -33,6 +34,7 @@ public:
         xml.addTag("config");
         xml.setValue("config:id", id);
         xml.setValue("config:name", name);
+        xml.setValue("config:speed", maxSpeed);
         
         xml.addTag("frames");
         xml.pushTag("frames");

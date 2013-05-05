@@ -15,7 +15,12 @@ NSAnimationManager::NSAnimationManager () {
 
 void NSAnimationManager::setup() {
     
+    
+    
     initJS();
+    
+    configScript = new NSAnimation();
+    configScript->setup(ofToDataPath("config.js"), 0);
     
     currentIndex        = 0;
     speedPct            = 1.0;
@@ -28,6 +33,7 @@ void NSAnimationManager::setup() {
     bNeedsUpdate        = false;
     bNeedsSetAnimation  = false;
     bFrameHasChanged    = false;
+    bNeedsAnimFromPreview   = false;
     //(0, 0);
     
     
@@ -67,12 +73,20 @@ void NSAnimationManager::listAnimations() {
 			if ((*it).getExtension() == "js")
 			{
 				 printf("- [%s] path=%s\n", (*it).getFileName().c_str(), (*it).getAbsolutePath().c_str());
+                
+                // Call main setup
+               
                                 
                  ofPtr<NSAnimation> animationRef(new NSAnimation());
                  animationRef->setup(ofToDataPath((*it).getAbsolutePath()), i);
                  ofAddListener(animationRef->needReload, this, &NSAnimationManager::onScriptChanged);
                  animations.push_back(animationRef);
                  i++;
+                
+                 // set name
+                
+               
+
 
 			}
 		}
@@ -153,8 +167,9 @@ void NSAnimationManager::prevAnimation(int scene) {
         args[0] = int_TO_ofxJSValue(currentPreviewIndex);
         ofxJSCallFunctionNameGlobal_IfExists("nextPreviewAnim", args,1,retVal);
         
-        
         callMainSetup();
+        
+        
         
         
     }
@@ -165,13 +180,18 @@ void NSAnimationManager::prevAnimation(int scene) {
 void NSAnimationManager::nextAnimation(int scene) {
     
     if(scene==0) {
-    
-        int index = Globals::instance()->nsSceneManager->getScene(scene)->animationRef->id + 1;
-        if(index > animations.size() -1 ) {
-            index = 0;
-        }
-        setAnimation(index, scene);
         
+        if(!Globals::instance()->nsSceneManager->getScene(scene)->animationRef)
+            setAnimation(0, scene);
+        else {
+            
+            int index = Globals::instance()->nsSceneManager->getScene(scene)->animationRef->id + 1;
+            if(index > animations.size() -1 ) {
+                index = 0;
+            }
+            setAnimation(index, scene);
+            
+        }
         
     } else {
         
@@ -198,6 +218,14 @@ void NSAnimationManager::nextAnimation(int scene) {
 void NSAnimationManager::update (int numScenes) {
     
     
+    
+    
+    // test if config.js has been updated
+    configScript->update(0);
+    
+    
+    
+    
     if(bNeedsPushPreview)
         nextAnimation(1);
     
@@ -207,9 +235,11 @@ void NSAnimationManager::update (int numScenes) {
     bNeedsPushPreview = false;
     bNeedsPopPreview = false;
     
-    if(bNeedsSetAnimation) {
+    if(bNeedsSetAnimation && sceneToGo < Globals::instance()->nsSceneManager->getNumScenes() ) {
+        
         
         Globals::instance()->nsSceneManager->getScene(sceneToGo)->animationRef.reset();
+        
         Globals::instance()->nsSceneManager->getScene(sceneToGo)->animationRef = animations[animToGo];
         Globals::instance()->nsSceneManager->getScene(sceneToGo)->animationRef->init(sceneToGo);
         
@@ -218,6 +248,18 @@ void NSAnimationManager::update (int numScenes) {
         bNeedsSetAnimation = false;
         
     }
+    
+    if(bNeedsAnimFromPreview) {
+        
+        ofxJSValue retVal;
+        ofxJSValue args[0];
+        ofxJSCallFunctionNameGlobal_IfExists("getCurrentPreviewName", args,1,retVal);
+        
+        setAnimation( ofxJSValue_TO_string(retVal), 0);
+        
+    }
+    
+    bNeedsAnimFromPreview = false;
     
     // update main JS update
         
@@ -250,9 +292,7 @@ void NSAnimationManager::callMainSetup() {
         sceneRef->reset();
         
     }
-    
-    
-    
+        
     ofxJSValue retVal;
     ofxJSValue args[1];
     

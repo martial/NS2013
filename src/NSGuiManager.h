@@ -27,18 +27,24 @@ public:
     void populateEditorAnimations();
     void guiEvent(ofxUIEventArgs &e);
     
+    void setColorByIndex(int index);
+    
     bool isBusy();
     
     ofxUITextInput *     nameInput;
     
     ofxUICanvas     *    guiLeft;
-    ofxUICanvas     *    guiRight;
+    //ofxUICanvas     *    guiRight;
     
     ofxUICanvas     *    guiEditorLeft;
     ofxUICanvas     *    guiEditorRight;
     
     ofxUISlider     *    overrideSlider;
-    ofxUIDropDownList*   animationsDropDown;
+    
+    vector<ofxUICanvas*>         rightCanvases;
+    vector<ofxUIDropDownList*>   animationsDropDownList;
+    
+    
     ofxUIDropDownList*   animationsEditorDropDown;
 
     

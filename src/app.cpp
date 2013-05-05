@@ -26,23 +26,31 @@ void app::setup(){
     eq.setRange(16);
         
     sceneManager.setup();
-    sceneManager.createScene(ofGetWidth(), ofGetHeight());
+    sceneManager.createScene(ofGetWidth(), ofGetHeight(), &editor);
+
     sceneManager.getScene(0)->bDrawIds      = true;
+    sceneManager.getScene(0)->setCameraMode(1);
+
     
 #ifdef PROD_MODE
-    sceneManager.createScene(160, 120);
+    sceneManager.createScene(160, 120, &editorPreview);
     sceneManager.getScene(1)->bEnableDof    = false;
     sceneManager.getScene(1)->bEnableFFSA   = false;
     sceneManager.getScene(1)->bdrawModels   = false;
+    sceneManager.getScene(1)->bDrawGrid    = false;
     
     sceneManager.getScene(1)->globalAlpha   = 1.0;
     sceneManager.getScene(1)->setCameraMode(1);
    
 #endif
+    
+    
     guiManager.setup();
     animationManager.setup();
-    animationManager.setAnimation(0, 0);
+    animationManager.setAnimation(0, 1);
     guiManager.populateAnimations();
+    
+    
 #ifdef PROD_MODE
     animationManager.setAnimation(0, 1);
     animationManager.nextAnimation(1);
@@ -54,9 +62,9 @@ void app::setup(){
     // editor
     
     
-    editor.setup();
+    editor.setup(true);
     
-    editorPreview.setup();
+    editorPreview.setup(false);
     
     dataManager.setup();
     dataManager.load();
@@ -69,6 +77,7 @@ void app::setup(){
     
     
     midiManager.setup();
+    midiMiniManager.setup();
 
     
 }
@@ -83,6 +92,7 @@ void app::update(){
     editorPreview.update();
     
     midiManager.update();
+    midiMiniManager.update();
 
     
     if(mode == 0 ) {
@@ -113,7 +123,7 @@ void app::draw(){
     if(mode == 0 ) {
         
         sceneManager.draw();
-        editorPreview.drawAsPreview(ofGetWidth() * .5, 0, 20, true);
+        editorPreview.drawAsPreview(ofGetWidth() * .5, 0, 24.5, true);
         ofSetColor(255);
         screenLog.draw();
         

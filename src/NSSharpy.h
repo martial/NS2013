@@ -34,6 +34,8 @@ public:
     void        setGobo(float pct);
     float       getGobo();
     
+    void        setFinePanTilt(float pan, float tilt);
+    
     void        setID(int id);
     int         getID() {return this->id;}
     
@@ -59,6 +61,8 @@ public:
     
     float               rotationX, rotationY;
     float               decay;
+    
+    float               finePan, fineTilt;
     
     
     ofNode              tmpParentNode;

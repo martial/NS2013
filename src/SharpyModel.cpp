@@ -87,7 +87,7 @@ void SharpyModel::draw(ofVec3f pos, float pan, float tilt) {
     ofTranslate(10, 0, 0);
     
     ofTranslate(-90, 0, -55);
-    ofRotateY(pan);
+    ofRotateY(180 + pan);
     //ofSphere(0, 0, 0, 10);
     ofTranslate(90, 0, 65);
     //panModel.setRotation(1, 360-pan, 0, 1, 0);

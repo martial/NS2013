@@ -21,7 +21,7 @@ class NSEditor {
     
 public:
     
-    void setup();
+    void setup(bool enableEvents);
     void update();
     void draw();
     void drawAsPreview(float x, float y, float w, bool horizontal);
@@ -70,9 +70,14 @@ public:
     
     int getTotalFrames() {return previewCanvas.size ();}
     
+    bool    bTapTempoMode;
+    
     
     void init();
     void exit();
+    
+    
+    bool bIsMain;
 
     
 private:
