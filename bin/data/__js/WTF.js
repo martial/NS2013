@@ -9,9 +9,11 @@ var WTF = Animation.extend({
 
     update: function (s) {
 
+        println(this.name);
+
   for (var i = 0; i < numSharpy; i++) {
 
-            // horizontalSharpies nous renvoie l'index des sharpies, mais mappé à l'envers
+            // horizontalSharpies nous renvoie l'index des sharpies, mais mappï¿½ ï¿½ l'envers
 
             var index = horizontalSharpies[i];
             var angle = ( i< 16) ?  -200 : 150;

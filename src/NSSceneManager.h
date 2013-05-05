@@ -20,7 +20,7 @@ public:
     void            setup();
     void            update();
     void            draw();
-    void            createScene(int width, int height);
+    void            createScene(int width, int height,  NSEditor * editor);
     
     
     ofPtr<NSScene>  getScene(int index);

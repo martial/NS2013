@@ -34,6 +34,8 @@ NSScene::NSScene () {
     
     bGlobalFrost    = false;
     
+    bEqualizerMode  = false;
+    
     
     dofAperture     = 1.0;
     dofFocus        = 0.2;
@@ -59,9 +61,11 @@ NSScene::NSScene () {
 //--------------------------------------------------------------
 
 
-void NSScene::setup (int width, int height) {
+void NSScene::setup (int width, int height, NSEditor * editor) {
     
     // init sharpies
+    
+    this->editor = editor;
     
     numSharpies = 32;
     
@@ -75,6 +79,18 @@ void NSScene::setup (int width, int height) {
         
         sharpies.push_back(sharpyRef);
       
+    }
+    
+    // map horizontal sharpies index
+    
+    
+    for (int j = 0; j < 16; j++) {
+        
+        for (int i = 0; i < 2; i++) {
+            int index = i * 16 + j;
+            horizontalSharpiesIndex.push_back(index);
+        }
+        
     }
     
     
@@ -155,11 +171,12 @@ void NSScene::update () {
     sharpiesCenter.set(ofVec3f( ( (float)numSharpies *.25  * xDistance) - xDistance*.5, yDistance * .5));
     
     ofxEQ * eq          = Globals::instance()->eq;
-    NSEditor * editor   = Globals::instance()->editor;
+    //NSEditor * editor   = Globals::instance()->editor;
     
     vector<int> data    = editor->getActualFrameData();
     
     //printf("size %d", data.size());
+    
     
      for (int i=0; i<sharpies.size(); i++) {
         
@@ -176,6 +193,35 @@ void NSScene::update () {
         int index = ( i < 16 ) ? i : i - 16;
         float * eqChannel = ( i < 16 ) ?  eq->left :  eq->right;
         int indexMapped = ofMap(index, 0, 16, 0, 512);
+         
+         
+         if(bEqualizerMode) {
+             
+             //take left at middle
+             
+             float snd = eq->left[256];
+             float pct = snd * 32;
+             
+             //printf("pct %f\n", pct);
+             
+             int horizontalIndex = horizontalSharpiesIndex[i];
+             ofPtr<NSSharpy> sharpyHorRef = sharpies[horizontalIndex];
+                          
+             if( pct > i ) {
+                 
+                 sharpyHorRef->target->brt = 1.0;
+                 sharpyHorRef->brightness  = 1.0;
+                 
+             } else {
+                 
+                 sharpyHorRef->target->brt = 0.0;
+                 sharpyHorRef->brightness  = 0.0;
+                 
+             }
+             
+             
+             
+         } else {
         
                           
          // map to anim
@@ -198,9 +244,12 @@ void NSScene::update () {
          
          // force lights
          
-         
-         if(sharpyRef->forcedBrightness >= 0.0)
+         if(sharpyRef->forcedBrightness >= 0.0) {
+             
+             sharpyRef->brightness = sharpyRef->forcedBrightness;
              sharpyRef->target->brt = sharpyRef->forcedBrightness;
+                 
+         }
          
         // sound
         
@@ -210,41 +259,40 @@ void NSScene::update () {
         if(bSndGobo)
             sharpyRef->target->goboPct *= sharpyRef->target->goboPct * eqChannel[indexMapped];
          
-         
-         sharpyRef->target->brt *= globalAlpha;
-         
-         
         // finally global strobz
          
          if(globalStrob > 0.0 ) {
              
              int strobStep  = 1 + (int)(globalStrob * 12);
-             sharpyRef->decay = 0.0;
+             //sharpyRef->decay = 0.0;
              if( ofGetFrameNum() % strobStep > (strobStep / 2) ) {
                  sharpyRef->target->brt *= 0.0;
-                 sharpyRef->brightness  *= 0.0;
+                // sharpyRef->brightness  *= 0.0;
              } else {
                  sharpyRef->target->brt *= 1.0;
-                 sharpyRef->brightness  *= 1.0;
+                 //sharpyRef->brightness  *= 1.0;
              }
-             
          }
          
-         if(globalFullStrob > 0.0 ) {
+             if(globalFullStrob > 0.0 ) {
              
-             int strobStep  = 1 + (int)(globalFullStrob * 12);
-             sharpyRef->decay = 0.0;
-             if( ofGetFrameNum() % strobStep > (strobStep / 2) ) {
-                 sharpyRef->target->brt = 0.0;
-                 sharpyRef->brightness  = 0.0;
-             } else {
+                 int strobStep  = 1 + (int)(globalFullStrob * 12);
+             //sharpyRef->decay = 0.0;
+                 if( ofGetFrameNum() % strobStep > (strobStep / 2) ) {
+                     sharpyRef->target->brt = 0.0;
+                     sharpyRef->brightness  = 0.0;
+                 } else {
                  sharpyRef->target->brt = 1.0;
                  sharpyRef->brightness  = 1.0;
              }
-             
          }
          
+         }
          
+         // global alpha
+         
+         sharpyRef->brightness *= globalAlpha;
+         sharpyRef->target->brt *= globalAlpha;
          
                  
         sharpyRef->update();
@@ -609,7 +657,7 @@ void NSScene::sharpyLookAt(int sharpyIndex, ofVec3f pos) {
     float roty = ofRadToDeg(atan2(sqrt(pow(pnt.x,2) + pow(pnt.y,2)),pnt.z));
     
       
-    sharpyRef->target->rotationX =  - rotx;
+    sharpyRef->target->rotationX =  180 - rotx;
     sharpyRef->target->rotationY =  180 - roty;
     
     
@@ -671,11 +719,15 @@ void NSScene::setOrientation(int sharpyIndex, ofVec3f eulerAngles) {
     
         
     
-    sharpyRef->target->rotationX =  - rotx;
+    sharpyRef->target->rotationX =  180 - rotx;
     sharpyRef->target->rotationY =  180 - roty;
     
+}
 
-
+void NSScene::setSharpyFinePanTilt(int index, float pan, float tilt) {
+    
+    ofPtr<NSSharpy> sharpyRef = sharpies[index];
+    sharpyRef->setFinePanTilt(pan, tilt);
     
 }
 

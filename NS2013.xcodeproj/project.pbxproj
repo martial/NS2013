@@ -80,6 +80,7 @@
 		E737B4AA1704958D00B656D9 /* fft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E737B4A21704958D00B656D9 /* fft.cpp */; };
 		E737B4AB1704958D00B656D9 /* fftOctaveAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E737B4A41704958D00B656D9 /* fftOctaveAnalyzer.cpp */; };
 		E737B4AC1704958D00B656D9 /* ofxEQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E737B4A61704958D00B656D9 /* ofxEQ.cpp */; };
+		E742281B1733B866000CFA9D /* NSMidiMiniManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E74228191733B866000CFA9D /* NSMidiMiniManager.cpp */; };
 		E742B16217158F5600EDDDCB /* NSEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B16017158F5600EDDDCB /* NSEditor.cpp */; };
 		E742B16517158F9100EDDDCB /* NSDataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B16317158F9100EDDDCB /* NSDataManager.cpp */; };
 		E742B175171590A900EDDDCB /* ofxMSAInteractiveObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E742B171171590A900EDDDCB /* ofxMSAInteractiveObject.cpp */; };
@@ -381,6 +382,8 @@
 		E737B4A51704958D00B656D9 /* fftOctaveAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftOctaveAnalyzer.h; sourceTree = "<group>"; };
 		E737B4A61704958D00B656D9 /* ofxEQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEQ.cpp; sourceTree = "<group>"; };
 		E737B4A71704958D00B656D9 /* ofxEQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEQ.h; sourceTree = "<group>"; };
+		E74228191733B866000CFA9D /* NSMidiMiniManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSMidiMiniManager.cpp; sourceTree = "<group>"; };
+		E742281A1733B866000CFA9D /* NSMidiMiniManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMidiMiniManager.h; sourceTree = "<group>"; };
 		E742B16017158F5600EDDDCB /* NSEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSEditor.cpp; sourceTree = "<group>"; };
 		E742B16117158F5600EDDDCB /* NSEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEditor.h; sourceTree = "<group>"; };
 		E742B16317158F9100EDDDCB /* NSDataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSDataManager.cpp; sourceTree = "<group>"; };
@@ -1166,6 +1169,8 @@
 				E711F9D7171DB610003D88AB /* SharpyModel.h */,
 				E7629F23172E6F1A001C7972 /* NSMidiManager.cpp */,
 				E7629F24172E6F1A001C7972 /* NSMidiManager.h */,
+				E74228191733B866000CFA9D /* NSMidiMiniManager.cpp */,
+				E742281A1733B866000CFA9D /* NSMidiMiniManager.h */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -1810,6 +1815,7 @@
 				E7629F16172E6DA0001C7972 /* ofxMidiMessage.cpp in Sources */,
 				E7629F17172E6DA0001C7972 /* ofxMidiOut.cpp in Sources */,
 				E7629F25172E6F1A001C7972 /* NSMidiManager.cpp in Sources */,
+				E742281B1733B866000CFA9D /* NSMidiMiniManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

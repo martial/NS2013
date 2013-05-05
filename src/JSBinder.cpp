@@ -13,7 +13,7 @@
 
 //class JSObject;
 //--------------------------------------------------------------
-bool initJS()
+ofxJSScript * initJS()
 { 
 	// Some functions
 	//
@@ -44,6 +44,8 @@ bool initJS()
     ofxJSDefineFunctionGlobal("getHeight",                      &getHeight,                         0);
     ofxJSDefineFunctionGlobal("getDepth",                       &getDepth,                          0);
     
+    ofxJSDefineFunctionGlobal("setFinePanTilt",                 &setFinePanTilt,                    3);
+    
 	// Load globals
 	ofxJSScript * pScript = ofxJSLoadFromData("app.js", "app"); 
 	if (pScript){
@@ -53,10 +55,34 @@ bool initJS()
 		} else {
             ofGetAppPtr()->exit();
         }
-	} 
+	}
+       
+    
 	
-	return true; // TODO err checking
+	return pScript; // TODO err checking
 }
+
+
+//--------------------------------------------------------------
+
+ofxJSDefineFunctionCpp(setFinePanTilt){
+    
+    if (argc == 2){
+        
+        
+        int index       = ofxJSValue_TO_int(argv[0]);
+        float pan       = ofxJSValue_TO_float(argv[1]);
+		float tilt		= ofxJSValue_TO_float(argv[2]);
+        
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyFinePanTilt(index, pan, tilt);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+
+    
+}
+
 
 //--------------------------------------------------------------
 ofxJSDefineFunctionCpp(lookAtSvg){

@@ -9,6 +9,8 @@ var ARCHE = Animation.extend({
 
     update: function (s) {
 
+        println(this.name)
+
 
         // setOrientation et la meme chose que lookAt
         // sauf que le point d'origine est la position du sharpy !

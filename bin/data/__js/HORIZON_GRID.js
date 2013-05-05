@@ -11,6 +11,8 @@ var HORIZON_GRID = Animation.extend({
 
     update: function (s) {
 
+        println(this.name)
+
 
         for ( var i=0; i<32; i+=2) {
 

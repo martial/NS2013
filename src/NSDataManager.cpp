@@ -61,8 +61,9 @@ void NSDataManager::urlResponse(ofHttpResponse & response) {
         // get num frames
         xml.pushTag("anim", i);
         
-        animDataRef->name   = xml.getValue("config:name", "error");
-        animDataRef->id     = ofToString(xml.getValue("config:id", 0));
+        animDataRef->name       = xml.getValue("config:name", "error");
+        animDataRef->maxSpeed   = xml.getValue("config:speed", 1.0);
+        animDataRef->id         = ofToString(xml.getValue("config:id", 0));
         
         vector<vector<int> > data;
         
@@ -105,7 +106,7 @@ void NSDataManager::urlResponse(ofHttpResponse & response) {
     }
     
     int tmp = 0;
-    
+    printf("Yo mama send event from load \n");
     ofNotifyEvent(onLoadSuccess, tmp, this);
         
     }
@@ -134,6 +135,8 @@ vector<string> NSDataManager::getAnimationsLabels() {
 
 void NSDataManager::load() {
     
+    printf("Yo coco load xml \n");
+
     ofLoadURLAsync("http://www.forme-libre.com/ns2013/ns/getxml", "load");
     Globals::instance()->loadingScreen->show();
     
@@ -235,10 +238,11 @@ void NSDataManager::upload() {
     
     if(response_str == "success" ) {
         
-        ofNotifyEvent(onUploadSuccess, id, this);
+       // ofNotifyEvent(onUploadSuccess, id, this);
         
     } else {
         
+        printf("Yo mama send event \n");
         int id = ofToInt(response_str);
         ofNotifyEvent(onUploadSuccess, id, this);
         

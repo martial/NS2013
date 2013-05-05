@@ -63,11 +63,11 @@ void NSLoadingScreen::show() {
 }
 void NSLoadingScreen::hide() {
     
-    messageStr = "SUCCESS";
+    messageStr = "SUCK SEX";
     tween.setParameters(quint, ofxTween::easeInOut, pct, 0.0, 400, 800);
     tween.start();
     
-    string voice = "Bruce";
+    string voice = "Victoria";
     string cmd = "say  -v "+voice+" "+messageStr +" &";
     system(cmd.c_str());
     

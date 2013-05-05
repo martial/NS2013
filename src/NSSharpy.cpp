@@ -16,6 +16,9 @@ NSSharpy::NSSharpy() {
     rotationX           = 0.0;
     rotationY           = 0.0;
     
+    finePan             = 0.0;
+    fineTilt            = 0.0;
+    
     decay               = 1.0;
     
     currentGoboPct      = 1.0;
@@ -137,6 +140,8 @@ void NSSharpy::sendToDmx() {
     // positions events
     
     int channel = this->id * 16;
+        
+    //int channel = 0;
     
     vector<ofPoint> dmxData;
     
@@ -300,26 +305,40 @@ ofVec2f NSSharpy::calculatePanTilt() {
 
     int distance2 = getAngleDIstance(currentAlpha, nalpha);
     
+    
+    //test
+    
+    int testDist = getAngleDIstance(359, 1);
+    int destDist2 = getAngleDIstance(359-180, 1);
+    
+    
+    if(id==-1) {
+        
+        printf("---\n");
+        printf("distance %d\n", testDist);
+        printf("distance2 %d\n", destDist2);
+        
+    }
+    
+    
+    
+    distance = abs(currentAlpha - alpha);
+    
+    
     if(id==-1) {
         
         printf("---\n");
         printf("distance %d\n", distance);
-        printf("distance2 %d\n", distance2);
+        //printf("distance2 %d\n", distance2);
         
     }
-    
-    if ( distance > distance2 ) {
-        alpha = nalpha;
-        beta = nbeta;        
-    }
-    
+    // store old value
+    currentAlpha = alpha;
    
-
     
   
     
-    // store old value
-    currentAlpha = alpha;
+ 
     
     if(id==-1) {
         printf("---\n");
@@ -332,23 +351,30 @@ ofVec2f NSSharpy::calculatePanTilt() {
        // map to shapry angles
     
     
-    float pan   = ofMap(alpha, -90, 450, 0, 540);
+    float pan   =    - 90 + alpha;
+    //pan   = ofMap(pan, -90, 450, 0, 360);
     float tilt  = ofMap(beta, -90, 90, 45, 225);
     
     if(id==-1) {
-    printf("---\n");
-    printf("pan %f\n", pan);
-    printf("tilt %f\n", tilt);
+        printf("---\n");
+        printf("pan %f\n", pan);
+        printf("tilt %f\n", tilt);
         
     }
-    
-    
-
-    
+        
     // map to DMX values
     
-    pan     = ofMap(pan, 0, 540, 0, 255);
-    tilt    = ofMap(tilt, 0, 270, 0, 255);
+    int max = floor( 255 / 3.0 );
+    
+    pan     = ofMap( 90 + finePan     + pan, -90, 450, 0, 255);
+    tilt    = ofMap(fineTilt    + tilt, 0, 270, 0, 255);
+    
+    if(id==-1) {
+        printf("---\n");
+        printf("dmxpan %f\n", pan);
+        printf("dmxtilt %f\n", tilt);
+        
+    }
     
     return ofVec2f(pan, tilt);
     
@@ -360,6 +386,8 @@ int NSSharpy:: getAngleDIstance(float a, float b) {
     double diff = (a > b ? a - b : b - a);
     double mod_diff = fmod(diff, 360);
     double result = (mod_diff < 180 ? mod_diff : 360 - mod_diff);
+    
+    return result;
     
 };
 
@@ -375,7 +403,7 @@ void NSSharpy::draw(bool bDrawIds){
     transformGL();
     ofPushMatrix();
     
-    ofRotateZ(alpha);
+    ofRotateZ(-180 + alpha);
     
     //printf("brt %f", brightness);
     
@@ -434,6 +462,12 @@ void NSSharpy::setTargetOrientation(ofVec3f orientation) {
     this->target->setOrientation(orientation);
 }
 
+void NSSharpy::setFinePanTilt(float pan, float tilt) {
+    
+    this->finePan   = pan;
+    this->fineTilt  = tilt;
+    
+}
 
 void NSSharpy::setBrightness(float brighntessPct){
     //this->brightness = brighntessPct;

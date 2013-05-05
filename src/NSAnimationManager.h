@@ -35,6 +35,7 @@ public:
     void prevAnimation(int scene);
     void nextAnimation(int scene);
     
+        
     
     void setGlobalSpeed(float pct);
     
@@ -53,6 +54,7 @@ public:
     int                             currentPreviewIndex;
     
     bool                            bNeedsSetAnimation;
+    bool                            bNeedsAnimFromPreview;
     int                             animToGo, sceneToGo;
     
     
@@ -69,6 +71,8 @@ private :
    
     bool                            bNeedsUpdate;
     bool                            bFrameHasChanged;
+    
+    NSAnimation *                   configScript;
     
     
     

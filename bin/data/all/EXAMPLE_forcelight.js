@@ -2,7 +2,7 @@ var ExampleForceLight = Animation.extend({
 
     setup: function (s) {
 
-        println("-- Template.js -- ");
+        println("-- CrossHouse.js -- ");
         this._super();
 
 

@@ -10,7 +10,7 @@
 #include "ofMain.h"
 #include "ofxJavascript.h"
 
-bool initJS();
+ofxJSScript * initJS();
 
 ofxJSDeclareFunctionCpp(getPosX);
 ofxJSDeclareFunctionCpp(getPosY);
@@ -22,7 +22,7 @@ ofxJSDeclareFunctionCpp(setOrientation);
 ofxJSDeclareFunctionCpp(forceLight);
 ofxJSDeclareFunctionCpp(setGobo);
 
-
+ofxJSDeclareFunctionCpp(setFinePanTilt);
 
 ofxJSDeclareFunctionCpp(setName);
 
@@ -40,3 +40,4 @@ ofxJSDeclareFunctionCpp(getCurrentTotalFrames);
 ofxJSDeclareFunctionCpp(getCurrentAnimFrame);
 
 ofxJSDeclareFunctionCpp(lookAtSvg);
+

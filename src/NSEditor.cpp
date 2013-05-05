@@ -10,7 +10,7 @@
 #include "Globals.h"
 #include "ofxModifierKeys.h"
 
-void NSEditor::setup() {
+void NSEditor::setup(bool enableEvents) {
     
     bIsPlaying          = false;
     currentFrame        = 0;
@@ -19,13 +19,26 @@ void NSEditor::setup() {
     currentAnimation    = -1;
     
     bDrawIds            = false;
+    
+    bTapTempoMode       = false;
    
     createNew();
     
-    ofAddListener( Globals::instance()->dataManager->onUploadSuccess, this, &NSEditor::onUploadSuccessHandler );
+    bIsMain = enableEvents;
+    
+    
+    if(enableEvents)
+        ofAddListener( Globals::instance()->dataManager->onUploadSuccess, this, &NSEditor::onUploadSuccessHandler );
+    
     ofAddListener( Globals::instance()->dataManager->onLoadSuccess, this, &NSEditor::onLoadSuccessHandler );
-    ofAddListener( Globals::instance()->dataManager->onDeleteSuccess, this, &NSEditor::onDeleteSuccessHandler );
+    
+    if(enableEvents)
+        ofAddListener( Globals::instance()->dataManager->onDeleteSuccess, this, &NSEditor::onDeleteSuccessHandler );
+    
+    
     ofAddListener( Globals::instance()->dataManager->onError, this, &NSEditor::onErrorHandler );
+        
+    
 
     
 }
@@ -57,15 +70,40 @@ void NSEditor::update() {
     if(editableCanvas)
         if( Globals::instance()->app->mode != editableCanvas->bEditable )
              editableCanvas->setEditable(Globals::instance()->app->mode );
+    
+    
+    if(bTapTempoMode) {
+        
+        // wait for the beat
+        //TODO
+        
+        
+        
+    } else {
         
     if(bIsPlaying) {
-        currentFrameCnt += playVel * 2.0f;
-        setCurrentFrame(floor(currentFrameCnt));
-        if(currentFrameCnt > previewCanvas.size() )
-            currentFrameCnt = 0.0;
         
-        if(currentFrameCnt < 0 )
-            currentFrameCnt = previewCanvas.size() -1;
+        
+        
+        float realPlayVel = playVel;
+        if (Globals::instance()->app->mode == 0 && currentAnimData)
+            realPlayVel = playVel * currentAnimData->maxSpeed;
+                    
+            if(isnan(realPlayVel) ) realPlayVel = playVel;
+        
+            currentFrameCnt += realPlayVel  * 2.0;
+        
+           // printf("get speed anim %f maxSpeed %f playVel %f currentFrameCnt %f\n", currentAnimData->maxSpeed, maxSpeed, playVel, currentFrameCnt);
+
+        
+            setCurrentFrame(floor(currentFrameCnt));
+            if(currentFrameCnt > previewCanvas.size() )
+                currentFrameCnt = 0.0;
+        
+            if(currentFrameCnt < 0 )
+                currentFrameCnt = previewCanvas.size() -1;
+        
+        }
         
     }
     
@@ -265,8 +303,12 @@ void NSEditor::setAnim(int index) {
     currentAnimation = index;
     
     stop();
+    
+    
     Globals::instance()->gui->nameInput->setTextString(currentAnimData->name);
     
+    if(Globals::instance()->app->mode == 1)
+        Globals::instance()->editor->playVel = currentAnimData->maxSpeed;
     
     /*
     populateAnim();
@@ -285,7 +327,6 @@ void NSEditor::setAnim(string name) {
     int id = Globals::instance()->dataManager->getAnimationId(name);
     if(id > -1) {
         setAnim(id);
-        
     }
   
 }
@@ -296,6 +337,9 @@ void NSEditor::populateAnim() {
     
     stop();
     Globals::instance()->gui->nameInput->setTextString(currentAnimData->name);
+    
+    //ofxUISlider * slider = (ofxUISlider *) Globals::instance()->gui->guiEditorLeft->getWidget("MAX SPEED");
+    Globals::instance()->editor->playVel = currentAnimData->maxSpeed;
     
     /*
     previewCanvas.clear();
@@ -345,7 +389,7 @@ void NSEditor::loadAll () {
     }
     
     
-    printf("load all : animations.size %d", animations.size());
+    //printf("load all : animations.size %d", animations.size());
     
     
 }
@@ -372,10 +416,18 @@ void NSEditor::save () {
     Globals::instance()->loadingScreen->show();
     currentAnimData->data = data;
     currentAnimData->name = Globals::instance()->gui->nameInput->getLabel()->getLabel();
+    
+    
+    ofxUISlider * slider = (ofxUISlider *) Globals::instance()->gui->guiEditorLeft->getWidget("MAX SPEED");
+    currentAnimData->maxSpeed = slider->getScaledValue();
     currentAnimData->toXML();
     
     
+    
+    printf("start upload");
     Globals::instance()->dataManager->startUpload();
+    
+    
     
 
     
@@ -400,6 +452,8 @@ void NSEditor::onLoadSuccessHandler(int & e) {
     
     // we should reload the current animation right?
     
+    printf("load success");
+    
     loadAll();
     
     Globals::instance()->gui->populateEditorAnimations();
@@ -416,6 +470,7 @@ void NSEditor::onLoadSuccessHandler(int & e) {
 void NSEditor::onUploadSuccessHandler(int & e) {
     
     
+    printf("upload success");
     currentAnimData->id = ofToString(e);
     Globals::instance()->dataManager->load();
 }
