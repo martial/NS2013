@@ -13,6 +13,12 @@ Globals* Globals::inst = 0;
 Globals::Globals()
 {
 	
+    DMX1_PORT = 0;
+    DMX2_PORT = 1;
+    
+    USB1_PORT = 0;
+    USB2_PORT = 3;
+    
 }
 
 Globals* Globals::instance(){

@@ -13,7 +13,7 @@ var Ascension = Animation.extend({
 
 
 
-        var time = of.GetElapsedTimeMillis() / 1000;
+        var time = of.GetElapsedTimeMillis() / (1000 * speedPct);
 
 
 

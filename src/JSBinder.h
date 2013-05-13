@@ -22,6 +22,7 @@ ofxJSDeclareFunctionCpp(setOrientation);
 ofxJSDeclareFunctionCpp(forceLight);
 ofxJSDeclareFunctionCpp(setGobo);
 
+ofxJSDeclareFunctionCpp(setFinePos);
 ofxJSDeclareFunctionCpp(setFinePanTilt);
 
 ofxJSDeclareFunctionCpp(setName);
@@ -40,4 +41,6 @@ ofxJSDeclareFunctionCpp(getCurrentTotalFrames);
 ofxJSDeclareFunctionCpp(getCurrentAnimFrame);
 
 ofxJSDeclareFunctionCpp(lookAtSvg);
+
+ofxJSDeclareFunctionCpp(setDMXUSBPorts);
 
