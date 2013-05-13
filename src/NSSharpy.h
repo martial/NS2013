@@ -34,6 +34,7 @@ public:
     void        setGobo(float pct);
     float       getGobo();
     
+    void        setFinePos(float x, float y);
     void        setFinePanTilt(float pan, float tilt);
     
     void        setID(int id);
@@ -62,6 +63,7 @@ public:
     float               rotationX, rotationY;
     float               decay;
     
+    ofPoint             finePos;
     float               finePan, fineTilt;
     
     

@@ -7,10 +7,11 @@
 //
 
 #include "NSDMXManager.h"
+#include "Globals.h"
 
 void NSDMXManager::setup(vector<ofPtr<NSSharpy> > * sharpies) {
     
-    dmx.connect(0, 512);
+    connect();
     
     this->sharpies = sharpies;
     
@@ -23,6 +24,23 @@ void NSDMXManager::setup(vector<ofPtr<NSSharpy> > * sharpies) {
     }
     
 }
+
+void NSDMXManager::connect()  {
+    
+   
+    dmx.disconnect();
+    dmx2.disconnect();
+    
+    if(!dmx.isConnected())
+        dmx.connect(Globals::instance()->DMX1_PORT, 512);
+    
+    if(!dmx.isConnected())
+        dmx2.connect(Globals::instance()->DMX2_PORT, 512);
+
+    
+}
+
+
 
 void NSDMXManager::onSharpyEvent(vector<ofPoint> & data) {
     

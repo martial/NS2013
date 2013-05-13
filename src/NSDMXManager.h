@@ -22,13 +22,14 @@ public:
     void update();
     void draw();
     
+    void connect();
     
     void onSharpyEvent(vector<ofPoint> & data);
     void resetAll();
     
 private:
     
-    ofxDmx dmx;
+    ofxDmx dmx, dmx2;
     vector<ofPtr<NSSharpy> >  * sharpies;
     
 };

@@ -53,6 +53,8 @@ public:
     
     void setSharpyColor(ofColor color, string name);
     
+    void setSharpyFinePos(int index, float x, float y);
+
     void setSharpyFinePanTilt(int index, float pan, float tilt);
     
     float                       dofFocus;
@@ -77,6 +79,8 @@ public:
     bool                        bGlobalFrost;
     
     bool                        bmapAnims;
+    
+    bool                        bDrawFinePos;
     
     // not sur if that would be there
     ofPtr<NSAnimation>          animationRef;

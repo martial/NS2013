@@ -186,6 +186,10 @@ void NSSharpy::sendToDmx() {
     dmxData.push_back(ofPoint(channel + 12, panTilt.y));
        
     ofNotifyEvent(dmxEvent, dmxData, this);
+    
+    
+    if(id < 16)
+    printf("titl %f \n",  panTilt.y);
 
     
 }
@@ -297,7 +301,7 @@ ofVec2f NSSharpy::calculatePanTilt() {
     
     // --------------------- distance tests
     
-    int distance = getAngleDIstance(currentAlpha, alpha);
+    int distance =  getAngleDIstance(currentAlpha, alpha);
     
     float nalpha =  alpha  + 180;
     float nbeta  =  beta * -1;
@@ -353,7 +357,9 @@ ofVec2f NSSharpy::calculatePanTilt() {
     
     float pan   =    - 90 + alpha;
     //pan   = ofMap(pan, -90, 450, 0, 360);
-    float tilt  = ofMap(beta, -90, 90, 45, 225);
+    
+    int range = 10;
+    float tilt  = ofMap(beta, -135, 135, 0, 270);
     
     if(id==-1) {
         printf("---\n");
@@ -460,6 +466,13 @@ void NSSharpy::setID(int id){
 
 void NSSharpy::setTargetOrientation(ofVec3f orientation) {
     this->target->setOrientation(orientation);
+}
+
+void NSSharpy::setFinePos(float x, float y) {
+    
+    this->finePos.x     = x;
+    this->finePos.y     = y;
+    
 }
 
 void NSSharpy::setFinePanTilt(float pan, float tilt) {

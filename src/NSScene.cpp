@@ -29,6 +29,7 @@ NSScene::NSScene () {
     bdrawLookAt     = false;
     bdrawModels     = true;
     bDrawIds        = false;
+    bDrawFinePos    = false;
     
     bmapAnims       = true;
     
@@ -182,7 +183,17 @@ void NSScene::update () {
         
         ofPtr<NSSharpy> sharpyRef = sharpies[i];
          
-         sharpyRef->setPosition(-getPosition() + pos - sharpiesCenter);
+          if(bDrawFinePos) {
+              
+              sharpyRef->setPosition(-getPosition() + pos - sharpiesCenter + sharpyRef->finePos);
+
+              
+          } else {
+              
+               sharpyRef->setPosition(-getPosition() + pos - sharpiesCenter);
+          }
+         
+         
          
          
          sharpyRef->decay   = globalDecay;
@@ -582,6 +593,16 @@ void NSScene::setCameraMode(int camMode) {
  //--------------------------------------------------------------
  */
 
+
+void NSScene::setSharpyFinePos(int index, float x, float y)  {
+    
+    
+    ofPtr<NSSharpy> sharpyRef = sharpies[index];
+    sharpyRef->setFinePos(x, y);
+    
+    
+}
+
 void NSScene:: setSharpyColor(ofColor color, string name) {
     
     for (int i=0; i<sharpies.size(); i++) {
@@ -649,7 +670,7 @@ void NSScene::sharpyLookAt(int sharpyIndex, ofVec3f pos) {
     sharpyIndex = ofClamp(sharpyIndex, 0, sharpies.size()-1);
     ofPtr<NSSharpy> sharpyRef = sharpies[sharpyIndex];
 
-    ofVec3f pnt = pos  -getPosition() - sharpyRef->getPosition();;
+    ofVec3f pnt = pos  -getPosition() - sharpyRef->getPosition() + sharpyRef->finePos;;
     
     sharpyRef->lookAtPnt =pos;
     
@@ -710,7 +731,7 @@ void NSScene::setOrientation(int sharpyIndex, ofVec3f eulerAngles) {
     if(eulerAngles.z >= 0 ) eulerAngles.z = -1;
 
     
-    ofVec3f pnt = eulerAngles  - getPosition() - sharpyRef->getPosition();;
+    ofVec3f pnt = eulerAngles  - getPosition() - sharpyRef->getPosition() + sharpyRef->finePos;;
     
     sharpyRef->lookAtPnt = pnt;
     

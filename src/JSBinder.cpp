@@ -44,7 +44,11 @@ ofxJSScript * initJS()
     ofxJSDefineFunctionGlobal("getHeight",                      &getHeight,                         0);
     ofxJSDefineFunctionGlobal("getDepth",                       &getDepth,                          0);
     
+    ofxJSDefineFunctionGlobal("setFinePos",                     &setFinePos,                        3);
+
     ofxJSDefineFunctionGlobal("setFinePanTilt",                 &setFinePanTilt,                    3);
+    
+     ofxJSDefineFunctionGlobal("setDMXUSBPorts",                &setDMXUSBPorts,                    3);
     
 	// Load globals
 	ofxJSScript * pScript = ofxJSLoadFromData("app.js", "app"); 
@@ -63,11 +67,58 @@ ofxJSScript * initJS()
 }
 
 
+
+//--------------------------------------------------------------
+
+ofxJSDefineFunctionCpp(setDMXUSBPorts){
+    
+    if (argc == 4){
+        
+        
+        
+        Globals::instance()->DMX1_PORT          = ofxJSValue_TO_int(argv[0]);
+        Globals::instance()->DMX2_PORT          = ofxJSValue_TO_int(argv[1]);
+		Globals::instance()->USB1_PORT          = ofxJSValue_TO_int(argv[2]);
+        Globals::instance()->USB2_PORT          = ofxJSValue_TO_int(argv[3]);
+        
+        
+        Globals::instance()->dmxManager->connect();
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+    
+    
+}
+
+
+//--------------------------------------------------------------
+
+ofxJSDefineFunctionCpp(setFinePos){
+    
+    if (argc == 3){
+        
+        printf("go fine pos \n");
+        
+        int index       = ofxJSValue_TO_int(argv[0]);
+        float x         = ofxJSValue_TO_float(argv[1]);
+		float y         = ofxJSValue_TO_float(argv[2]);
+        
+        Globals::instance()->nsSceneManager->getScene(0)->setSharpyFinePos(index, x, y);
+        
+		return JS_TRUE;
+	}
+	return JS_FALSE;
+    
+    
+}
+
+
 //--------------------------------------------------------------
 
 ofxJSDefineFunctionCpp(setFinePanTilt){
     
-    if (argc == 2){
+    if (argc == 3){
         
         
         int index       = ofxJSValue_TO_int(argv[0]);

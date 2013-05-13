@@ -17,7 +17,7 @@ void NSMidiMiniManager::setup() {
 	//ofxMidiIn::listPorts(); // via static as well
     
 	// open port by number (you may need to change this)
-	midiIn.openPort(3);
+	midiIn.openPort(Globals::instance()->USB2_PORT);
 	//midiIn.openPort("IAC Pure Data In");	// by name
 	//midiIn.openVirtualPort("ofxMidiIn Input");	// open a virtual port
     
