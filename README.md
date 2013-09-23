@@ -3,7 +3,7 @@ NS2010
 
 Project for Nuits Sonores 2013
 
-[software](https://dl.dropboxusercontent.com/u/817108/apps/NS2013.zip "Download software")
+[Download software](https://dl.dropboxusercontent.com/u/817108/apps/NS2013.zip "Download software")
 
 ![pict](https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-prn1/923552_10151425694493596_935523540_n.jpg "pic")
 ![pict](https://dl.dropboxusercontent.com/u/817108/lazerlazer/interface.png "pic")
